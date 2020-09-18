@@ -1,4 +1,4 @@
-import {system} from '..';
+import { system } from '..';
 
 const breakpoints = [40, 52, 64].map(n => n + 'em');
 
@@ -50,7 +50,7 @@ test('merges multiple responsive styles', () => {
     width: true,
   });
   const styles = parser({
-    theme: {breakpoints},
+    theme: { breakpoints },
     margin: [0, 4, 8],
     padding: [16, 32, 64],
     width: ['100%', '50%'],
@@ -78,10 +78,10 @@ test('merges multiple responsive object styles', () => {
     width: true,
   });
   const styles = parser({
-    theme: {breakpoints},
-    margin: {_: 0, 0: 4, 1: 8},
-    padding: {_: 16, 0: 32, 1: 64},
-    width: {_: '100%', 0: '50%'},
+    theme: { breakpoints },
+    margin: { _: 0, 0: 4, 1: 8 },
+    padding: { _: 16, 0: 32, 1: 64 },
+    width: { _: '100%', 0: '50%' },
   });
   expect(styles).toEqual({
     margin: 0,
@@ -155,14 +155,14 @@ test('gets 0 index values from theme', () => {
     },
     width: 0,
   });
-  expect(style).toEqual({width: 24});
+  expect(style).toEqual({ width: 24 });
 });
 
 test('ignores null values', () => {
   const parser = system({
     color: true,
   });
-  const style = parser({color: null});
+  const style = parser({ color: null });
   expect(style).toEqual({});
 });
 
@@ -176,7 +176,7 @@ test('skips null values in arrays', () => {
     fontSize: true,
   });
   const style = parser({
-    theme: {breakpoints},
+    theme: { breakpoints },
     fontSize: [16, null, null, 18],
   });
   expect(style).toEqual({
@@ -197,20 +197,20 @@ test('includes single property functions', () => {
     backgroundColor: true,
     width: true,
   });
-  const a = parser.color({color: 'tomato', backgroundColor: 'nope'});
+  const a = parser.color({ color: 'tomato', backgroundColor: 'nope' });
   const b = parser.width({
     width: '100%',
     color: 'tomato',
     backgroundColor: 'nope',
   });
-  expect(a).toEqual({color: 'tomato'});
-  expect(b).toEqual({width: '100%'});
+  expect(a).toEqual({ color: 'tomato' });
+  expect(b).toEqual({ width: '100%' });
 });
 
 test('parser configs can be composed manually', () => {
-  const color = system({color: true, backgroundColor: true});
-  const layout = system({width: true, height: true});
-  const composed = system({...color.config, ...layout.config});
+  const color = system({ color: true, backgroundColor: true });
+  const layout = system({ width: true, height: true });
+  const composed = system({ ...color.config, ...layout.config });
   const style = composed({
     color: 'tomato',
     backgroundColor: 'black',
@@ -238,8 +238,8 @@ test('supports non-array breakpoints object', () => {
         lg: '64em',
       },
     },
-    margin: {_: 0, sm: 4, md: 8},
-    padding: {_: 16, lg: 64},
+    margin: { _: 0, sm: 4, md: 8 },
+    padding: { _: 16, lg: 64 },
   });
   expect(styles).toEqual({
     margin: 0,
@@ -272,9 +272,9 @@ test('sorts media queries when responsive object values are used', () => {
         xl: '128em',
       },
     },
-    padding: {_: 16, lg: 64, xl: 128},
-    margin: {sm: 4, md: 8},
-    color: {lg: 'tomato'},
+    padding: { _: 16, lg: 64, xl: 128 },
+    margin: { sm: 4, md: 8 },
+    color: { lg: 'tomato' },
   });
   expect(Object.keys(styles)).toEqual([
     '@media screen and (min-width: 32em)',
@@ -295,8 +295,8 @@ test('transforms values', () => {
       },
     },
   });
-  const a = parser({margin: 8});
-  const b = parser({margin: 12, multiply: 2});
-  expect(a).toEqual({margin: 8});
-  expect(b).toEqual({margin: 24});
+  const a = parser({ margin: 8 });
+  const b = parser({ margin: 12, multiply: 2 });
+  expect(a).toEqual({ margin: 8 });
+  expect(b).toEqual({ margin: 24 });
 });

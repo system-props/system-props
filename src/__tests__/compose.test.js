@@ -1,4 +1,4 @@
-import {system, compose} from '..';
+import { system, compose } from '..';
 
 const color = system({
   color: true,
@@ -12,10 +12,7 @@ const fontSize = system({
 });
 
 test('compose combines style parsers', () => {
-  const parser = compose(
-    color,
-    fontSize
-  );
+  const parser = compose(color, fontSize);
   expect(typeof parser).toBe('function');
   const styles = parser({
     color: 'tomato',

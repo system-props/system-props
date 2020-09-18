@@ -1,4 +1,4 @@
-import {system} from '..';
+import { system } from '..';
 
 const theme = {
   colors: {
@@ -83,7 +83,7 @@ test('uses breakpoints', () => {
 // Per default, we expect it to be impossible to override breakpoints
 test('does *not* use dynamically changed breakpoints', () => {
   const styles = parser({
-    theme: {...theme, breakpoints: ['11em', '22em', '33em']},
+    theme: { ...theme, breakpoints: ['11em', '22em', '33em'] },
     fontSize: [1, 2, 3],
     color: ['primary', null, 'secondary'],
   });
@@ -184,7 +184,7 @@ test('throws an error if no "breakpoints" entry found in theme', () => {
 test('parses raw function values', () => {
   // flush cache from previous tests
   const styles = parser({
-    theme: {...theme, disableStyledSystemCache: true},
+    theme: { ...theme, disableStyledSystemCache: true },
     border(t) {
       return `1px solid ${t.colors.primary}`;
     },
@@ -216,7 +216,7 @@ test('parses raw function values', () => {
 
 test('parses raw function values at each breakpoint', () => {
   const styles = parser({
-    theme: {...theme},
+    theme: { ...theme },
     color: [t => t.colors.primary, t => t.colors.secondary],
   });
   expect(styles).toEqual({

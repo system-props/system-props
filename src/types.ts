@@ -1,7 +1,7 @@
-export interface SomeObj {
-  [x: string]: string | number | {};
-}
+export type BreakpointsObject = { [x: string]: string };
+export type BreakpointsArray = Array<string>;
 
 export interface Theme {
-  [x: string]: string | number | Theme;
+  [x: string]: any;
+  breakpoints: BreakpointsObject | BreakpointsArray;
 }

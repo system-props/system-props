@@ -3,11 +3,11 @@ import { createStyleFunction } from './createStyleFunction';
 import { betterGet as get } from './get';
 import {
   Breakpoints,
-  // PropertyConfig,
   SystemConfig,
   Config,
   BreakpointsObject,
   Props,
+  Parser,
 } from './types';
 import { sort } from './sort';
 import { merge } from './merge';
@@ -31,7 +31,7 @@ function parseBreakpoints(breakpoints: Breakpoints) {
 export const createParser = (
   config: Config,
   pseudoSelectors: { [x: string]: string } = {}
-) => {
+): Parser => {
   const cache: Cache = {};
 
   const parse = (props: Props) => {
@@ -183,4 +183,16 @@ export const createSystem = ({
   };
 
   return system;
+};
+
+export const compose = (...parsers: Parser[]): Parser => {
+  const config = parsers.reduce((acc, parser) => {
+    if (!parser || !parser.config) {
+      return acc;
+    }
+    return { ...acc, ...parser.config };
+  }, {});
+  const parser = createParser(config);
+
+  return parser;
 };

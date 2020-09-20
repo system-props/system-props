@@ -27,3 +27,11 @@ export type PropertyConfig = {
 export interface Config {
   [x: string]: true | PropertyConfig;
 }
+
+export interface Parser {
+  (props: Props): {
+    [x: string]: unknown;
+  };
+  config: Config;
+  propNames: string[];
+}

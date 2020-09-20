@@ -2,14 +2,6 @@ interface Theme {
   [x: string]: any;
 }
 
-// e.g., 'colors.blue.3' -> ['colors', 'blue', '4']
-function split(path: unknown): Array<unknown> {
-  if (typeof path === 'string') {
-    return path.split('.');
-  }
-  return [path];
-}
-
 export const get = (
   object: Theme,
   path?: unknown,
@@ -17,8 +9,11 @@ export const get = (
   // To make sure we get a true undefined
   undef?: undefined
 ) => {
-  const route = split(path);
+  const route = typeof path === 'string' ? path.split('.') : [path];
+
+  // Start with theme, that will get narrowed down
   let result: any = object;
+
   for (let p = 0; p < route.length; p++) {
     // For the length of the map, dive deeper into the object
     // and return the property at that depth
@@ -29,6 +24,7 @@ export const get = (
       result = undef;
     }
   }
+
   return result;
 };
 
@@ -76,10 +72,11 @@ export const betterGet = (
   undef?: undefined
 ) => {
   let result;
-  result = get(object, value);
 
-  if (result === undef && typeof value === 'string' && value.includes('$')) {
+  if (typeof value === 'string' && value.includes('$')) {
     result = systemValueParser(object, value);
+  } else {
+    result = get(object, value);
   }
 
   return result === undef ? defaultValue : result;

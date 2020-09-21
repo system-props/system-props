@@ -46,7 +46,6 @@ function getParseableValues(theme: Theme, str: string) {
 }
 
 export const systemValueParser = (theme: Theme, value: string) => {
-  console.log(theme);
   const parsedMap = getParseableValues(theme, value);
 
   let newString = value;

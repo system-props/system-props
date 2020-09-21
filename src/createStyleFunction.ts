@@ -30,7 +30,5 @@ export const createStyleFunction = ({
   };
 
   Object.assign(systemConfig, { scale, defaultScale });
-  // systemConfig.scale = scale;
-  // systemConfig.defaultScale = defaultScale;
   return systemConfig;
 };

@@ -1,7 +1,8 @@
 import { betterGet } from './get';
 import { Props, PropertyConfig, SystemConfig } from './types';
 
-const getValue = (n: unknown, scale: {}) => betterGet(scale, n, n);
+const getValue = (value: unknown, scale: {}, props: Props) =>
+  betterGet(scale || props.theme, value);
 
 export const createStyleFunction = ({
   properties,

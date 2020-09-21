@@ -14,7 +14,7 @@ export type Props = {
 
 export type SystemConfig = (value: unknown, scale: string, props: Props) => {};
 
-type Transform = (a: unknown, scale: {}, props?: Props) => unknown;
+type Transform = (a: unknown, scale: {}, props: Props) => unknown;
 
 export type PropertyConfig = {
   properties?: Array<string>;

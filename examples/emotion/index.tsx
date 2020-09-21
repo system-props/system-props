@@ -3,7 +3,8 @@ import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { createSystem, compose } from '../../src';
-import styled, { ThemeProvider } from 'styled-components';
+import styled from '@emotion/styled';
+import { ThemeProvider } from 'emotion-theming';
 
 const theme = {
   breakpoints: ['42em', '52em', '60em'],

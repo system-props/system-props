@@ -28,36 +28,29 @@ export const get = (
   return result;
 };
 
-const parserCache = {};
-function getParseableValues(object: Theme, str: string) {
+function getParseableValues(theme: Theme, str: string) {
   const results = str.match(/\$(\S*)/gi);
+  const values: { [x: string]: string } = {};
+
   if (!results) {
-    return parserCache;
+    return values;
   }
 
   for (const result of results) {
-    // @ts-ignore
-    if (parserCache[result]) {
-      continue;
-    }
     const [, path] = result.split('$');
-    // @ts-ignore
-    parserCache[result] = get(object, path);
+    console.log(path, theme);
+    values[result] = get(theme, path);
   }
 
-  return parserCache;
+  return values;
 }
 
-export const systemValueParser = (
-  object: Theme,
-  value: string
-  // defaultValue?: unknown
-) => {
-  const parsedMap = getParseableValues(object, value);
+export const systemValueParser = (theme: Theme, value: string) => {
+  console.log(theme);
+  const parsedMap = getParseableValues(theme, value);
 
   let newString = value;
   for (let systemValue in parsedMap) {
-    // @ts-ignore
     const replacement = parsedMap[systemValue];
     newString = newString.replace(systemValue, replacement);
   }
@@ -66,7 +59,7 @@ export const systemValueParser = (
 };
 
 export const betterGet = (
-  object: Theme,
+  theme: Theme,
   value?: unknown,
   defaultValue?: unknown,
   undef?: undefined
@@ -74,9 +67,9 @@ export const betterGet = (
   let result;
 
   if (typeof value === 'string' && value.includes('$')) {
-    result = systemValueParser(object, value);
+    result = systemValueParser(theme, value);
   } else {
-    result = get(object, value);
+    result = get(theme, value);
   }
 
   return result === undef ? defaultValue : result;

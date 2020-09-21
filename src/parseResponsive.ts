@@ -27,12 +27,8 @@ export const parseResponsiveStyle = ({
     // @ts-ignore
     const style: SystemConfig = systemConfig(value, scale, props);
     if (!media) {
-      // styles = mergeObj(styles, style);
       styles = { ...styles, ...style };
     } else {
-      // styles = mergeObj(styles, {
-      //   [media]: mergeObj(styles[media], style),
-      // });
       styles = {
         ...styles,
         [media]: {
@@ -76,7 +72,6 @@ export const parseResponsiveObject = ({
         : valueAtQuery;
     const style = systemConfig(value, scale, props);
     if (!breakpoint) {
-      // styles = mergeObj(styles, style);
       styles = { ...styles, ...style };
     } else {
       const media = createMediaQuery(breakpoint);
@@ -88,9 +83,6 @@ export const parseResponsiveObject = ({
           ...style,
         },
       };
-      // styles = mergeObj(styles, {
-      //   [media]: mergeObj(styles[media], style),
-      // });
     }
   }
   return styles;

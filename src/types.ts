@@ -7,6 +7,10 @@ export interface Theme {
   breakpoints: Breakpoints;
 }
 
+export interface SomeObject {
+  [x: string]: SomeObject | string | number | Function;
+}
+
 export type Props = {
   theme: Theme;
   [x: string]: any;
@@ -34,4 +38,7 @@ export interface Parser {
   };
   config: Config;
   propNames: string[];
+  cache: {
+    media?: string[];
+  };
 }

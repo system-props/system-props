@@ -6,9 +6,13 @@ const collator = new Intl.Collator(undefined, {
   sensitivity: 'base',
 });
 
-// sort object-value responsive styles
-export const sort = (obj: { [x: string]: unknown }) => {
-  const next: { [x: string]: unknown } = {};
+interface SomeObject {
+  [x: string]: unknown;
+}
+
+// Array.sort an object
+export const sort = (obj: SomeObject) => {
+  const next: SomeObject = {};
   Object.keys(obj)
     .sort((a, b) => collator.compare(a, b))
     .forEach(key => {

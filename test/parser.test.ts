@@ -1,4 +1,4 @@
-import { createSystem } from '../createSystem';
+import { createSystem } from '../src/createSystem';
 
 const theme = {
   colors: {

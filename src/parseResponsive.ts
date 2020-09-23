@@ -1,4 +1,4 @@
-import { SystemConfig, Props, BreakpointsObject } from './types';
+import { SomeObject, SystemConfig, BreakpointsObject } from './types';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 
@@ -13,7 +13,7 @@ export const parseResponsiveStyle = ({
   systemConfig: SystemConfig;
   scale: string;
   propValue: Array<unknown>;
-  props: Props;
+  props: SomeObject;
 }) => {
   let styles = {};
   propValue.slice(0, mediaQueries.length).forEach((valueAtQuery, i) => {
@@ -53,7 +53,7 @@ export const parseResponsiveObject = ({
   systemConfig: SystemConfig;
   scale: string;
   propValue: { [x: string]: string | number | (({}) => string | number) };
-  props: Props;
+  props: SomeObject;
 }) => {
   let styles = {};
   for (const key in propValue) {
@@ -70,6 +70,7 @@ export const parseResponsiveObject = ({
       typeof valueAtQuery === 'function'
         ? valueAtQuery(props.theme)
         : valueAtQuery;
+    // @ts-ignore
     const style = systemConfig(value, scale, props);
     if (!breakpoint) {
       styles = { ...styles, ...style };

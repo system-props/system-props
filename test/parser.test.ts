@@ -186,7 +186,7 @@ test.skip('uses dynamically changed breakpoints', () => {
 //   );
 // });
 
-test('parses raw function values', () => {
+test.only('parses raw function values', () => {
   // flush cache from previous tests
   const styles = parser({
     theme: { ...theme, disableStyledSystemCache: true },

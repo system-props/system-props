@@ -1,8 +1,9 @@
 import { betterGet } from './get';
 import { Props, PropertyConfig, SystemConfig } from './types';
 
-const getValue = (value: unknown, scale: {}, props: Props) =>
-  betterGet(scale || props.theme, value);
+const getValue = (value: unknown, scale: {}) => {
+  return betterGet(scale, value, value);
+};
 
 export const createStyleFunction = ({
   properties,
@@ -13,19 +14,16 @@ export const createStyleFunction = ({
 }: PropertyConfig): SystemConfig => {
   const _properties = properties || [property];
 
-  const systemConfig: SystemConfig = (
-    value: unknown,
-    scale: string,
-    props: Props
-  ) => {
-    const result = {};
+  const systemConfig = (value: unknown, scale: string, props: Props) => {
+    const result: { [key: string]: unknown } = {};
     const n = transform(value, scale, props);
     if (n === null) {
       return result;
     }
     _properties.forEach(prop => {
-      // @ts-ignore
-      result[prop] = n;
+      if (prop) {
+        result[prop] = n;
+      }
     });
     return result;
   };

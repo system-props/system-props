@@ -222,7 +222,7 @@ test('skips null values in arrays', () => {
 //   expect(b).toEqual({ width: '100%' });
 // });
 
-test('parser configs can be composed manually', () => {
+test.only('parser configs can be composed manually', () => {
   const system = createSystem();
   const color = system({ color: true, backgroundColor: true });
   const layout = system({ width: true, height: true });

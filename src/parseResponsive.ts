@@ -9,7 +9,7 @@ export const parseResponsiveStyle = ({
   propValue,
   props,
 }: {
-  mediaQueries: Array<string>;
+  mediaQueries: (string | null)[];
   systemConfig: SystemConfig;
   scale: string;
   propValue: Array<unknown>;
@@ -26,6 +26,7 @@ export const parseResponsiveStyle = ({
     const media = mediaQueries[i];
     // @ts-ignore
     const style: SystemConfig = systemConfig(value, scale, props);
+
     if (!media) {
       styles = { ...styles, ...style };
     } else {

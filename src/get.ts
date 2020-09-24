@@ -38,7 +38,6 @@ function getParseableValues(theme: Theme, str: string) {
 
   for (const result of results) {
     const [, path] = result.split('$');
-    console.log(path, theme);
     values[result] = get(theme, path);
   }
 

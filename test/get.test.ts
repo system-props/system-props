@@ -32,24 +32,6 @@ test('returns a $ prefixed value', () => {
   expect(a).toBe('1px solid #0cf');
 });
 
-test('caches parsed $ values', () => {
-  const a = systemValueParser(
-    {
-      borderWidths: {
-        base: 'foo',
-      },
-      colors: {
-        blue: {
-          10: 'bar',
-          20: 'baz',
-        },
-      },
-    },
-    '$borderWidths.base solid $colors.blue.10'
-  );
-  expect(a).toBe('1px solid #0cf');
-});
-
 test('supports fallback values', () => {
   const a = get({}, 'hi', 'nope');
   expect(a).toBe('nope');

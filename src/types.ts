@@ -1,5 +1,5 @@
 export type BreakpointsObject = { [x: string]: string };
-export type BreakpointsArray = string[] | number[];
+export type BreakpointsArray = string[];
 export type Breakpoints = BreakpointsObject | BreakpointsArray;
 
 export interface Theme {
@@ -16,19 +16,23 @@ export type Props = {
   [x: string]: any;
 };
 
-export type SystemConfig = (value: unknown, scale: string, props: Props) => {};
+export interface SystemConfig {
+  (value: unknown, scale: string, props: Props): {};
+  scale?: 'string';
+  defaultScale?: unknown;
+}
 
 type Transform = (a: unknown, scale: {}, props: Props) => unknown;
 
 export type PropertyConfig = {
-  properties?: Array<string>;
+  properties?: string[];
   property?: string;
   scale?: string;
   defaultScale?: Array<unknown>;
   transform?: Transform;
 };
 
-export interface Config {
+export interface PropConfigCollection {
   [x: string]: true | PropertyConfig;
 }
 
@@ -36,9 +40,9 @@ export interface Parser {
   (props: Props): {
     [x: string]: unknown;
   };
-  config: Config;
+  config: PropConfigCollection;
   propNames: string[];
   cache: {
-    media?: string[];
+    media?: (string | null)[];
   };
 }

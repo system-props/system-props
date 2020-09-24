@@ -4,8 +4,8 @@ import { betterGet as get } from './get';
 import {
   Breakpoints,
   SystemConfig,
-  Config,
-  // BreakpointsObject,
+  PropConfigCollection,
+  BreakpointsObject,
   Props,
   Parser,
   SomeObject,
@@ -15,7 +15,7 @@ import { merge } from './merge';
 
 interface Cache {
   breakpoints?: Breakpoints;
-  media?: Array<string>;
+  media?: (string | null)[];
 }
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
@@ -25,12 +25,11 @@ function parseBreakpoints(breakpoints: Breakpoints) {
   if (!Array.isArray(breakpoints)) {
     bps = Object.values(breakpoints);
   }
-  // @ts-ignore
-  return bps.map((str: string) => createMediaQuery(str));
+  return (bps as string[]).map(createMediaQuery);
 }
 
 export const createParser = (
-  config: Config,
+  config: { [key: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {}
 ): Parser => {
   const cache: Cache = {};
@@ -38,16 +37,15 @@ export const createParser = (
   const parse = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
     let shouldSort = false;
-    const isCacheDisabled = props?.theme?.disableStyledSystemCache;
+    const isCacheDisabled = Boolean(props?.theme?.disableStyledSystemCache);
 
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
+      // console.log({ config, systemConfig });
       let propValue: any = obj[key];
       const scale = get(
         props.theme,
-        // @ts-ignore
         systemConfig.scale,
-        // @ts-ignore
         systemConfig.defaultScale
       );
 
@@ -58,8 +56,11 @@ export const createParser = (
       }
 
       if (typeof propValue === 'object') {
+        cache.breakpoints =
+          (!isCacheDisabled && cache.breakpoints) || props.theme.breakpoints;
+
         if (Array.isArray(propValue)) {
-          if (typeof props.theme.breakpoints === 'undefined') {
+          if (typeof cache.breakpoints === 'undefined') {
             throw new Error(
               'The system props parser could not find a `breakpoints` property in the theme object, which is required for responsive styles to work. Make sure that the theme object has a breakpoints property.'
             );
@@ -67,12 +68,11 @@ export const createParser = (
 
           cache.media = (!isCacheDisabled && cache.media) || [
             null,
-            ...parseBreakpoints(props.theme.breakpoints),
+            ...parseBreakpoints(cache.breakpoints),
           ];
 
           return parseResponsiveStyle({
             mediaQueries: cache.media,
-            // @ts-ignore
             systemConfig,
             scale,
             propValue,
@@ -82,10 +82,9 @@ export const createParser = (
 
         if (propValue !== null) {
           shouldSort = true;
-          const bp = props.breakpoints;
+          const bp = cache.breakpoints as BreakpointsObject;
           return parseResponsiveObject({
             breakpoints: bp,
-            // @ts-ignore
             systemConfig,
             scale,
             propValue,
@@ -94,7 +93,6 @@ export const createParser = (
         }
       }
 
-      // @ts-ignore
       return systemConfig(propValue, scale, props);
     };
 
@@ -104,22 +102,17 @@ export const createParser = (
         // _hover -> '&:hover'
         const pseudoSelector = pseudoSelectors[key];
         const pseudoStyles: SomeObject = props[key];
-        // @ts-ignore
         for (const pseudoStyleKey in pseudoStyles) {
-          // Object.assign(
-          //   styles[pseudoSelector],
-          //   parseEntry(pseudoStyles, pseudoStyleKey)
-          // );
           styles[pseudoSelector] = {
-            // @ts-ignore
-            ...styles[pseudoSelector],
+            ...(styles[pseudoSelector] as object),
             ...parseEntry(pseudoStyles, pseudoStyleKey),
           };
 
           // sort object-based responsive styles
           if (shouldSort) {
-            // @ts-ignore
-            styles[pseudoSelectors[key]] = sort(styles[pseudoSelectors[key]]);
+            styles[pseudoSelectors[key]] = sort(
+              styles[pseudoSelectors[key]] as SomeObject
+            );
             shouldSort = false;
           }
         }
@@ -151,12 +144,11 @@ export const createParser = (
   const keys = Object.keys(config).filter(k => k !== 'config');
   if (keys.length > 1) {
     keys.forEach(key => {
-      // Object.assign(parse, { [key]: createParser({ [key]: config[key] }) });
-      // @ts-ignore
-      parse[key] = createParser({ [key]: config[key] });
+      Object.assign(parse, { [key]: createParser({ [key]: config[key] }) });
     });
   }
 
+  // @ts-ignore
   return parse;
 };
 
@@ -165,7 +157,7 @@ export const createSystem = ({
 }: {
   pseudoSelectors?: { [x: string]: string };
 } = {}) => {
-  const system = (args: Config) => {
+  const system = (args: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
     Object.keys(args).forEach(key => {
       const conf = args[key];
@@ -178,13 +170,11 @@ export const createSystem = ({
         return;
       }
       if (typeof conf === 'function') {
-        config[key] = conf;
         return;
       }
       config[key] = createStyleFunction(conf);
     });
 
-    // @ts-ignore
     const parser = createParser(config, pseudoSelectors);
     return parser;
   };

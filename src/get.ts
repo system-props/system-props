@@ -28,9 +28,11 @@ export const get = (
   return result;
 };
 
+const REGEX_$ = /\$(\S*)/gi;
+
 function getParseableValues(theme: Theme, str: string) {
-  const results = str.match(/\$(\S*)/gi);
-  const values: { [x: string]: string } = {};
+  const results = str.match(REGEX_$);
+  let values: { [x: string]: string } | undefined;
 
   if (!results) {
     return values;
@@ -38,7 +40,11 @@ function getParseableValues(theme: Theme, str: string) {
 
   for (const result of results) {
     const [, path] = result.split('$');
-    values[result] = get(theme, path);
+    const found = get(theme, path);
+    if (found) {
+      values = values || {};
+      values[result] = get(theme, path);
+    }
   }
 
   return values;
@@ -46,6 +52,10 @@ function getParseableValues(theme: Theme, str: string) {
 
 export const systemValueParser = (theme: Theme, value: string) => {
   const parsedMap = getParseableValues(theme, value);
+
+  if (!parsedMap) {
+    return;
+  }
 
   let newString = value;
   for (let systemValue in parsedMap) {
@@ -57,17 +67,21 @@ export const systemValueParser = (theme: Theme, value: string) => {
 };
 
 export const betterGet = (
-  theme: Theme,
+  scale: Theme,
   value?: unknown,
   defaultValue?: unknown,
+  theme?: Theme,
   undef?: undefined
 ) => {
   let result;
 
   if (typeof value === 'string' && value.includes('$')) {
-    result = systemValueParser(theme, value);
+    result = systemValueParser(scale, value);
+    if (result === undef && theme) {
+      result = systemValueParser(theme, value);
+    }
   } else {
-    result = get(theme, value);
+    result = get(scale, value);
   }
 
   return result === undef ? defaultValue : result;

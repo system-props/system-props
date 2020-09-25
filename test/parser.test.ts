@@ -105,55 +105,6 @@ test('does *not* use dynamically changed breakpoints', () => {
   });
 });
 
-// Per default, we expect it to be impossible to override breakpoints
-test('Caches lookups, even if theme changes', () => {
-  const styles = parser({
-    theme: {
-      ...theme,
-      colors: { primary: 'tomato', secondary: 'magenta' },
-      breakpoints: ['11em', '22em', '33em'],
-    },
-    fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  });
-  expect(styles).toEqual({
-    color: 'rebeccapurple',
-    fontSize: 4,
-    '@media screen and (min-width: 40em)': {
-      fontSize: 8,
-    },
-    '@media screen and (min-width: 52em)': {
-      fontSize: 16,
-      color: 'papayawhip',
-    },
-  });
-});
-
-// Per default, we expect it to be impossible to override breakpoints
-test('disabling cache allows for new theme', () => {
-  const styles = parser({
-    theme: {
-      ...theme,
-      colors: { primary: 'tomato', secondary: 'magenta' },
-      breakpoints: ['11em', '22em', '33em'],
-      systemPropsId: 'foo',
-    },
-    fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
-  });
-  expect(styles).toEqual({
-    color: 'rebeccapurple',
-    fontSize: 4,
-    '@media screen and (min-width: 40em)': {
-      fontSize: 8,
-    },
-    '@media screen and (min-width: 52em)': {
-      fontSize: 16,
-      color: 'papayawhip',
-    },
-  });
-});
-
 // With caching disabled, we expect it to be possible to change breakpoints
 test.skip('uses dynamically changed breakpoints', () => {
   const firstStyles = parser({

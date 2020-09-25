@@ -28,23 +28,12 @@ export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {}
 ): Parser => {
-  const cache: Cache = { system: {}, systemPropsId: 'system' };
+  const cache: Cache = {};
 
   const parse = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
     let shouldSort = false;
-
-    let isCacheDisabled: boolean;
-    const systemPropsId = get(props.theme, 'systemPropsId', false);
-    if (!systemPropsId) {
-      isCacheDisabled = false;
-    } else if (systemPropsId !== cache.systemPropsId) {
-      isCacheDisabled = true;
-      cache.systemPropsId = systemPropsId;
-      cache.system = {};
-    }
-
-    console.log(cache.system);
+    const isCacheDisabled = Boolean(props.theme?.disableStyledSystemCache);
 
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
@@ -79,7 +68,6 @@ export const createParser = (
           ];
 
           return parseResponsiveStyle({
-            cache,
             mediaQueries: cache.media,
             systemConfig,
             scale,
@@ -92,7 +80,6 @@ export const createParser = (
           shouldSort = true;
           const bp = cache.breakpoints as BreakpointsObject;
           return parseResponsiveObject({
-            cache,
             breakpoints: bp,
             systemConfig,
             scale,
@@ -102,7 +89,7 @@ export const createParser = (
         }
       }
 
-      return systemConfig(propValue, scale, props, cache);
+      return systemConfig(propValue, scale, props);
     };
 
     for (const key in props) {

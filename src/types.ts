@@ -2,9 +2,12 @@ export type BreakpointsObject = { [x: string]: string };
 export type BreakpointsArray = string[];
 export type Breakpoints = BreakpointsObject | BreakpointsArray;
 
+type SystemPropsId = string | boolean;
+
 export interface Theme {
   [x: string]: any;
   breakpoints: Breakpoints;
+  systemPropsId?: SystemPropsId;
 }
 
 export interface SomeObject {
@@ -17,7 +20,7 @@ export type Props = {
 };
 
 export interface SystemConfig {
-  (value: unknown, scale: string, props: Props): {};
+  (value: unknown, scale: string, props: Props, cache: Cache): {};
   scale?: 'string';
   defaultScale?: unknown;
 }
@@ -44,5 +47,14 @@ export interface Parser {
   propNames: string[];
   cache: {
     media?: (string | null)[];
+  };
+}
+
+export interface Cache {
+  systemPropsId: SystemPropsId;
+  breakpoints?: Breakpoints;
+  media?: (string | null)[];
+  system: {
+    [key: string]: unknown;
   };
 }

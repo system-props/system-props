@@ -22,7 +22,7 @@ export interface SystemConfig {
   defaultScale?: unknown;
 }
 
-type Transform = (a: unknown, scale: {}, props: Props) => unknown;
+export type Transform = (a: unknown, scale: {}, props: Props) => unknown;
 
 export type PropertyConfig = {
   properties?: string[];

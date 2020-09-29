@@ -3,13 +3,17 @@ interface Theme {
 }
 
 export const get = (
-  object: Theme,
+  object?: Theme,
   path?: unknown,
   defaultValue?: unknown,
   // Not used, should be undefined
   // To make sure we get a true undefined
   undef?: undefined
 ) => {
+  if (!object) {
+    return defaultValue;
+  }
+
   const route = typeof path === 'string' ? path.split('.') : [path];
 
   // Start with theme, that will get narrowed down
@@ -31,7 +35,11 @@ export const get = (
 
 const REGEX_$ = /\$(\S*)/gi;
 
-function getDollaValues(theme: Theme, str: string) {
+function getDollaValues(theme?: Theme, str?: string, undef?: undefined) {
+  if (!str) {
+    return undef;
+  }
+
   const results = str.match(REGEX_$);
   let values: { [x: string]: string } | undefined;
 
@@ -54,7 +62,15 @@ function getDollaValues(theme: Theme, str: string) {
   return values;
 }
 
-export const systemValueParser = (theme: Theme, value: string) => {
+export const systemValueParser = (
+  theme?: Theme,
+  value?: string,
+  undef?: undefined
+) => {
+  if (!theme || !value) {
+    return undef;
+  }
+
   const parsedMap = getDollaValues(theme, value);
 
   if (!parsedMap) {
@@ -71,7 +87,7 @@ export const systemValueParser = (theme: Theme, value: string) => {
 };
 
 export const betterGet = (
-  scale: Theme,
+  scale?: Theme,
   value?: unknown,
   defaultValue?: unknown,
   undef?: undefined

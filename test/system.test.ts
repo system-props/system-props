@@ -151,6 +151,53 @@ test('gets values from theme', () => {
   });
 });
 
+test('if strict, only allows theme values', () => {
+  const system = createSystem({ strict: true });
+  const parser = system({
+    mx: {
+      properties: ['marginLeft', 'marginRight'],
+      scale: 'space',
+    },
+    color: {
+      property: 'color',
+      scale: 'colors',
+    },
+    bg: {
+      property: 'backgroundColor',
+      scale: 'colors',
+    },
+  });
+  const style = parser({
+    theme: {
+      breakpoints,
+      colors: {
+        primary: 'tomato',
+      },
+      space: [0, 6, 12, 24],
+    },
+    mx: ['0', '1', '2', '3', '4'],
+    color: ['primary', 'black'],
+    bg: 'blue',
+  });
+  expect(style).toEqual({
+    color: 'tomato',
+    marginLeft: 0,
+    marginRight: 0,
+    '@media screen and (min-width: 40em)': {
+      marginLeft: 6,
+      marginRight: 6,
+    },
+    '@media screen and (min-width: 52em)': {
+      marginLeft: 12,
+      marginRight: 12,
+    },
+    '@media screen and (min-width: 64em)': {
+      marginLeft: 24,
+      marginRight: 24,
+    },
+  });
+});
+
 test('gets 0 index values from theme', () => {
   const system = createSystem();
   const parser = system({

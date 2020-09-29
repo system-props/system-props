@@ -5,7 +5,7 @@ import {
   Breakpoints,
   SystemConfig,
   PropConfigCollection,
-  BreakpointsObject,
+  // BreakpointsObject,
   Props,
   Parser,
   SomeObject,
@@ -26,10 +26,11 @@ function parseBreakpoints(breakpoints: Breakpoints) {
 
 export const createParser = (
   config: { [x: string]: SystemConfig },
-  pseudoSelectors: { [x: string]: string } = {}
+  pseudoSelectors: { [x: string]: string } = {},
+  strict: boolean = false
 ): Parser => {
   // console.log(config);
-  const cache: Cache = {};
+  const cache: Cache = { strict };
 
   const parse: Parser = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
@@ -68,7 +69,7 @@ export const createParser = (
           ];
 
           return parseResponsiveStyle({
-            mediaQueries: cache.media,
+            cache,
             systemConfig,
             scale,
             propValue,
@@ -78,9 +79,9 @@ export const createParser = (
 
         if (propValue !== null) {
           shouldSort = true;
-          const bp = cache.breakpoints as BreakpointsObject;
+          // const bp = cache.breakpoints as BreakpointsObject;
           return parseResponsiveObject({
-            breakpoints: bp,
+            cache,
             systemConfig,
             scale,
             propValue,
@@ -89,7 +90,7 @@ export const createParser = (
         }
       }
 
-      return systemConfig(propValue, scale, props);
+      return systemConfig(propValue, scale, props, cache);
     };
 
     for (const key in props) {
@@ -147,8 +148,10 @@ export const createParser = (
 
 export const createSystem = ({
   pseudoSelectors,
+  strict = false,
 }: {
   pseudoSelectors?: { [x: string]: string };
+  strict?: boolean;
 } = {}) => {
   const system = (args: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
@@ -168,7 +171,7 @@ export const createSystem = ({
       config[key] = createStyleFunction(conf);
     });
 
-    const parser = createParser(config, pseudoSelectors);
+    const parser = createParser(config, pseudoSelectors, strict);
     return parser;
   };
 

@@ -17,12 +17,18 @@ export type Props = {
 };
 
 export interface SystemConfig {
-  (value: unknown, scale: string, props: Props): {};
+  (value: unknown, scale: string, props: Props, cache: Cache): {};
   scale?: 'string';
   defaultScale?: unknown;
 }
 
-export type Transform = (a: unknown, scale: {}, props: Props) => unknown;
+export type Transform = (
+  a: unknown,
+  scale: {},
+  props: Props,
+  strict: boolean,
+  undef?: undefined
+) => unknown;
 
 export type PropertyConfig = {
   properties?: string[];
@@ -51,4 +57,5 @@ export interface Parser {
 export interface Cache {
   breakpoints?: Breakpoints;
   media?: (string | null)[];
+  strict: boolean;
 }

@@ -1,21 +1,28 @@
-import { SomeObject, SystemConfig, BreakpointsObject } from './types';
+import {
+  Cache,
+  SomeObject,
+  SystemConfig,
+  BreakpointsObject,
+  BreakpointsArray,
+} from './types';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 
 export const parseResponsiveStyle = ({
-  mediaQueries,
+  cache,
   systemConfig,
   scale,
   propValue,
   props,
 }: {
-  mediaQueries: (string | null)[];
+  cache: Cache;
   systemConfig: SystemConfig;
   scale: string;
   propValue: Array<unknown>;
   props: SomeObject;
 }) => {
   let styles = {};
+  const mediaQueries = cache.media as BreakpointsArray;
   propValue.slice(0, mediaQueries.length).forEach((valueAtQuery, i) => {
     // e.g. <Box color={[theme => theme.colors.primary, theme => theme.colors.secondary]} />
     const value =
@@ -25,7 +32,7 @@ export const parseResponsiveStyle = ({
 
     const media = mediaQueries[i];
     // @ts-ignore
-    const style: SystemConfig = systemConfig(value, scale, props);
+    const style: SystemConfig = systemConfig(value, scale, props, cache);
 
     if (!media) {
       styles = { ...styles, ...style };
@@ -44,18 +51,19 @@ export const parseResponsiveStyle = ({
 };
 
 export const parseResponsiveObject = ({
-  breakpoints,
+  cache,
   systemConfig,
   scale,
   propValue,
   props,
 }: {
-  breakpoints: BreakpointsObject;
+  cache: Cache;
   systemConfig: SystemConfig;
   scale: string;
   propValue: { [x: string]: string | number | (({}) => string | number) };
   props: SomeObject;
 }) => {
+  const breakpoints = cache.breakpoints as BreakpointsObject;
   let styles = {};
   for (const key in propValue) {
     const breakpoint = breakpoints[key];
@@ -72,7 +80,7 @@ export const parseResponsiveObject = ({
         ? valueAtQuery(props.theme)
         : valueAtQuery;
     // @ts-ignore
-    const style = systemConfig(value, scale, props);
+    const style = systemConfig(value, scale, props, cache);
     if (!breakpoint) {
       styles = { ...styles, ...style };
     } else {

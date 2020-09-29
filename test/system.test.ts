@@ -44,7 +44,7 @@ test('returns a style parser', () => {
   });
 });
 
-test.only('merges multiple responsive styles', () => {
+test('merges multiple responsive styles', () => {
   const system = createSystem();
   const parser = system({
     margin: true,
@@ -59,21 +59,21 @@ test.only('merges multiple responsive styles', () => {
         primary: 'rebeccapurple',
       },
     },
-    margin: ['$0', '$4', '$8'],
+    margin: [0, 4, 8],
     padding: ['16px', '32px', '64px'],
     width: ['100%', '50%'],
   });
   expect(styles).toEqual({
-    margin: '0px',
+    margin: 0,
     padding: '16px',
     width: '100%',
     '@media screen and (min-width: 40em)': {
-      margin: '32px',
+      margin: 4,
       padding: '32px',
       width: '50%',
     },
     '@media screen and (min-width: 52em)': {
-      margin: '8px',
+      margin: 8,
       padding: '64px',
     },
   });
@@ -128,8 +128,8 @@ test('gets values from theme', () => {
       },
       space: [0, 6, 12, 24, 48, 96],
     },
-    mx: ['$0', '$1', '$2', '$3'],
-    color: ['$primary', 'black'],
+    mx: ['0', '1', '2', '3'],
+    color: ['primary', 'black'],
   });
   expect(style).toEqual({
     color: 'tomato',
@@ -164,7 +164,7 @@ test('gets 0 index values from theme', () => {
       breakpoints,
       sizes: [24, 48],
     },
-    width: '$0',
+    width: '0',
   });
   expect(style).toEqual({ width: 24 });
 });
@@ -221,24 +221,6 @@ test('skips null values in arrays', () => {
 //   expect(a).toEqual({ color: 'tomato' });
 //   expect(b).toEqual({ width: '100%' });
 // });
-
-test('parser configs can be composed manually', () => {
-  const system = createSystem();
-  const color = system({ color: true, backgroundColor: true });
-  const layout = system({ width: true, height: true });
-  const composed = system({ ...color.config, ...layout.config });
-  const style = composed({
-    theme: { breakpoints: [] },
-    color: 'tomato',
-    backgroundColor: 'black',
-    width: '100%',
-  });
-  expect(style).toEqual({
-    color: 'tomato',
-    backgroundColor: 'black',
-    width: '100%',
-  });
-});
 
 test('supports non-array breakpoints object', () => {
   const system = createSystem();

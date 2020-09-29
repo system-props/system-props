@@ -190,15 +190,15 @@ test.skip('uses dynamically changed breakpoints', () => {
 test('parses raw function values', () => {
   // flush cache from previous tests
   const styles = parser({
-    theme: { ...theme, systemPropsId: 'bar' },
-    border(t: any) {
+    theme: { ...theme, systemPropsId: 'bar', disableStyledSystemCache: true },
+    border(t: typeof theme) {
       return `1px solid ${t.colors.primary}`;
     },
-    fontSize(t: any) {
+    fontSize(t: typeof theme) {
       return [t.fontSize[1], t.fontSize[2], t.fontSize[3]];
     },
     _hover: {
-      color(t: any) {
+      color(t: typeof theme) {
         return t.colors.secondary;
       },
       fontSize: 2,
@@ -223,7 +223,10 @@ test('parses raw function values', () => {
 test('parses raw function values at each breakpoint', () => {
   const styles = parser({
     theme,
-    color: [(t: any) => t.colors.primary, (t: any) => t.colors.secondary],
+    color: [
+      (t: typeof theme) => t.colors.primary,
+      (t: typeof theme) => t.colors.secondary,
+    ],
   });
   expect(styles).toEqual({
     color: 'rebeccapurple',
@@ -234,8 +237,9 @@ test('parses raw function values at each breakpoint', () => {
 
   const stylesObjectBPs = parser({
     theme: {
-      ...themeWithObjectBPs, // flush cache from previous tests
-      systemPropsId: 'pizza',
+      ...themeWithObjectBPs,
+      // flush cache from previous tests
+      disableStyledSystemCache: true,
     },
     color: {
       all: (t: any) => t.colors.primary,

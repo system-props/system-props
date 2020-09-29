@@ -40,10 +40,11 @@ export interface Parser {
   (props: Props): {
     [x: string]: unknown;
   };
-  config: PropConfigCollection;
+  config: { [key: string]: SystemConfig };
   propNames: string[];
   cache: {
     media?: (string | null)[];
+    breakpoints?: Breakpoints;
   };
 }
 

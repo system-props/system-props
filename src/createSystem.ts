@@ -28,9 +28,10 @@ export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {}
 ): Parser => {
+  // console.log(config);
   const cache: Cache = {};
 
-  const parse = (props: Props) => {
+  const parse: Parser = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
     let shouldSort = false;
     const isCacheDisabled = Boolean(props.theme?.disableStyledSystemCache);
@@ -141,7 +142,6 @@ export const createParser = (
     });
   }
 
-  // @ts-ignore
   return parse;
 };
 

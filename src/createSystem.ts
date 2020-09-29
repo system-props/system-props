@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { betterGet as get } from './get';
+import { get } from './get';
 import {
   Breakpoints,
   SystemConfig,
@@ -37,7 +37,6 @@ export const createParser = (
 
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
-      // console.log({ config, systemConfig });
       let propValue: any = obj[key];
       const scale = get(
         props.theme,
@@ -130,8 +129,6 @@ export const createParser = (
 
     return styles;
   };
-
-  // Object.assign(parse, { config, cache, propNames: Object.keys(config) });
 
   parse.config = config;
   parse.propNames = Object.keys(config);

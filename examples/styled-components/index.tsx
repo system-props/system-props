@@ -7,7 +7,7 @@ import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
   breakpoints: ['42em', '52em', '60em'],
-  space: [0, 4, 8, 12, 16, 20, 24, 28, 32],
+  space: ['0px', '4px', '8px', '12px', '16px', '20px', '24px', '28px', '32px'],
   colors: {
     gray: {
       10: '#333',
@@ -65,10 +65,13 @@ const App = () => {
       <Box
         color="$blue.30"
         bg="$gray.30"
-        padding={2}
+        padding="$2"
         border="1px solid $gray.10"
       >
         Hello
+      </Box>
+      <Box bg="$gray.20" margin="-$2" padding="$2">
+        Welcome
       </Box>
     </ThemeProvider>
   );

@@ -19,32 +19,32 @@ test('returns a style parser', () => {
   const styles = parser({
     theme: {
       breakpoints,
-      space: [0, 4, 8, 16, 32],
+      space: ['0px', '4px', '8px', '16px', '32px'],
       colors: {
         primary: 'rebeccapurple',
       },
     },
     color: 'tomato',
-    backgroundColor: 'primary',
-    mx: [2, 3, 4],
+    backgroundColor: '$primary',
+    mx: ['$2', '$3', '$4'],
   });
   expect(styles).toEqual({
     color: 'tomato',
     backgroundColor: 'rebeccapurple',
-    marginLeft: 8,
-    marginRight: 8,
+    marginLeft: '8px',
+    marginRight: '8px',
     '@media screen and (min-width: 40em)': {
-      marginLeft: 16,
-      marginRight: 16,
+      marginLeft: '16px',
+      marginRight: '16px',
     },
     '@media screen and (min-width: 52em)': {
-      marginLeft: 32,
-      marginRight: 32,
+      marginLeft: '32px',
+      marginRight: '32px',
     },
   });
 });
 
-test('merges multiple responsive styles', () => {
+test.only('merges multiple responsive styles', () => {
   const system = createSystem();
   const parser = system({
     margin: true,
@@ -54,27 +54,27 @@ test('merges multiple responsive styles', () => {
   const styles = parser({
     theme: {
       breakpoints,
-      space: [0, 4, 8, 16, 32],
+      space: ['0px', '4px', '8px', '16px', '32px'],
       colors: {
         primary: 'rebeccapurple',
       },
     },
-    margin: [0, 4, 8],
-    padding: [16, 32, 64],
+    margin: ['$0', '$4', '$8'],
+    padding: ['16px', '32px', '64px'],
     width: ['100%', '50%'],
   });
   expect(styles).toEqual({
-    margin: 0,
-    padding: 16,
+    margin: '0px',
+    padding: '16px',
     width: '100%',
     '@media screen and (min-width: 40em)': {
-      margin: 4,
-      padding: 32,
+      margin: '32px',
+      padding: '32px',
       width: '50%',
     },
     '@media screen and (min-width: 52em)': {
-      margin: 8,
-      padding: 64,
+      margin: '8px',
+      padding: '64px',
     },
   });
 });
@@ -128,8 +128,8 @@ test('gets values from theme', () => {
       },
       space: [0, 6, 12, 24, 48, 96],
     },
-    mx: [0, 1, 2, 3],
-    color: ['primary', 'black'],
+    mx: ['$0', '$1', '$2', '$3'],
+    color: ['$primary', 'black'],
   });
   expect(style).toEqual({
     color: 'tomato',
@@ -164,7 +164,7 @@ test('gets 0 index values from theme', () => {
       breakpoints,
       sizes: [24, 48],
     },
-    width: 0,
+    width: '$0',
   });
   expect(style).toEqual({ width: 24 });
 });
@@ -222,7 +222,7 @@ test('skips null values in arrays', () => {
 //   expect(b).toEqual({ width: '100%' });
 // });
 
-test.only('parser configs can be composed manually', () => {
+test('parser configs can be composed manually', () => {
   const system = createSystem();
   const color = system({ color: true, backgroundColor: true });
   const layout = system({ width: true, height: true });

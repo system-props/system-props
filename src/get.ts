@@ -5,6 +5,7 @@ interface Theme {
 export const get = (
   object: Theme,
   path?: unknown,
+  defaultValue?: unknown,
   // Not used, should be undefined
   // To make sure we get a true undefined
   undef?: undefined
@@ -25,12 +26,12 @@ export const get = (
     }
   }
 
-  return result;
+  return result === undef ? defaultValue : result;
 };
 
 const REGEX_$ = /\$(\S*)/gi;
 
-function getParseableValues(theme: Theme, str: string) {
+function getDollaValues(theme: Theme, str: string) {
   const results = str.match(REGEX_$);
   let values: { [x: string]: string } | undefined;
 
@@ -40,10 +41,13 @@ function getParseableValues(theme: Theme, str: string) {
 
   for (const result of results) {
     const [, path] = result.split('$');
-    const found = get(theme, path);
-    if (found) {
-      values = values || {};
-      values[result] = get(theme, path);
+    // If we haven't already get'd the path
+    if (!values?.[result]) {
+      const found = get(theme, path);
+      if (found) {
+        values = values || {};
+        values[result] = get(theme, path);
+      }
     }
   }
 
@@ -51,7 +55,7 @@ function getParseableValues(theme: Theme, str: string) {
 }
 
 export const systemValueParser = (theme: Theme, value: string) => {
-  const parsedMap = getParseableValues(theme, value);
+  const parsedMap = getDollaValues(theme, value);
 
   if (!parsedMap) {
     return;
@@ -70,16 +74,12 @@ export const betterGet = (
   scale: Theme,
   value?: unknown,
   defaultValue?: unknown,
-  theme?: Theme,
   undef?: undefined
 ) => {
   let result;
 
   if (typeof value === 'string' && value.includes('$')) {
     result = systemValueParser(scale, value);
-    if (result === undef && theme) {
-      result = systemValueParser(theme, value);
-    }
   } else {
     result = get(scale, value);
   }

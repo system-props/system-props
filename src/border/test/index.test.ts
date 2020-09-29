@@ -48,6 +48,7 @@ test('returns individual border styles', () => {
     borderLeftWidth: 'thin',
     borderLeftColor: 'primary',
     borderLeftStyle: 'thick',
+    border: 'thin thick primary',
   });
   expect(style).toEqual({
     borderTopColor: 'red',
@@ -66,6 +67,7 @@ test('returns individual border styles', () => {
     borderLeftColor: 'red',
     borderLeftWidth: 1,
     borderLeftStyle: 'solid',
+    border: '1 solid red',
   });
 });
 

@@ -48,10 +48,7 @@ export interface Parser {
   };
   config: { [key: string]: SystemConfig };
   propNames: string[];
-  cache: {
-    media?: (string | null)[];
-    breakpoints?: Breakpoints;
-  };
+  cache: Cache;
 }
 
 export interface Cache {

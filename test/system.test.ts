@@ -225,12 +225,6 @@ test('ignores null values', () => {
   expect(style).toEqual({});
 });
 
-// test('returns a noop function with no arguments', () => {
-//   const system = createSystem({ breakpoints });
-//   const parser = system();
-//   expect(typeof parser).toBe('function');
-// });
-
 test('skips null values in arrays', () => {
   const system = createSystem();
   const parser = system({
@@ -252,22 +246,27 @@ test('skips null values in arrays', () => {
   });
 });
 
-// test('includes single property functions', () => {
-//   const system = createSystem({ breakpoints });
-//   const parser = system({
-//     color: true,
-//     backgroundColor: true,
-//     width: true,
-//   });
-//   const a = parser.color({ color: 'tomato', backgroundColor: 'nope' });
-//   const b = parser.width({
-//     width: '100%',
-//     color: 'tomato',
-//     backgroundColor: 'nope',
-//   });
-//   expect(a).toEqual({ color: 'tomato' });
-//   expect(b).toEqual({ width: '100%' });
-// });
+test('includes single property functions', () => {
+  const system = createSystem();
+  const parser = system({
+    color: true,
+    backgroundColor: true,
+    width: true,
+  });
+  // Struggling to get this typed correctly
+  // We apply the SystemConfig to the Parser at every key in the parser,
+  // but not sure how to type it so TS knows about it
+  // @ts-ignore
+  const a = parser.color({ color: 'tomato', backgroundColor: 'nope' });
+  // @ts-ignore
+  const b = parser.width({
+    width: '100%',
+    color: 'tomato',
+    backgroundColor: 'nope',
+  });
+  expect(a).toEqual({ color: 'tomato' });
+  expect(b).toEqual({ width: '100%' });
+});
 
 test('supports non-array breakpoints object', () => {
   const system = createSystem();

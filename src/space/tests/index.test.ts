@@ -111,12 +111,12 @@ test('returns values from theme object', () => {
 
 test('pl prop sets paddingLeft', () => {
   const styles = themedParser({ pl: 2 });
-  expect(styles).toEqual({ paddingLeft: 8 });
+  expect(styles).toEqual({ paddingLeft: '8px' });
 });
 
 test('pl prop sets paddingLeft 0', () => {
   const styles = themedParser({ pl: 0 });
-  expect(styles).toEqual({ paddingLeft: 0 });
+  expect(styles).toEqual({ paddingLeft: '0px' });
 });
 
 test('px prop overrides pl prop', () => {
@@ -124,7 +124,7 @@ test('px prop overrides pl prop', () => {
     pl: 1,
     px: 2,
   });
-  expect(styles).toEqual({ paddingLeft: 8, paddingRight: 8 });
+  expect(styles).toEqual({ paddingLeft: '8px', paddingRight: '8px' });
 });
 
 test('py prop overrides pb prop', () => {
@@ -132,7 +132,7 @@ test('py prop overrides pb prop', () => {
     pb: 1,
     py: 2,
   });
-  expect(styles).toEqual({ paddingTop: 8, paddingBottom: 8 });
+  expect(styles).toEqual({ paddingTop: '8px', paddingBottom: '8px' });
 });
 
 test('mx prop overrides mr prop', () => {
@@ -140,7 +140,7 @@ test('mx prop overrides mr prop', () => {
     mr: 1,
     mx: 2,
   });
-  expect(styles).toEqual({ marginLeft: 8, marginRight: 8 });
+  expect(styles).toEqual({ marginLeft: '8px', marginRight: '8px' });
 });
 
 test('my prop overrides mt prop', () => {
@@ -148,7 +148,7 @@ test('my prop overrides mt prop', () => {
     mt: 1,
     my: 2,
   });
-  expect(styles).toEqual({ marginTop: 8, marginBottom: 8 });
+  expect(styles).toEqual({ marginTop: '8px', marginBottom: '8px' });
 });
 
 test('margin overrides m prop', () => {
@@ -156,7 +156,7 @@ test('margin overrides m prop', () => {
     m: 1,
     margin: 2,
   });
-  expect(styles).toEqual({ margin: 8 });
+  expect(styles).toEqual({ margin: '8px' });
 });
 
 test('handles margin with no theme', () => {
@@ -178,12 +178,12 @@ test('handles overriding margin/padding shortcut props', () => {
     pt: 2,
   });
   expect(styles).toEqual({
-    margin: 32,
-    marginLeft: 16,
-    marginRight: 8,
-    padding: 32,
-    paddingBottom: 16,
-    paddingTop: 8,
+    margin: '16px',
+    marginLeft: '12px',
+    marginRight: '8px',
+    padding: '16px',
+    paddingBottom: '12px',
+    paddingTop: '8px',
   });
 });
 
@@ -197,10 +197,10 @@ test('single directions override axes', () => {
     pr: 2,
   });
   expect(styles).toEqual({
-    marginLeft: 4,
-    marginRight: 8,
-    paddingLeft: 4,
-    paddingRight: 8,
+    marginLeft: '4px',
+    marginRight: '8px',
+    paddingLeft: '4px',
+    paddingRight: '8px',
   });
 });
 
@@ -213,12 +213,12 @@ test('supports object values', () => {
     },
   });
   expect(styles).toEqual({
-    margin: 0,
+    margin: '0px',
     '@media screen and (min-width: 40em)': {
-      margin: 4,
+      margin: '4px',
     },
     '@media screen and (min-width: 52em)': {
-      margin: 8,
+      margin: '8px',
     },
   });
 });
@@ -226,6 +226,7 @@ test('supports object values', () => {
 test('supports non-array breakpoints', () => {
   const theme = {
     disableStyledSystemCache: true,
+    space: ['0px', '4px', '8px', '12px', '16px'],
     breakpoints: {
       small: '40em',
       medium: '52em',
@@ -243,13 +244,13 @@ test('supports non-array breakpoints', () => {
     },
   });
   expect(styles).toEqual({
-    margin: 0,
+    margin: '0px',
     '@media screen and (min-width: 40em)': {
-      margin: 4,
-      padding: 8,
+      margin: '4px',
+      padding: '8px',
     },
     '@media screen and (min-width: 52em)': {
-      margin: 8,
+      margin: '8px',
     },
   });
 });

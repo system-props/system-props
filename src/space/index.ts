@@ -4,7 +4,7 @@ import { PropConfigCollection, Transform, Theme } from '../types';
 const isNumber = (n: string | number): boolean =>
   typeof n === 'number' && !isNaN(n);
 
-const getMargin = (n: string | number, scale: Theme) => {
+const getPosOrNegMargin = (n: string | number, scale: Theme) => {
   if (!isNumber(n)) {
     return betterGet(scale, n, n);
   }
@@ -20,9 +20,9 @@ const getMargin = (n: string | number, scale: Theme) => {
   return value * (isNegative ? -1 : 1);
 };
 
-const getSpace: Transform = (value, _, props) => {
+const getMargin: Transform = (value, _, props) => {
   if (typeof value === 'string' || typeof value === 'number') {
-    const result = getMargin(value, props?.theme?.space);
+    const result = getPosOrNegMargin(value, props?.theme?.space);
     if (result) {
       return result;
     }
@@ -31,7 +31,25 @@ const getSpace: Transform = (value, _, props) => {
     return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
-        return [...acc, getMargin(curr, props?.theme?.space)];
+        return [...acc, getPosOrNegMargin(curr, props?.theme?.space)];
+      }, [])
+      .join(' ');
+  }
+  return value;
+};
+
+const getPadding: Transform = (value, _, props) => {
+  if (typeof value === 'string' || typeof value === 'number') {
+    const result = betterGet(props?.theme?.space, value);
+    if (result) {
+      return result;
+    }
+  }
+  if (typeof value === 'string') {
+    return value
+      .split(' ')
+      .reduce((acc: string[], curr: string) => {
+        return [...acc, betterGet(props?.theme?.space, curr)];
       }, [])
       .join(' ');
   }
@@ -42,37 +60,37 @@ export const margin: PropConfigCollection = {
   margin: {
     property: 'margin',
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginTop: {
     property: 'marginTop',
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginRight: {
     property: 'marginRight',
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginBottom: {
     property: 'marginBottom',
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginLeft: {
     property: 'marginLeft',
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginX: {
     properties: ['marginLeft', 'marginRight'],
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
   marginY: {
     properties: ['marginTop', 'marginBottom'],
     scale: 'space',
-    transform: getSpace,
+    transform: getMargin,
   },
 };
 margin.m = margin.margin;
@@ -87,37 +105,37 @@ export const padding: PropConfigCollection = {
   padding: {
     property: 'padding',
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingTop: {
     property: 'paddingTop',
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingRight: {
     property: 'paddingRight',
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingBottom: {
     property: 'paddingBottom',
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingLeft: {
     property: 'paddingLeft',
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingX: {
     properties: ['paddingLeft', 'paddingRight'],
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
   paddingY: {
     properties: ['paddingTop', 'paddingBottom'],
     scale: 'space',
-    transform: getSpace,
+    transform: getPadding,
   },
 };
 padding.p = padding.padding;

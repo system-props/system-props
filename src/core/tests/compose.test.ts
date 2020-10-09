@@ -1,4 +1,4 @@
-import { createSystem, compose } from '../src/createSystem';
+import { createSystem, compose } from '../createSystem';
 
 const system = createSystem();
 

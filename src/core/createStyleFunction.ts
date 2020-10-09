@@ -1,5 +1,5 @@
 import { betterGet } from './get';
-import { Props, PropertyConfig, SystemConfig, Cache } from './types';
+import { Props, PropertyConfig, SystemConfig, Cache } from '../types';
 
 const getValue = (
   value: unknown,

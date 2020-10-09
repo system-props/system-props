@@ -1,5 +1,5 @@
 import border from '..';
-import { createSystem } from '../..';
+import { createSystem } from '../../core/createSystem';
 
 const system = createSystem();
 

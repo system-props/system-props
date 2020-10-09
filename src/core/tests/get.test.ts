@@ -1,4 +1,4 @@
-import { betterGet, systemValueParser } from '../src/get';
+import { betterGet, systemValueParser } from '../get';
 
 const get = betterGet;
 

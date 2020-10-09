@@ -1,4 +1,4 @@
-import { createSystem } from '../src/createSystem';
+import { createSystem } from '../createSystem';
 
 const breakpoints = [40, 52, 64].map(n => n + 'em');
 

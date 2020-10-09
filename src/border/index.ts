@@ -1,4 +1,4 @@
-import { betterGet } from '../get';
+import { betterGet } from '../core/get';
 import { PropConfigCollection, Transform } from '../types';
 
 const borderShorthandTransform: Transform = (value, scale, props) => {

@@ -1,5 +1,5 @@
 import { shadow } from '..';
-import { createSystem } from '../..';
+import { createSystem } from '../../core/createSystem';
 
 const system = createSystem();
 

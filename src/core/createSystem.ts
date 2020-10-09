@@ -10,7 +10,7 @@ import {
   Parser,
   SomeObject,
   Cache,
-} from './types';
+} from '../types';
 import { sort } from './sort';
 import { merge } from './merge';
 

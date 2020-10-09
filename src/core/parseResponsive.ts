@@ -4,7 +4,7 @@ import {
   SystemConfig,
   BreakpointsObject,
   BreakpointsArray,
-} from './types';
+} from '../types';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 

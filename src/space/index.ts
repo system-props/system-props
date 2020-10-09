@@ -1,4 +1,4 @@
-import { betterGet } from '../get';
+import { betterGet } from '../core/get';
 import { PropConfigCollection, Transform, Theme } from '../types';
 
 const isNumber = (n: string | number): boolean =>

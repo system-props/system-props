@@ -1,4 +1,4 @@
-import { betterGet } from '../get';
+import { betterGet } from '../core/get';
 import { Transform, PropConfigCollection } from '../types';
 
 const getShadow: Transform = (value, _, props) => {

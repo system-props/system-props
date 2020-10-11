@@ -8,8 +8,10 @@ export interface Theme {
 }
 
 export interface SomeObject {
-  [x: string]: SomeObject | string | number | Function;
+  [x: string]: SomeObject | string | number | ((x: Theme) => string | number);
 }
+
+export type PropValue = string | number | SomeObject;
 
 export type Props = {
   theme?: Theme;

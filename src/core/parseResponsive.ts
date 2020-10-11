@@ -1,9 +1,10 @@
 import {
   Cache,
-  SomeObject,
   SystemConfig,
   BreakpointsObject,
   BreakpointsArray,
+  Theme,
+  Props,
 } from '@/types';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
@@ -18,8 +19,10 @@ export const parseResponsiveStyle = ({
   cache: Cache;
   systemConfig: SystemConfig;
   scale: string;
-  propValue: Array<unknown>;
-  props: SomeObject;
+  propValue: Array<
+    string | number | ((arg0: Theme | undefined) => string | number)
+  >;
+  props: Props;
 }) => {
   let styles = {};
   const mediaQueries = cache.media as BreakpointsArray;
@@ -60,8 +63,13 @@ export const parseResponsiveObject = ({
   cache: Cache;
   systemConfig: SystemConfig;
   scale: string;
-  propValue: { [x: string]: string | number | (({}) => string | number) };
-  props: SomeObject;
+  propValue: {
+    [x: string]:
+      | string
+      | number
+      | ((arg0: Theme | undefined) => string | number);
+  };
+  props: Props;
 }) => {
   const breakpoints = cache.breakpoints as BreakpointsObject;
   let styles = {};

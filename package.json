@@ -4,6 +4,7 @@
   "author": "Rogin Farrer",
   "module": "dist/system-props.esm.js",
   "devDependencies": {
+    "@rollup/plugin-alias": "^3.1.1",
     "husky": "^4.3.0",
     "tsdx": "^0.14.0",
     "tslib": "^2.0.1",

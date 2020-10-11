@@ -25,6 +25,7 @@ test('returns theme values', () => {
   const style = parser({
     theme: {
       breakpoints: [],
+      space: [0, 4, 8, 16, 32],
     },
     top: 1,
     right: 2,

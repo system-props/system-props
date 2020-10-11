@@ -1,6 +1,6 @@
 import { PropConfigCollection } from '../types';
 
-export const config: PropConfigCollection = {
+export const layout: PropConfigCollection = {
   width: {
     property: 'width',
     scale: 'sizes',
@@ -36,4 +36,4 @@ export const config: PropConfigCollection = {
   verticalAlign: true,
 };
 
-export default size;
+export default layout;

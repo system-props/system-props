@@ -1,5 +1,5 @@
 import { betterGet } from './get';
-import { Props, PropertyConfig, SystemConfig, Cache } from '../types';
+import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
 
 const getValue = (
   value: unknown,
@@ -31,9 +31,8 @@ export const createStyleFunction = ({
     if (n === null) {
       return result;
     }
-    _properties.forEach(prop => {
+    _properties.forEach((prop: string | undefined) => {
       if (prop) {
-        // @ts-ignore
         result[prop] = n;
       }
     });

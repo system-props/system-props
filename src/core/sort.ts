@@ -1,6 +1,5 @@
 // String.prototype.localeCompare vs Intl.Collator.compare
 // https://stackoverflow.com/a/52369951
-// eslint-disable-next-line no-undefined
 const collator = new Intl.Collator(undefined, {
   numeric: true,
   sensitivity: 'base',

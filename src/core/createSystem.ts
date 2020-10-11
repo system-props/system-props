@@ -10,7 +10,7 @@ import {
   Parser,
   SomeObject,
   Cache,
-} from '../types';
+} from '@/types';
 import { sort } from './sort';
 import { merge } from './merge';
 
@@ -54,7 +54,7 @@ export const createParser = (
 
       if (typeof propValue === 'object') {
         cache.breakpoints =
-          (!isCacheDisabled && cache.breakpoints) || props.theme.breakpoints;
+          (!isCacheDisabled && cache.breakpoints) || props?.theme?.breakpoints;
 
         if (Array.isArray(propValue)) {
           if (typeof cache.breakpoints === 'undefined') {

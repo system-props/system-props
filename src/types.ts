@@ -4,7 +4,7 @@ export type Breakpoints = BreakpointsObject | BreakpointsArray;
 
 export interface Theme {
   [x: string]: any;
-  breakpoints: Breakpoints;
+  breakpoints?: Breakpoints;
 }
 
 export interface SomeObject {
@@ -12,7 +12,7 @@ export interface SomeObject {
 }
 
 export type Props = {
-  theme: Theme;
+  theme?: Theme;
   [x: string]: any;
 };
 

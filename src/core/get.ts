@@ -1,6 +1,4 @@
-interface Theme {
-  [x: string]: any;
-}
+import { Theme } from '@/types';
 
 export const get = (
   object?: Theme,

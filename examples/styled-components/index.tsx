@@ -2,7 +2,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createSystem, compose, get } from '../../src';
+import { createSystem, compose, get } from 'system-propz';
 import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {

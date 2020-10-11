@@ -5,7 +5,6 @@ import {
   Breakpoints,
   SystemConfig,
   PropConfigCollection,
-  // BreakpointsObject,
   Props,
   Parser,
   SomeObject,
@@ -29,7 +28,6 @@ export const createParser = (
   pseudoSelectors: { [x: string]: string } = {},
   strict: boolean = false
 ): Parser => {
-  // console.log(config);
   const cache: Cache = { strict };
 
   const parse: Parser = (props: Props) => {

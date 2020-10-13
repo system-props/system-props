@@ -1,6 +1,6 @@
 {
   "name": "system-props",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "Rogin Farrer",
   "module": "dist/system-props.esm.js",
   "devDependencies": {

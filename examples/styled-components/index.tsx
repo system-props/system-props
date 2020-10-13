@@ -2,7 +2,15 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createSystem, compose, get } from 'system-props';
+import {
+  createSystem,
+  color,
+  border,
+  space,
+  layout,
+  position,
+  shadow,
+} from 'system-props';
 import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
@@ -22,38 +30,11 @@ const theme = {
   },
 };
 
-const system = createSystem({
-  pseudoSelectors: {
-    _hover: '&:hover',
-  },
-});
+const system = createSystem();
 
-const margin = system({
-  margin: {
-    property: 'margin',
-    scale: 'space',
-  },
-  padding: {
-    property: 'padding',
-    scale: 'space',
-  },
-});
-
-const color = system({
-  color: {
-    property: 'color',
-    scale: 'colors',
-  },
-  bg: {
-    property: 'background-color',
-    scale: 'colors',
-  },
-  border: {
-    property: 'border',
-  },
-});
-
-const Box = styled.div(compose(color, margin));
+const Box = styled.div(
+  system({ ...shadow, ...color, ...layout, ...position, ...border, ...space })
+);
 
 const App = () => {
   return (
@@ -63,10 +44,22 @@ const App = () => {
         bg="$gray.30"
         padding="$2"
         border="1px solid $gray.10"
+        mb="$6"
       >
         Hello
       </Box>
-      <Box bg="$gray.20" margin="-$2" padding="$2">
+      <Box bg="$gray.20" marginTop="-$2" mb={4} padding="$2">
+        Welcome
+      </Box>
+      <Box
+        bg="blue.20"
+        padding="$2"
+        boxShadow="0px 1px 3px $blue.10"
+        _hover={{ bg: 'blue.10' }}
+      >
+        Welcome
+      </Box>
+      <Box p={4} bg="red">
         Welcome
       </Box>
     </ThemeProvider>

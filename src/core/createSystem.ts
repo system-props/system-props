@@ -145,8 +145,17 @@ export const createParser = (
 };
 
 export const createSystem = ({
-  pseudoSelectors,
   strict = false,
+  pseudoSelectors = {
+    _hover: '&:hover',
+    _focus: '&:focus',
+    _hoverAndFocus: '&:hover, &:focus',
+    _disabled: '[disabled]',
+    _first: '&:first-child',
+    _last: '&:last-child',
+    _odd: '&:nth-of-type(odd)',
+    _even: '&:nth-of-type(even)',
+  },
 }: {
   pseudoSelectors?: { [x: string]: string };
   strict?: boolean;

@@ -1,99 +1,64 @@
-# TSDX User Guide
+# System Props
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with TSDX. Let’s get you oriented with what’s here and how to use it.
+Inspired by [styled-system](https://github.com/styled-system), a responsive, theme-based style props for building design systems with React.
 
-> This TSDX setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+Functions almost identically to styled-system, but adds the following features:
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+- Written in TypeScript
+- Chakra's PseudoBox inspired pseudo selector props
+- Access the theme object at any time by using the function syntax
+- Supports common themed shorthand properties, like `border`, `margin`, `padding`, and `box-shadow`
+- Strict mode: allow only values that are present in the theme
+- Visually distinguish theme values by prefixing system prop values with `$`
 
-## Commands
+## Installation
 
-TSDX scaffolds your new library inside `/src`.
-
-To run TSDX, use:
-
-```bash
-npm start # or yarn start
+```sh
+yarn add system-props
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+## Quick Start
 
-To do a one-off build, use `npm run build` or `yarn build`.
+See the [examples](./examples) directory for more.
 
-To run tests, use `npm test` or `yarn test`.
+```tsx
+import { createSystem, color, space } from 'system-props';
+import styled from 'styled-components';
 
-## Configuration
+const system = createSystem({
+  strict, // default: false
+  pseudoSelectors, // default: { _hover: '&:hover', ...etc }
+});
 
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
+const Box = styled.div(system({ ...color, ...space }));
 
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.tsx       # EDIT THIS
-/test
-  blah.test.tsx   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+const App = () => {
+  return (
+    <Box
+      bg="$blue500"
+      margin="$1 $2 $3 $4"
+      border="1px solid $blue200"
+      borderBottom={theme => `3px dotted ${theme.colors.blue200}`}
+      _hover={{
+        bg: 'blue700',
+      }}
+    />
+  );
+};
 ```
 
-### Rollup
+## TODO
 
-TSDX uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+- [ ] Improve TypeScript support for users
+- [ ] Improve API documentation
+- [ ] Add setting to toggle accessing theme values via `Number` (mainly in `space` and `layout`). Will be disabled by default, but can be enabled to support those migrating from styled-system.
+- [ ] Add `variant` API
 
-### TypeScript
+## Credits
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+Many of the concepts here come from so many great, existing open-source projects, and they deserve a shout-out!
 
-## Continuous Integration
-
-### GitHub Actions
-
-A simple action is included that runs these steps on all pushes:
-
-- Installs deps w/ cache
-- Lints, tests, and builds
-
-## Optimizations
-
-Please see the main `tsdx` [optimizations docs](https://github.com/palmerhq/tsdx#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
-```
-
-You can also choose to install and use [invariant](https://github.com/palmerhq/tsdx#invariant) and [warning](https://github.com/palmerhq/tsdx#warning) functions.
-
-## Module Formats
-
-CJS, ESModules, and UMD module formats are supported.
-
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
-
-## Named Exports
-
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
-
-## Including Styles
-
-There are many ways to ship styles, including with CSS-in-JS. TSDX has no opinion on this, configure how you like.
-
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
-
-## Publishing to NPM
-
-We recommend using [np](https://github.com/sindresorhus/np).
+- [styled-system](https://github.com/styled-system/styled-system), duh
+- [Chakra UI](https://chakra-ui.com/) and the PseudoBox
+- [Stitches](https://github.com/modulz/stitches)
+- [Sprout's System Props documentation](https://seeds.sproutsocial.com/components/system-props/)

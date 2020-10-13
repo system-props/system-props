@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "alias": {
-    "system-props": "../../dist"
-  },
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
@@ -15,7 +12,8 @@
     "react-app-polyfill": "^1.0.6",
     "react-dom": ">= 16.8.0",
     "react-is": ">= 16.8.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "system-props": "latest"
   },
   "devDependencies": {
     "@types/react": "^16.9.11",

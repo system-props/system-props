@@ -16,7 +16,7 @@
     "types": ["node"],
     "baseUrl": ".",
     "paths": {
-      "system-propz": ["../../dist/*"]
+      "system-props": ["../../dist/*"]
     }
   }
 }

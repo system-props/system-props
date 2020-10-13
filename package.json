@@ -1,8 +1,8 @@
 {
-  "name": "system-propz",
+  "name": "system-props",
   "version": "0.1.0",
   "author": "Rogin Farrer",
-  "module": "dist/system-propz.esm.js",
+  "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
     "husky": "^4.3.0",

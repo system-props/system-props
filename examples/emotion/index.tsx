@@ -2,7 +2,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createSystem, compose } from '../../src';
+import { createSystem, compose } from 'system-props';
 import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
 
@@ -61,7 +61,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Box
         color="blue.30"
-        bg="gray.30"
+        bg="$gray.30"
         padding={2}
         border="1px solid $colors.gray.10"
       >

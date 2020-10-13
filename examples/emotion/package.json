@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "alias": {
+    "system-props": "../../dist"
+  },
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"

@@ -2,7 +2,7 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { createSystem, compose, get } from 'system-propz';
+import { createSystem, compose, get } from 'system-props';
 import styled, { ThemeProvider } from 'styled-components';
 
 const theme = {
@@ -50,10 +50,6 @@ const color = system({
   },
   border: {
     property: 'border',
-    transform: (value: string, _, props: {}) => {
-      const [width, style, color] = value.split(' ');
-      return `${width} ${style} ${get(props.theme.colors, color)}`;
-    },
   },
 });
 

@@ -23,7 +23,16 @@ See the [examples](./examples) directory for more.
 
 ```tsx
 import { createSystem, color, space } from 'system-props';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+
+const theme = {
+  space: ['0px', '4px', '8px', '16px', '32px'],
+  colors: {
+    blue100: 'lightblue',
+    blue200: 'blue',
+    //...etc
+  },
+};
 
 const system = createSystem({
   strict, // default: false
@@ -34,15 +43,17 @@ const Box = styled.div(system({ ...color, ...space }));
 
 const App = () => {
   return (
-    <Box
-      bg="$blue500"
-      margin="$1 $2 $3 $4"
-      border="1px solid $blue200"
-      borderBottom={theme => `3px dotted ${theme.colors.blue200}`}
-      _hover={{
-        bg: 'blue700',
-      }}
-    />
+    <ThemeProvider theme={theme}>
+      <Box
+        bg="$blue500"
+        margin="$1 $2 $3 $4"
+        border="1px solid $blue200"
+        borderBottom={theme => `3px dotted ${theme.colors.blue200}`}
+        _hover={{
+          bg: 'blue700',
+        }}
+      />
+    </ThemeProvider>
   );
 };
 ```

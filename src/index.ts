@@ -11,3 +11,6 @@ export { position } from './props/position';
 export { shadow } from './props/shadow';
 export { space } from './props/space';
 export { typography } from './props/typography';
+
+export { space as styledSystemSpace } from './props/styled-system-space';
+export { layout as styledSystemLayout } from './props/styled-system-layout';

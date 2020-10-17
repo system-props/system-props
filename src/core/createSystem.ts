@@ -26,10 +26,9 @@ function parseBreakpoints(breakpoints: Breakpoints) {
 export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {},
-  strict: boolean = false,
-  enableStyledSystemTransforms: boolean = false
+  strict: boolean = false
 ): Parser => {
-  const cache: Cache = { strict, enableStyledSystemTransforms };
+  const cache: Cache = { strict };
 
   const parse: Parser = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
@@ -142,7 +141,6 @@ export const createParser = (
 
 export const createSystem = ({
   strict = false,
-  enableStyledSystemTransforms = false,
   pseudoSelectors = {
     _hover: '&:hover',
     _focus: '&:focus',
@@ -177,12 +175,7 @@ export const createSystem = ({
       config[key] = createStyleFunction(conf);
     });
 
-    const parser = createParser(
-      config,
-      pseudoSelectors,
-      strict,
-      enableStyledSystemTransforms
-    );
+    const parser = createParser(config, pseudoSelectors, strict);
     return parser;
   };
 

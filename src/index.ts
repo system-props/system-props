@@ -1,5 +1,5 @@
 export { betterGet as get } from './core/get';
-export { createSystem, compose } from './core/createSystem';
+export { createSystem } from './core/createSystem';
 
 export { background } from './props/background';
 export { border } from './props/border';

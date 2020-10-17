@@ -277,7 +277,7 @@ test('supports non-array breakpoints object', () => {
   });
   const styles = parser({
     theme: {
-      disableStyledSystemCache: true,
+      disableSystemPropsCache: true,
       breakpoints: {
         sm: '32em',
         md: '40em',
@@ -311,7 +311,7 @@ test('sorts media queries when responsive object values are used', () => {
   });
   const styles = parser({
     theme: {
-      disableStyledSystemCache: true,
+      disableSystemPropsCache: true,
       breakpoints: {
         sm: '32em',
         md: '40em',

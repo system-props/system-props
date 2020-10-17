@@ -26,23 +26,20 @@ function parseBreakpoints(breakpoints: Breakpoints) {
 export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {},
-  strict: boolean = false
+  strict: boolean = false,
+  enableStyledSystemTransforms: boolean = false
 ): Parser => {
-  const cache: Cache = { strict };
+  const cache: Cache = { strict, enableStyledSystemTransforms };
 
   const parse: Parser = (props: Props) => {
     let styles: { [x: string]: unknown } = {};
     let shouldSort = false;
-    const isCacheDisabled = Boolean(props.theme?.disableStyledSystemCache);
+    const isCacheDisabled = Boolean(props.theme?.disableSystemPropsCache);
 
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
       let propValue: any = obj[key];
-      const scale = get(
-        props.theme,
-        systemConfig.scale,
-        systemConfig.defaultScale
-      );
+      const scale = get(props.theme, systemConfig.scale);
 
       if (typeof propValue === 'function') {
         // e.g.,
@@ -77,7 +74,6 @@ export const createParser = (
 
         if (propValue !== null) {
           shouldSort = true;
-          // const bp = cache.breakpoints as BreakpointsObject;
           return parseResponsiveObject({
             cache,
             systemConfig,
@@ -146,11 +142,14 @@ export const createParser = (
 
 export const createSystem = ({
   strict = false,
+  enableStyledSystemTransforms = false,
   pseudoSelectors = {
     _hover: '&:hover',
     _focus: '&:focus',
     _hoverAndFocus: '&:hover, &:focus',
-    _disabled: '[disabled]',
+    _disabled:
+      '[disabled], [disabled]:hover, [disabled]:focus, [aria-disabled], [aria-disabled]:hover, [aria-disabled]:focus',
+    _readOnly: '[readOnly]',
     _first: '&:first-child',
     _last: '&:last-child',
     _odd: '&:nth-of-type(odd)',
@@ -178,21 +177,14 @@ export const createSystem = ({
       config[key] = createStyleFunction(conf);
     });
 
-    const parser = createParser(config, pseudoSelectors, strict);
+    const parser = createParser(
+      config,
+      pseudoSelectors,
+      strict,
+      enableStyledSystemTransforms
+    );
     return parser;
   };
 
   return system;
-};
-
-export const compose = (...parsers: Parser[]): Parser => {
-  const config = parsers.reduce((acc, parser) => {
-    if (!parser || !parser.config) {
-      return acc;
-    }
-    return { ...acc, ...parser.config };
-  }, {});
-  const parser = createParser(config);
-
-  return parser;
 };

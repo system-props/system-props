@@ -27,7 +27,7 @@ export const createStyleFunction = ({
     cache: Cache
   ) => {
     const result: { [key: string]: unknown } = {};
-    const n = transform(value, scale, props, cache.strict);
+    const n = transform(value, scale, props, cache);
     if (n === null) {
       return result;
     }

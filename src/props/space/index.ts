@@ -5,6 +5,10 @@ const isNumber = (n: string | number): boolean =>
   typeof n === 'number' && !isNaN(n);
 
 const getPosOrNegMargin = (n: string, scale: Theme) => {
+  // Naive way to check whether the value is negative
+  // This could go wrong if the value begins with '-',
+  // but it's not meant to signify a negative number,
+  // such as using a CSS var ('--var-foo')
   if (n.startsWith('-')) {
     const [, value] = n.split('-');
     const result = betterGet(scale, value);

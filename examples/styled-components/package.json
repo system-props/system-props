@@ -15,6 +15,10 @@
     "styled-components": "^5.2.0",
     "system-props": "latest"
   },
+  "alias": {
+    "react": "../node_modules/react",
+    "react-dom": "../node_modules/react-dom/profiling"
+  },
   "devDependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",

@@ -62,7 +62,6 @@ const App = () => {
 
 - [ ] Improve TypeScript support for users
 - [ ] Improve API documentation
-- [ ] Add setting to toggle accessing theme values via `Number` (mainly in `space` and `layout`). Will be disabled by default, but can be enabled to support those migrating from styled-system.
 - [ ] Add `variant` API
 
 ## Credits

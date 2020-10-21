@@ -10,7 +10,7 @@ test('returns layout styles', () => {
     theme: {
       breakpoints: ['40em', '52em'],
     },
-    width: ['100%', '50%', '25%'],
+    width: [1, 1 / 2, 1 / 4],
     minHeight: 32,
     maxWidth: 768,
   });

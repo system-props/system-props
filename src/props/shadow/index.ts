@@ -11,7 +11,7 @@ const getShadow: Transform = (value, _, props) => {
     const maybeColor = arr.pop();
     const foundColor = betterGet(props?.theme?.colors, maybeColor);
     if (foundColor) {
-      return `${arr.join(' ')} ${foundColor}`;
+      return [...arr, foundColor].join(' ');
     }
   }
   return value;

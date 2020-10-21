@@ -13,7 +13,7 @@ const borderShorthandTransform: Transform = (value, scale, props) => {
   const borderWidth = betterGet(props?.theme?.borderWidths, width, width);
   const borderStyle = betterGet(props?.theme?.borderStyles, style, style);
   const borderColor = betterGet(props?.theme?.colors, color, color);
-  return `${borderWidth} ${borderStyle} ${borderColor}`;
+  return [borderWidth, borderStyle, borderColor].filter(Boolean).join(' ');
 };
 
 const config: PropConfigCollection = {

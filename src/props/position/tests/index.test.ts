@@ -25,14 +25,19 @@ test('returns theme values', () => {
   const style = parser({
     theme: {
       breakpoints: [],
-      space: [0, 4, 8, 16, 32],
+      space: ['0px', '4px', '8px', '16px', '32px'],
     },
     top: 1,
-    right: 2,
+    right: -2,
     bottom: 3,
-    left: 4,
+    left: '4',
   });
-  expect(style).toEqual({ top: 4, right: 8, bottom: 16, left: 32 });
+  expect(style).toEqual({
+    top: '4px',
+    right: '-8px',
+    bottom: '16px',
+    left: '32px',
+  });
 });
 
 test('returns pixel values', () => {

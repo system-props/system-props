@@ -1,9 +1,25 @@
-import { PropConfigCollection } from '@/types';
+import { PropConfigCollection, Transform } from '@/types';
+import { get } from '@/core';
+
+const isNumber = (n: unknown) => typeof n === 'number' && !isNaN(n);
+
+const getWidth: Transform = (
+  value: unknown,
+  scale: { [x: string]: unknown }
+) => {
+  let defaultValue = value;
+  if (isNumber(value)) {
+    const n = value as number;
+    defaultValue = n > 1 ? value : `${n * 100}%`;
+  }
+  return get(scale, value, defaultValue);
+};
 
 export const layout: PropConfigCollection = {
   width: {
     property: 'width',
     scale: 'sizes',
+    transform: getWidth,
   },
   height: {
     property: 'height',

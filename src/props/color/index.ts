@@ -9,6 +9,14 @@ const config: PropConfigCollection = {
     property: 'backgroundColor',
     scale: 'colors',
   },
+  fill: {
+    property: 'fill',
+    scale: 'colors',
+  },
+  stroke: {
+    property: 'stroke',
+    scale: 'colors',
+  },
   opacity: true,
 };
 config.bg = config.backgroundColor;

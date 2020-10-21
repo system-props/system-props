@@ -1,35 +1,21 @@
 import { betterGet } from '@/core/get';
-import { PropConfigCollection, Transform, Theme } from '@/types';
-
-const isNumber = (n: string | number): boolean =>
-  typeof n === 'number' && !isNaN(n);
-
-const getPosOrNegMargin = (n: string, scale: Theme) => {
-  // Naive way to check whether the value is negative
-  // This could go wrong if the value begins with '-',
-  // but it's not meant to signify a negative number,
-  // such as using a CSS var ('--var-foo')
-  if (n.startsWith('-')) {
-    const [, value] = n.split('-');
-    const result = betterGet(scale, value);
-    if (result) {
-      return isNumber(result) ? result * -1 : `-${result}`;
-    }
-  }
-  return betterGet(scale, n, n);
-};
+import { PropConfigCollection, Transform } from '@/types';
+import { positiveOrNegative } from '../positiveOrNegative';
 
 const getMargin: Transform = (value, _, props) => {
-  if (typeof value === 'string') {
-    const result = getPosOrNegMargin(value, props?.theme?.space);
+  if (typeof value === 'string' || typeof value === 'number') {
+    const result = positiveOrNegative(value, props?.theme?.space);
     if (result) {
       return result;
     }
+  }
+  if (typeof value === 'string') {
     return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
-        return [...acc, getPosOrNegMargin(curr, props?.theme?.space)];
+        return [...acc, positiveOrNegative(curr, props?.theme?.space)];
       }, [])
+      .filter(Boolean)
       .join(' ');
   }
   return value;
@@ -48,6 +34,7 @@ const getPadding: Transform = (value, _, props) => {
       .reduce((acc: string[], curr: string) => {
         return [...acc, betterGet(props?.theme?.space, curr)];
       }, [])
+      .filter(Boolean)
       .join(' ');
   }
   return value;

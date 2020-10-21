@@ -15,11 +15,13 @@ test('returns border styles', () => {
     border: '1px solid $red500',
     borderLeft: '1px solid red500',
     borderRight: 'base',
+    borderBottom: '1px solid',
   });
   expect(style).toEqual({
     borderLeft: '1px solid #ff0000',
     border: '1px solid #ff0000',
     borderRight: '1px solid papayawhip',
+    borderBottom: '1px solid',
   });
 });
 

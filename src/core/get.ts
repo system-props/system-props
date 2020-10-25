@@ -92,8 +92,8 @@ export const betterGet = (
 ) => {
   let result;
 
-  if (typeof value === 'string' && value.includes('$')) {
-    result = systemValueParser(scale, value);
+  if (typeof value === 'string' && value.startsWith('$')) {
+    result = get(scale, value.slice(1));
   } else {
     result = get(scale, value);
   }

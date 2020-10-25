@@ -22,14 +22,14 @@ Create a new component that uses style functions from Styled System.
 To start with, add the `color` function to the component's styles argument.
 
 ```javascript
-import styled from 'styled-components'
-import { color } from 'styled-system'
+import styled from 'styled-components';
+import { color } from 'styled-system';
 
 const Box = styled.div`
   ${color}
-`
+`;
 
-export default Box
+export default Box;
 ```
 
 Now, this component will have two style props available: `color` to set foreground color, and `bg` to set background color.
@@ -53,7 +53,7 @@ export default {
     blue: '#007ce0',
     navy: '#004175',
   },
-}
+};
 ```
 
 ## Theming
@@ -62,15 +62,15 @@ Most CSS-in-JS libraries include a ThemeProvider to provide values through React
 Import the styled-components [ThemeProvider][] in the root of your application and pass the theme to the `theme` prop.
 
 ```jsx
-import React from 'react'
-import { ThemeProvider } from 'styled-components'
-import theme from './theme'
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
+import theme from './theme';
 
 const App = props => (
   <ThemeProvider theme={theme}>{/* application elements */}</ThemeProvider>
-)
+);
 
-export default App
+export default App;
 ```
 
 [themeprovider]: https://www.styled-components.com/docs/advanced#theming
@@ -94,16 +94,16 @@ To make the Box component a little more useful, add a few more Styled System fun
 to handle layout styles.
 
 ```jsx
-import styled from 'styled-components'
-import { space, layout, color } from 'styled-system'
+import styled from 'styled-components';
+import { space, layout, color } from 'styled-system';
 
 const Box = styled.div`
   ${space}
   ${layout}
   ${color}
-`
+`;
 
-export default Box
+export default Box;
 ```
 
 If you prefer using the plain object syntax, you can pass Styled System functions in as arguments.
@@ -117,7 +117,7 @@ const Box = styled('div')(
   space,
   layout,
   color
-)
+);
 ```
 
 ## Margin & Padding
@@ -162,7 +162,7 @@ It's recommended to set `0` as the first value in the array.
 // theme.js
 export default {
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
-}
+};
 ```
 
 All spacing props accept numbers, strings, or arrays as values, where:
@@ -223,4 +223,3 @@ For a complete list, see the [Reference Table][] of style functions.
 [emotion]: https://github.com/emotion-js/emotion
 [responsive styles]: /responsive-styles
 [reference table]: /table
-

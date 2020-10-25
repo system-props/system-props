@@ -1,6 +1,6 @@
 {
   "config": {
-    "title": "Docz Example Typescript",
+    "title": "System Props Docs",
     "description": "My awesome app using docz",
     "menu": [],
     "version": "2.0.0-rc.41",
@@ -129,21 +129,6 @@
             "slug": "system",
             "depth": 2,
             "value": "System"
-          },
-          {
-            "slug": "variant",
-            "depth": 2,
-            "value": "Variant"
-          },
-          {
-            "slug": "legacy-variants",
-            "depth": 2,
-            "value": "Legacy Variants"
-          },
-          {
-            "slug": "defaults",
-            "depth": 2,
-            "value": "Defaults"
           }
         ]
       }

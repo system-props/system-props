@@ -19,7 +19,7 @@ const config = {
   pathPrefix: '/',
 
   siteMetadata: {
-    title: 'Docz Example Typescript',
+    title: 'System Props Docs',
     description: 'My awesome app using docz',
   },
   plugins: [
@@ -65,7 +65,7 @@ const config = {
         eb: 'master',
         'edit-branch': 'master',
         config: '',
-        title: 'Docz Example Typescript',
+        title: 'System Props Docs',
         description: 'My awesome app using docz',
         host: 'localhost',
         port: 3000,

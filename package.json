@@ -37,6 +37,7 @@
     "docs": "docz dev",
     "docs:build": "docz build",
     "docs:serve": "docz build && docz serve",
+    "clean": "rm -rf node_modules && rm -rf examples/**/node_modules && rm -rf .docz && rm -rf dist",
     "release": "np"
   },
   "peerDependencies": {},

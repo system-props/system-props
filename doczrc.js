@@ -3,6 +3,5 @@ export default {
 	dest: 'site',
 	src: 'docs',
 	typescript: true,
-	menu: ['API'],
 	editBranch: 'main',
 };

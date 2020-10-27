@@ -29,15 +29,13 @@ const getPadding: Transform = (value, _, props) => {
     }
   }
   if (typeof value === 'string') {
-    const result = value
+    return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
         return [...acc, betterGet(props?.theme?.space, curr, curr)];
       }, [])
       .filter(Boolean)
       .join(' ');
-    console.log(result);
-    return result;
   }
   return value;
 };

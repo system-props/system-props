@@ -56,3 +56,8 @@ test('returns 0 index items', () => {
   const a = get(['a', 'b', 'c'], 0);
   expect(a).toBe('a');
 });
+
+test('returns number values with $', () => {
+  const a = get([0, 4, 8], '$2');
+  expect(a).toBe(8);
+});

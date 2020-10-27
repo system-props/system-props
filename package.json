@@ -11,8 +11,11 @@
   "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
+    "docz": "^2.3.1",
     "husky": "^4.3.0",
     "np": "^6.5.0",
+    "react": "16",
+    "react-dom": "16",
     "tsdx": "^0.14.0",
     "tslib": "^2.0.1",
     "typescript": "^4.0.2"
@@ -20,10 +23,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist", "src"],
   "engines": {
     "node": ">=10"
   },
@@ -34,7 +34,9 @@
     "lint": "tsdx lint src",
     "prepare": "tsdx build",
     "start-sc": "yarn --cwd ./examples/styled-components start",
-    "docs": "yarn --cwd ./docs dev",
+    "docs": "docz dev",
+    "docs:build": "docz build",
+    "docs:serve": "docz build && docz serve",
     "release": "np"
   },
   "peerDependencies": {},

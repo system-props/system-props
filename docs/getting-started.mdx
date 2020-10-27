@@ -3,7 +3,24 @@ name: Getting Started
 route: /getting-started
 ---
 
+import Box from './components/Box'
+import {Playground} from 'docz'
+
 # Getting Started
+
+Styled System lets you quickly build custom UI components with constraint-based style props based on scales defined in your theme.
+
+```js
+import { createSystem, space, color, typography } from 'system-props';
+
+const system = createSystem();
+
+const Box = styled.div({ ...space, ...color, ...typography });
+```
+
+<Playground>
+  <Box as="h3" textAlign="center" fontSize="lg" bg="primary" color="white" py={2}>Welcome to System Props!</Box>
+</Playground>
 
 Styled System is a collection of utility functions that add style props
 to your React components
@@ -66,7 +83,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import theme from './theme';
 
-const App = props => (
+const App = (props) => (
   <ThemeProvider theme={theme}>{/* application elements */}</ThemeProvider>
 );
 

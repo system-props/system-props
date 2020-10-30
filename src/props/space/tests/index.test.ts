@@ -9,7 +9,7 @@ const themedParser = (config: { [x: string]: any }) =>
   parser({
     theme: {
       breakpoints: ['40em', '52em', '64em'],
-      space: ['0px', '4px', '8px', '12px', '16px'],
+      space: [0, 4, 8, 12, 16],
     },
     ...config,
   });
@@ -28,7 +28,7 @@ test('returns 0 values', () => {
 
 test('returns negative pixel values', () => {
   const styles = themedParser({ m: -2 });
-  expect(styles).toEqual({ margin: '-8px' });
+  expect(styles).toEqual({ margin: -8 });
 });
 
 test('returns negative em values', () => {
@@ -63,9 +63,9 @@ test('returns responsive values', () => {
     m: [0, 2, 3],
   });
   expect(styles).toEqual({
-    margin: '0px',
-    '@media screen and (min-width: 40em)': { margin: '8px' },
-    '@media screen and (min-width: 52em)': { margin: '12px' },
+    margin: 0,
+    '@media screen and (min-width: 40em)': { margin: 8 },
+    '@media screen and (min-width: 52em)': { margin: 12 },
   });
 });
 
@@ -73,7 +73,7 @@ test('returns aliased values', () => {
   const styles = themedParser({
     px: 2,
   });
-  expect(styles).toEqual({ paddingLeft: '8px', paddingRight: '8px' });
+  expect(styles).toEqual({ paddingLeft: 8, paddingRight: 8 });
 });
 
 test('returns string values from theme', () => {
@@ -111,12 +111,12 @@ test('returns values from theme object', () => {
 
 test('pl prop sets paddingLeft', () => {
   const styles = themedParser({ pl: 2 });
-  expect(styles).toEqual({ paddingLeft: '8px' });
+  expect(styles).toEqual({ paddingLeft: 8 });
 });
 
 test('pl prop sets paddingLeft 0', () => {
   const styles = themedParser({ pl: 0 });
-  expect(styles).toEqual({ paddingLeft: '0px' });
+  expect(styles).toEqual({ paddingLeft: 0 });
 });
 
 test('px prop overrides pl prop', () => {
@@ -124,7 +124,7 @@ test('px prop overrides pl prop', () => {
     pl: 1,
     px: 2,
   });
-  expect(styles).toEqual({ paddingLeft: '8px', paddingRight: '8px' });
+  expect(styles).toEqual({ paddingLeft: 8, paddingRight: 8 });
 });
 
 test('py prop overrides pb prop', () => {
@@ -132,7 +132,7 @@ test('py prop overrides pb prop', () => {
     pb: 1,
     py: 2,
   });
-  expect(styles).toEqual({ paddingTop: '8px', paddingBottom: '8px' });
+  expect(styles).toEqual({ paddingTop: 8, paddingBottom: 8 });
 });
 
 test('mx prop overrides mr prop', () => {
@@ -140,7 +140,7 @@ test('mx prop overrides mr prop', () => {
     mr: 1,
     mx: 2,
   });
-  expect(styles).toEqual({ marginLeft: '8px', marginRight: '8px' });
+  expect(styles).toEqual({ marginLeft: 8, marginRight: 8 });
 });
 
 test('my prop overrides mt prop', () => {
@@ -148,7 +148,7 @@ test('my prop overrides mt prop', () => {
     mt: 1,
     my: 2,
   });
-  expect(styles).toEqual({ marginTop: '8px', marginBottom: '8px' });
+  expect(styles).toEqual({ marginTop: 8, marginBottom: 8 });
 });
 
 test('margin overrides m prop', () => {
@@ -156,7 +156,7 @@ test('margin overrides m prop', () => {
     m: 1,
     margin: 2,
   });
-  expect(styles).toEqual({ margin: '8px' });
+  expect(styles).toEqual({ margin: 8 });
 });
 
 test('handles margin with no theme', () => {
@@ -178,12 +178,12 @@ test('handles overriding margin/padding shortcut props', () => {
     pt: 2,
   });
   expect(styles).toEqual({
-    margin: '16px',
-    marginLeft: '12px',
-    marginRight: '8px',
-    padding: '16px',
-    paddingBottom: '12px',
-    paddingTop: '8px',
+    margin: 16,
+    marginLeft: 12,
+    marginRight: 8,
+    padding: 16,
+    paddingBottom: 12,
+    paddingTop: 8,
   });
 });
 
@@ -197,10 +197,10 @@ test('single directions override axes', () => {
     pr: 2,
   });
   expect(styles).toEqual({
-    marginLeft: '4px',
-    marginRight: '8px',
-    paddingLeft: '4px',
-    paddingRight: '8px',
+    marginLeft: 4,
+    marginRight: 8,
+    paddingLeft: 4,
+    paddingRight: 8,
   });
 });
 
@@ -213,12 +213,12 @@ test('supports object values', () => {
     },
   });
   expect(styles).toEqual({
-    margin: '0px',
+    margin: 0,
     '@media screen and (min-width: 40em)': {
-      margin: '4px',
+      margin: 4,
     },
     '@media screen and (min-width: 52em)': {
-      margin: '8px',
+      margin: 8,
     },
   });
 });
@@ -253,4 +253,29 @@ test('supports non-array breakpoints', () => {
       margin: '8px',
     },
   });
+});
+
+test('handles shorthand values', () => {
+  const styles = themedParser({ m: '2 4', p: '2 4' });
+  expect(styles).toEqual({ margin: '8px 16px', padding: '8px 16px' });
+});
+
+test('handles shorthand negative values', () => {
+  const styles = themedParser({ m: '-2 -4' });
+  expect(styles).toEqual({ margin: '-8px -16px' });
+});
+
+test('handles shorthand values ($)', () => {
+  const styles = themedParser({ m: '$2 $4', p: '$2 $4' });
+  expect(styles).toEqual({ margin: '8px 16px', padding: '8px 16px' });
+});
+
+test('handles shorthand negative values ($)', () => {
+  const styles = themedParser({ p: 2, m: '$2 $4 -$4 -$2' });
+  expect(styles).toEqual({ padding: 8, margin: '8px 16px -16px -8px' });
+});
+
+test('padding does not handle negative values, just passes through', () => {
+  const styles = themedParser({ paddingLeft: -1, p: '1 -2 -$2 $1' });
+  expect(styles).toEqual({ paddingLeft: -1, padding: '4px -2 -$2 4px' });
 });

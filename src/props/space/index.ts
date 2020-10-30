@@ -3,40 +3,75 @@ import { PropConfigCollection, Transform } from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
 
 const getMargin: Transform = (value, _, props) => {
-  if (typeof value === 'string' || typeof value === 'number') {
+  // Not using shorthand, just a theme value, e.g, m={4}
+  if (typeof value === 'number') {
     const result = positiveOrNegative(value, props?.theme?.space);
     if (result) {
       return result;
     }
   }
+
   if (typeof value === 'string') {
-    return value
-      .split(' ')
+    const arr = value.split(' ');
+
+    // applied to all sides, return a number or string
+    // e.g., m="2" or m="$2"
+    if (arr.length === 1) {
+      return positiveOrNegative(value, props?.theme?.space);
+    }
+
+    return arr
       .reduce((acc: string[], curr: string) => {
-        return [...acc, positiveOrNegative(curr, props?.theme?.space)];
+        let value = positiveOrNegative(curr, props?.theme?.space);
+        if (typeof value === 'number') {
+          // if a number is returned, it's not converted
+          // to a pixel value by the css parser in most libraries
+          // so we need to make it a string with a pixel value
+          value = `${value}px`;
+        }
+        return [...acc, value];
       }, [])
       .filter(Boolean)
       .join(' ');
   }
+
   return value;
 };
 
 const getPadding: Transform = (value, _, props) => {
-  if (typeof value === 'string' || typeof value === 'number') {
+  // Not using shorthand, just a theme value, e.g, p={4}
+  if (typeof value === 'number') {
     const result = betterGet(props?.theme?.space, value);
     if (result) {
       return result;
     }
   }
+
   if (typeof value === 'string') {
+    const arr = value.split(' ');
+
+    // applied to all sides, return a number or string
+    // e.g., m="2" or m="$2"
+    if (arr.length === 1) {
+      return betterGet(props?.theme?.space, value, value);
+    }
+
     return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
-        return [...acc, betterGet(props?.theme?.space, curr, curr)];
+        let value = betterGet(props?.theme?.space, curr, curr);
+        if (typeof value === 'number') {
+          // if a number is returned, it's not converted
+          // to a pixel value by the css parser in most libraries
+          // so we need to make it a string with a pixel value
+          value = `${value}px`;
+        }
+        return [...acc, value];
       }, [])
       .filter(Boolean)
       .join(' ');
   }
+
   return value;
 };
 

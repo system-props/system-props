@@ -41,8 +41,10 @@ const App = () => {
         color="$blue.30"
         bg="$gray.30"
         padding="$2"
-        border="1px solid $gray.10"
+        border="1px solid rgba(0, 0, 0, 0.1)"
         mb="$6"
+        transform="scale(.5)"
+        opacity=".5"
       >
         Hello
       </Box>

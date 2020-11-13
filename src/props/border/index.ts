@@ -1,7 +1,8 @@
 import { betterGet } from '@/core/get';
 import { PropConfigCollection, Transform } from '@/types';
+import {tokenizeValue} from '../tokenizeValue'
 
-const borderShorthandTransform: Transform = (value, scale, props) => {
+export const borderShorthandTransform: Transform = (value, scale, props) => {
   if (typeof value !== 'string') {
     return value;
   }
@@ -9,7 +10,7 @@ const borderShorthandTransform: Transform = (value, scale, props) => {
   if (border) {
     return border;
   }
-  const [width, style, color] = value.split(' ');
+  const [[width, style, color]] = tokenizeValue(value)
   const borderWidth = betterGet(props?.theme?.borderWidths, width, width);
   const borderStyle = betterGet(props?.theme?.borderStyles, style, style);
   const borderColor = betterGet(props?.theme?.colors, color, color);

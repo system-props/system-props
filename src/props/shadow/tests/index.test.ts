@@ -1,4 +1,4 @@
-import { shadow } from '..';
+import { shadow, getShadow } from '../index';
 import { createSystem } from '@/core/createSystem';
 
 const system = createSystem();
@@ -41,5 +41,29 @@ test('uses theme colors if it can', () => {
   expect(style).toEqual({
     textShadow: '0 -1px #FF0000',
     boxShadow: '0 -1px #FF0000',
+  });
+});
+
+describe('getShadow', () => {
+  const props = {
+    theme: {
+      colors: {
+        gray400: '#e3e3e3',
+      },
+    },
+  };
+
+  test('handles tokens in box-shadow', () => {
+    expect(getShadow('10px 5px 1px gray400', {}, props, false)).toEqual(
+      '10px 5px 1px #e3e3e3'
+    );
+
+    expect(getShadow('1px -16px gray400', {}, props, false)).toEqual('1px -16px #e3e3e3')
+
+    expect(getShadow('inset 1px 1em gray400', {}, props, false)).toEqual('inset 1px 1em #e3e3e3')
+
+    expect(getShadow('60px -16px gray400', {}, props, false)).toEqual('60px -16px #e3e3e3')
+
+    expect(getShadow('60px -16px rgba(0, 242, 42, .24)', {}, props, false)).toEqual('60px -16px rgba(0, 242, 42, .24)')
   });
 });

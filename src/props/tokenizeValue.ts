@@ -1,6 +1,7 @@
-// Full credit goes to Stitches
+// Full credit goes to modulz/stitches
 // Handles complex CSS values and functions like rgba, linear-gradient,
 // and other things with parenthesis
+// https://github.com/modulz/stitches/blob/1ea8656e849d48b08a9222b89cb919936b0f5f93/packages/core/src/shorthand-parser/value-tokenizer.ts
 
 const TOKEN_STRING = 1;
 const TOKEN_QUOTED_STRING = 2;

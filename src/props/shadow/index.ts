@@ -9,12 +9,6 @@ export const getShadow: Transform = (value, _, props) => {
   }
   if (typeof value === 'string') {
     return tokenizeValue(value).map((chain) => chain.map((val) => betterGet(props?.theme?.colors, val, val)).join(' ')).join(', ')
-    // const arr = value.split(' ');
-    // const maybeColor = arr.pop();
-    // const foundColor = betterGet(props?.theme?.colors, maybeColor);
-    // if (foundColor) {
-    //   return [...arr, foundColor].join(' ');
-    // }
   }
   return value;
 };

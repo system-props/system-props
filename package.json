@@ -54,5 +54,8 @@
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "publishConfig": {
+    "registry": "https://registry.yarnpkg.com"
   }
 }

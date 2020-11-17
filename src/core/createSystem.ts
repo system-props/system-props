@@ -2,20 +2,28 @@ import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
 import { get } from './get';
 import {
-  Breakpoints,
+  ResponsiveProp,
   SystemConfig,
   PropConfigCollection,
   Props,
-  Parser,
   SomeObject,
   Cache,
 } from '@/types';
 import { sort } from './sort';
 import { merge } from './merge';
 
+export interface Parser {
+  (props: Props): {
+    [x: string]: unknown;
+  };
+  config: { [key: string]: SystemConfig };
+  propNames: string[];
+  cache: Cache;
+}
+
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 
-function parseBreakpoints(breakpoints: Breakpoints) {
+function parseBreakpoints(breakpoints: ResponsiveProp<string | number>) {
   let bps = breakpoints;
   if (!Array.isArray(breakpoints)) {
     bps = Object.values(breakpoints);
@@ -129,9 +137,9 @@ export const createParser = (
   parse.propNames = Object.keys(config);
   parse.cache = cache;
 
-  const keys = Object.keys(config).filter(k => k !== 'config');
+  const keys = Object.keys(config).filter((k) => k !== 'config');
   if (keys.length > 1) {
-    keys.forEach(key => {
+    keys.forEach((key) => {
       Object.assign(parse, { [key]: createParser({ [key]: config[key] }) });
     });
   }
@@ -159,7 +167,7 @@ export const createSystem = ({
 } = {}) => {
   const system = (args: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
-    Object.keys(args).forEach(key => {
+    Object.keys(args).forEach((key) => {
       const conf = args[key];
       if (conf === true) {
         // shortcut definition

@@ -1,10 +1,10 @@
-export type BreakpointsObject = { [x: string]: string };
-export type BreakpointsArray = string[];
-export type Breakpoints = BreakpointsObject | BreakpointsArray;
+export type ResponsiveObject<T> = { [x: string]: T };
+export type ResponsiveArray<T> = Array<T | null>;
+export type ResponsiveProp<T> = T | ResponsiveObject<T> | ResponsiveArray<T>;
 
 export interface Theme {
   [x: string]: any;
-  breakpoints?: Breakpoints;
+  breakpoints?: Record<string, string | number>;
 }
 
 export interface SomeObject {
@@ -44,17 +44,8 @@ export interface PropConfigCollection {
   [x: string]: true | PropertyConfig;
 }
 
-export interface Parser {
-  (props: Props): {
-    [x: string]: unknown;
-  };
-  config: { [key: string]: SystemConfig };
-  propNames: string[];
-  cache: Cache;
-}
-
 export interface Cache {
-  breakpoints?: Breakpoints;
+  breakpoints?: ResponsiveProp;
   media?: (string | null)[];
   strict: boolean;
 }

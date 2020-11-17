@@ -11,7 +11,7 @@
   "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
-    "docz": "^2.3.1",
+    "csstype": "^3.0.5",
     "husky": "^4.3.0",
     "np": "^6.5.0",
     "prettier": "^2.1.2",
@@ -37,10 +37,7 @@
     "prepare": "tsdx build",
     "format": "yarn prettier -w **/*.{ts,tsx,js}",
     "start-sc": "yarn --cwd ./examples/styled-components start",
-    "docs": "docz dev",
-    "docs:build": "docz build",
-    "docs:serve": "docz build && docz serve",
-    "clean": "rm -rf node_modules && rm -rf examples/**/node_modules && rm -rf .docz && rm -rf dist",
+    "clean": "rm -rf node_modules && rm -rf examples/**/node_modules && rm -rf dist",
     "release": "np"
   },
   "peerDependencies": {},

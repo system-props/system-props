@@ -1,8 +1,8 @@
 import {
   Cache,
   SystemConfig,
-  BreakpointsObject,
-  BreakpointsArray,
+  ResponsiveObject,
+  ResponsiveArray,
   Theme,
   Props,
 } from '@/types';
@@ -25,7 +25,7 @@ export const parseResponsiveStyle = ({
   props: Props;
 }) => {
   let styles = {};
-  const mediaQueries = cache.media as BreakpointsArray;
+  const mediaQueries = cache.media as ResponsiveArray<string | number>;
   propValue.slice(0, mediaQueries.length).forEach((valueAtQuery, i) => {
     // e.g. <Box color={[theme => theme.colors.primary, theme => theme.colors.secondary]} />
     const value =
@@ -71,7 +71,7 @@ export const parseResponsiveObject = ({
   };
   props: Props;
 }) => {
-  const breakpoints = cache.breakpoints as BreakpointsObject;
+  const breakpoints = cache.breakpoints as ResponsiveObject<string>;
   let styles = {};
   for (const key in propValue) {
     const breakpoint = breakpoints[key];

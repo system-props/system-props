@@ -31,7 +31,9 @@ const theme = {
 
 const system = createSystem();
 
-const Box = styled.div(system(color));
+const Box = styled.div(
+  system({ ...shadow, ...color, ...layout, ...position, ...border, ...space })
+);
 
 const App = () => {
   return (

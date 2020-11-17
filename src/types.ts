@@ -1,3 +1,5 @@
+import * as CSS from 'csstype';
+
 export type ResponsiveObject<T> = { [x: string]: T };
 export type ResponsiveArray<T> = Array<T | null>;
 export type ResponsiveProp<T> = T | ResponsiveObject<T> | ResponsiveArray<T>;
@@ -33,10 +35,10 @@ export type Transform = (
 ) => unknown;
 
 export type PropertyConfig = {
-  properties?: string[];
-  property?: string;
+  properties?: Array<keyof CSS.Properties>;
+  property?: keyof CSS.Properties;
   scale?: string;
-  defaultScale?: Array<unknown>;
+  defaultScale?: Array<string | number>;
   transform?: Transform;
 };
 
@@ -45,7 +47,7 @@ export interface PropConfigCollection {
 }
 
 export interface Cache {
-  breakpoints?: ResponsiveProp;
+  breakpoints?: ResponsiveProp<string | number>;
   media?: (string | null)[];
   strict: boolean;
 }

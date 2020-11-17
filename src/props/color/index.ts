@@ -32,5 +32,3 @@ export interface ColorProps {
 }
 
 export const color = config;
-
-export default color;

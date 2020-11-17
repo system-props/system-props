@@ -1,5 +1,6 @@
 import { betterGet } from './get';
 import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
+import * as CSS from 'csstype';
 
 const getValue = (
   value: unknown,
@@ -26,12 +27,12 @@ export const createStyleFunction = ({
     props: Props,
     cache: Cache
   ) => {
-    const result: { [key: string]: unknown } = {};
+    const result: Record<string, any> = {};
     const n = transform(value, scale, props, cache.strict);
     if (n === null) {
       return result;
     }
-    _properties.forEach((prop: string | undefined) => {
+    _properties.forEach((prop: keyof CSS.Properties | undefined) => {
       if (prop) {
         result[prop] = n;
       }

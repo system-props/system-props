@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/react": "^16",
     "@types/react-dom": "^16",
+    "@types/styled-components": "^5.1.4",
     "parcel": "^1.12.3",
     "typescript": "^3.4.5"
   }

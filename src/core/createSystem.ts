@@ -11,11 +11,10 @@ import {
 } from '@/types';
 import { sort } from './sort';
 import { merge } from './merge';
+import * as CSS from 'csstype';
 
 export interface Parser {
-  (props: Props): {
-    [x: string]: unknown;
-  };
+  (...args: any[]): any;
   config: { [key: string]: SystemConfig };
   propNames: string[];
   cache: Cache;
@@ -39,7 +38,7 @@ export const createParser = (
   const cache: Cache = { strict };
 
   const parse: Parser = (props: Props) => {
-    let styles: { [x: string]: unknown } = {};
+    let styles: Record<string, any> = {};
     let shouldSort = false;
     const isCacheDisabled = Boolean(props.theme?.disableSystemPropsCache);
 
@@ -172,7 +171,7 @@ export const createSystem = ({
       if (conf === true) {
         // shortcut definition
         config[key] = createStyleFunction({
-          property: key,
+          property: key as keyof CSS.Properties,
           scale: key,
         });
         return;

@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom';
 import {
   createSystem,
   color,
+  ColorProps,
   border,
   space,
   layout,
@@ -26,42 +27,45 @@ const theme = {
       30: 'blue',
     },
   },
-};
+} as const;
 
 const system = createSystem();
 
-const Box = styled.div(
-  system({ ...shadow, ...color, ...layout, ...position, ...border, ...space })
-);
+const Box = styled.div<ColorProps>(system({ ...color }));
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        color="$blue.30"
-        bg="$gray.30"
-        padding="$2"
-        border="1px solid rgba(0, 0, 0, 0.1)"
-        mb="$6"
-        transform="scale(.5)"
-        opacity=".5"
-      >
-        Hello
-      </Box>
-      <Box bg="$gray.20" marginTop="-$2" mb={4} padding="$2">
-        Welcome
-      </Box>
-      <Box
-        bg="blue.20"
-        padding="$2"
-        boxShadow="0px 1px 3px $blue.10"
-        _hover={{ bg: 'blue.10' }}
-      >
-        Welcome
-      </Box>
-      <Box p={4} bg="red">
-        Welcome
-      </Box>
+        bg="red"
+        color="blue.10"
+        opacity={(t: typeof theme) => t.colors.blue}
+      />
+      {/* <Box */}
+      {/*   color="$blue.30" */}
+      {/*   bg="$gray.30" */}
+      {/*   padding="$2" */}
+      {/*   border="1px solid rgba(0, 0, 0, 0.1)" */}
+      {/*   mb="$6" */}
+      {/*   transform="scale(.5)" */}
+      {/*   opacity=".5" */}
+      {/* > */}
+      {/*   Hello */}
+      {/* </Box> */}
+      {/* <Box bg="$gray.20" marginTop="-$2" mb={4} padding="$2"> */}
+      {/*   Welcome */}
+      {/* </Box> */}
+      {/* <Box */}
+      {/*   bg="blue.20" */}
+      {/*   padding="$2" */}
+      {/*   boxShadow="0px 1px 3px $blue.10" */}
+      {/*   _hover={{ bg: 'blue.10' }} */}
+      {/* > */}
+      {/*   Welcome */}
+      {/* </Box> */}
+      {/* <Box p={4} bg="red"> */}
+      {/*   Welcome */}
+      {/* </Box> */}
     </ThemeProvider>
   );
 };

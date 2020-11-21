@@ -12,7 +12,7 @@
     "react-dom": "^16",
     "react-is": "^16",
     "styled-components": "^5",
-    "system-props": "latest"
+    "system-props": "../../dist"
   },
   "devDependencies": {
     "@types/react": "^16",

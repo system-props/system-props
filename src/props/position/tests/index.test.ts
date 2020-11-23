@@ -1,5 +1,5 @@
 import { createSystem } from '@/core';
-import position from '..';
+import { position } from '..';
 
 const system = createSystem();
 

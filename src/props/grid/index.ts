@@ -1,4 +1,5 @@
-import { PropConfigCollection } from '@/types';
+import { PropConfigCollection, ResponsiveProp } from '@/types';
+import { Property } from 'csstype';
 
 export const grid: PropConfigCollection = {
   gap: {
@@ -27,5 +28,21 @@ export const grid: PropConfigCollection = {
   gridTemplateAreas: true,
   gridArea: true,
 };
+
+export interface GridProps {
+  gap?: ResponsiveProp<Property.Gap>;
+  gridGap?: ResponsiveProp<Property.GridGap>;
+  gridColumnGap?: ResponsiveProp<Property.GridColumnGap>;
+  gridRowGap?: ResponsiveProp<Property.GridRowGap>;
+  gridRow?: ResponsiveProp<Property.GridRow>;
+  gridColumn?: ResponsiveProp<Property.GridColumn>;
+  gridAutoFlow?: ResponsiveProp<Property.GridAutoFlow>;
+  gridAutoColumns?: ResponsiveProp<Property.GridAutoColumns>;
+  gridAutoRows?: ResponsiveProp<Property.GridAutoRows>;
+  gridTemplateColumns?: ResponsiveProp<Property.GridTemplateColumns>;
+  gridTemplateRows?: ResponsiveProp<Property.GridTemplateRows>;
+  gridTemplateAreas?: ResponsiveProp<Property.GridTemplateAreas>;
+  gridArea?: ResponsiveProp<Property.GridArea>;
+}
 
 export default grid;

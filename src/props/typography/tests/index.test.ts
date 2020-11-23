@@ -1,5 +1,5 @@
 import { createSystem } from '@/core';
-import typography from '..';
+import { typography } from '..';
 
 const system = createSystem();
 

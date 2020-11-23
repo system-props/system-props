@@ -1,9 +1,9 @@
 import { createSystem } from '@/core';
-import size from '..';
+import { layout } from '..';
 
 const system = createSystem();
 
-const parser = system(size);
+const parser = system(layout);
 
 test('returns layout styles', () => {
   const style = parser({

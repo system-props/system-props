@@ -1,6 +1,7 @@
 import { betterGet } from '@/core/get';
-import { PropConfigCollection, Transform } from '@/types';
+import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
+import { Property } from 'csstype';
 
 const getMargin: Transform = (value, _, props) => {
   // Not using shorthand, just a theme value, e.g, m={4}
@@ -167,4 +168,38 @@ padding.py = padding.paddingY;
 
 export const space = { ...padding, ...margin };
 
-export default space;
+export interface PaddingProps {
+  padding?: ResponsiveProp<Property.Padding>;
+  paddingTop?: ResponsiveProp<Property.PaddingTop>;
+  paddingRight?: ResponsiveProp<Property.PaddingRight>;
+  paddingLeft?: ResponsiveProp<Property.PaddingLeft>;
+  paddingBottom?: ResponsiveProp<Property.PaddingBottom>;
+  paddingX?: ResponsiveProp<Property.PaddingLeft>;
+  paddingY?: ResponsiveProp<Property.PaddingTop>;
+  p?: ResponsiveProp<Property.Padding>;
+  pt?: ResponsiveProp<Property.PaddingTop>;
+  pr?: ResponsiveProp<Property.PaddingRight>;
+  pl?: ResponsiveProp<Property.PaddingLeft>;
+  pb?: ResponsiveProp<Property.PaddingBottom>;
+  px?: ResponsiveProp<Property.PaddingLeft>;
+  py?: ResponsiveProp<Property.PaddingTop>;
+}
+
+export interface MarginProps {
+  margin?: ResponsiveProp<Property.Margin>;
+  marginTop?: ResponsiveProp<Property.MarginTop>;
+  marginRight?: ResponsiveProp<Property.MarginRight>;
+  marginLeft?: ResponsiveProp<Property.MarginLeft>;
+  marginBottom?: ResponsiveProp<Property.MarginBottom>;
+  marginX?: ResponsiveProp<Property.MarginLeft>;
+  marginY?: ResponsiveProp<Property.MarginTop>;
+  m?: ResponsiveProp<Property.Margin>;
+  mt?: ResponsiveProp<Property.MarginTop>;
+  mr?: ResponsiveProp<Property.MarginRight>;
+  ml?: ResponsiveProp<Property.MarginLeft>;
+  mb?: ResponsiveProp<Property.MarginBottom>;
+  mx?: ResponsiveProp<Property.MarginLeft>;
+  my?: ResponsiveProp<Property.MarginTop>;
+}
+
+export interface SpaceProps extends MarginProps, PaddingProps {}

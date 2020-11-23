@@ -1,6 +1,7 @@
 import { betterGet } from '@/core/get';
-import { PropConfigCollection, Transform } from '@/types';
-import {tokenizeValue} from '../tokenizeValue'
+import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
+import { tokenizeValue } from '../tokenizeValue';
+import { Property } from 'csstype';
 
 export const borderShorthandTransform: Transform = (value, scale, props) => {
   if (typeof value !== 'string') {
@@ -10,7 +11,7 @@ export const borderShorthandTransform: Transform = (value, scale, props) => {
   if (border) {
     return border;
   }
-  const [[width, style, color]] = tokenizeValue(value)
+  const [[width, style, color]] = tokenizeValue(value);
   const borderWidth = betterGet(props?.theme?.borderWidths, width, width);
   const borderStyle = betterGet(props?.theme?.borderStyles, style, style);
   const borderColor = betterGet(props?.theme?.colors, color, color);
@@ -155,4 +156,28 @@ config.borderRightStyle = {
 
 export const border = config;
 
-export default border;
+export interface BorderProps {
+  border?: ResponsiveProp<Property.Border>;
+  borderX?: ResponsiveProp<Property.Border>;
+  borderY?: ResponsiveProp<Property.Border>;
+  borderRight?: ResponsiveProp<Property.BorderRight>;
+  borderLeft?: ResponsiveProp<Property.BorderLeft>;
+  borderTop?: ResponsiveProp<Property.BorderTop>;
+  borderColor?: ResponsiveProp<Property.BorderColor>;
+  borderRightColor?: ResponsiveProp<Property.BorderRightColor>;
+  borderLeftColor?: ResponsiveProp<Property.BorderLeftColor>;
+  borderTopColor?: ResponsiveProp<Property.BorderTopColor>;
+  borderStyle?: ResponsiveProp<Property.BorderColor>;
+  borderRightStyle?: ResponsiveProp<Property.BorderRightColor>;
+  borderLeftStyle?: ResponsiveProp<Property.BorderLeftColor>;
+  borderTopStyle?: ResponsiveProp<Property.BorderTopColor>;
+  borderWidth?: ResponsiveProp<Property.BorderWidth>;
+  borderRightWidth?: ResponsiveProp<Property.BorderRightWidth>;
+  borderLeftWidth?: ResponsiveProp<Property.BorderLeftWidth>;
+  borderTopWidth?: ResponsiveProp<Property.BorderTopWidth>;
+  borderRadius?: ResponsiveProp<Property.BorderRadius>;
+  borderTopLeftRadius?: ResponsiveProp<Property.BorderTopLeftRadius>;
+  borderTopRightRadius?: ResponsiveProp<Property.BorderTopRightRadius>;
+  borderBottomLeftRadius?: ResponsiveProp<Property.BorderBottomLeftRadius>;
+  borderBottomRightRadius?: ResponsiveProp<Property.BorderBottomRightRadius>;
+}

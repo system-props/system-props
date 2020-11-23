@@ -1,4 +1,4 @@
-import border, {borderShorthandTransform} from '..';
+import { border, borderShorthandTransform } from '..';
 import { createSystem } from '@/core/createSystem';
 
 const system = createSystem();
@@ -92,6 +92,8 @@ test('returns border top and bottom radii', () => {
   });
 });
 
-test('transform handles rgba', ()=> {
-  expect(borderShorthandTransform('1px solid rgba(0, 0, 0, 0.1)', {}, {}, false)).toEqual('1px solid rgba(0, 0, 0, 0.1)')
-})
+test('transform handles rgba', () => {
+  expect(
+    borderShorthandTransform('1px solid rgba(0, 0, 0, 0.1)', {}, {}, false)
+  ).toEqual('1px solid rgba(0, 0, 0, 0.1)');
+});

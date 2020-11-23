@@ -1,5 +1,6 @@
-import { PropConfigCollection, Transform } from '@/types';
+import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
 import { get } from '@/core';
+import { Property } from 'csstype';
 
 const isNumber = (n: unknown) => typeof n === 'number' && !isNaN(n);
 
@@ -52,4 +53,17 @@ export const layout: PropConfigCollection = {
   verticalAlign: true,
 };
 
-export default layout;
+export interface LayoutProps {
+  height?: ResponsiveProp<Property.Height>;
+  width?: ResponsiveProp<Property.Width>;
+  minWidth?: ResponsiveProp<Property.MinWidth>;
+  minHeight?: ResponsiveProp<Property.MinHeight>;
+  maxWidth?: ResponsiveProp<Property.MaxWidth>;
+  maxHeight?: ResponsiveProp<Property.MaxHeight>;
+  size?: ResponsiveProp<Property.Width>;
+  overflow?: ResponsiveProp<Property.Overflow>;
+  overflowX?: ResponsiveProp<Property.OverflowX>;
+  overflowY?: ResponsiveProp<Property.OverflowY>;
+  display?: ResponsiveProp<Property.Display>;
+  verticalAlign?: ResponsiveProp<Property.VerticalAlign>;
+}

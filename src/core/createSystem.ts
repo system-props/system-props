@@ -11,6 +11,7 @@ import {
 } from '@/types';
 import { sort } from './sort';
 import { merge } from './merge';
+import { pseudoSelectors as defaultPseudos } from '../pseudos';
 import * as CSS from 'csstype';
 
 export interface Parser {
@@ -148,20 +149,9 @@ export const createParser = (
 
 export const createSystem = ({
   strict = false,
-  pseudoSelectors = {
-    _hover: '&:hover',
-    _focus: '&:focus',
-    _hoverAndFocus: '&:hover, &:focus',
-    _disabled:
-      '[disabled], [disabled]:hover, [disabled]:focus, [aria-disabled], [aria-disabled]:hover, [aria-disabled]:focus',
-    _readOnly: '[readOnly]',
-    _first: '&:first-child',
-    _last: '&:last-child',
-    _odd: '&:nth-of-type(odd)',
-    _even: '&:nth-of-type(even)',
-  },
+  pseudoSelectors = defaultPseudos,
 }: {
-  pseudoSelectors?: { [x: string]: string };
+  pseudoSelectors?: Record<string, string>;
   strict?: boolean;
 } = {}) => {
   const system = (args: PropConfigCollection) => {

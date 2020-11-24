@@ -3,14 +3,21 @@ import * as ReactDOM from 'react-dom';
 import {
   createSystem,
   color,
+  ResponsiveProp,
+  PseudoProps,
+  SystemProps,
   border,
   space,
   layout,
   position,
   shadow,
+  background,
+  flexbox,
+  grid,
 } from 'system-props';
 import styled from '@emotion/styled';
 import { ThemeProvider } from 'emotion-theming';
+import * as CSS from 'csstype';
 
 const theme = {
   breakpoints: ['42em', '52em', '60em'],
@@ -27,23 +34,39 @@ const theme = {
       30: 'blue',
     },
   },
-};
+} as const;
 
 const system = createSystem();
 
-const Box = styled.div(
-  system({ ...shadow, ...color, ...layout, ...position, ...border, ...space })
+interface BoxProps extends SystemProps, PseudoProps<SystemProps> {
+  transform?: ResponsiveProp<CSS.Property.Transform>;
+}
+
+const Box = styled.div<BoxProps>(
+  system({
+    ...color,
+    ...border,
+    ...background,
+    ...flexbox,
+    ...grid,
+    ...shadow,
+    ...position,
+    ...layout,
+    ...space,
+    transform: true,
+  })
 );
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        color="$blue.30"
-        bg="$gray.30"
-        padding="$2"
-        border="1px solid $gray.10"
+        color="$blue.10"
+        bg={(t: typeof theme) => t.colors.gray[10]}
+        padding="$2 $8"
+        border="1px solid rgba(0, 0, 0, 0.1)"
         mb="$6"
+        transform="rotate(1deg)"
       >
         Hello
       </Box>

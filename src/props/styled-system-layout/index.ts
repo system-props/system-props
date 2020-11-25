@@ -4,10 +4,7 @@ import { Property } from 'csstype';
 
 const isNumber = (n: unknown) => typeof n === 'number' && !isNaN(n);
 
-const getWidth: Transform = (
-  value: unknown,
-  scale: { [x: string]: unknown }
-) => {
+const getWidth: Transform = (value, scale) => {
   let defaultValue = value;
   if (isNumber(value)) {
     const n = value as number;

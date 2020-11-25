@@ -3,8 +3,8 @@ import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
 import * as CSS from 'csstype';
 
 const getValue = (
-  value: unknown,
-  scale: {},
+  value: any,
+  scale: any,
   _props: Props,
   strict: boolean,
   undef?: undefined
@@ -23,7 +23,7 @@ export const createStyleFunction = ({
 
   const systemConfig = (
     value: unknown,
-    scale: string,
+    scale: any,
     props: Props,
     cache: Cache
   ) => {

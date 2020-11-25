@@ -3,10 +3,15 @@ import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
 import { Property } from 'csstype';
 
-const getMargin: Transform = (value, _, props) => {
+const getMargin: Transform = (value, _, props, strict) => {
   // Not using shorthand, just a theme value, e.g, m={4}
   if (typeof value === 'number') {
-    const result = positiveOrNegative(value, props?.theme?.space);
+    const result = positiveOrNegative(
+      value,
+      props?.theme?.space,
+      props,
+      strict
+    );
     if (result) {
       return result;
     }
@@ -18,12 +23,18 @@ const getMargin: Transform = (value, _, props) => {
     // applied to all sides, return a number or string
     // e.g., m="2" or m="$2"
     if (arr.length === 1) {
-      return positiveOrNegative(value, props?.theme?.space);
+      return positiveOrNegative(value, props?.theme?.space, props, strict);
     }
 
     return arr
       .reduce((acc: string[], curr: string) => {
-        let value = positiveOrNegative(curr, props?.theme?.space);
+        let value = positiveOrNegative(
+          curr,
+          props?.theme?.space,
+          props,
+          strict
+        );
+
         if (typeof value === 'number') {
           // if a number is returned, it's not converted
           // to a pixel value by the css parser in most libraries
@@ -39,7 +50,7 @@ const getMargin: Transform = (value, _, props) => {
   return value;
 };
 
-const getPadding: Transform = (value, _, props) => {
+const getPadding: Transform = (value, _, props, strict) => {
   // Not using shorthand, just a theme value, e.g, p={4}
   if (typeof value === 'number') {
     const result = betterGet(props?.theme?.space, value);
@@ -54,13 +65,17 @@ const getPadding: Transform = (value, _, props) => {
     // applied to all sides, return a number or string
     // e.g., m="2" or m="$2"
     if (arr.length === 1) {
-      return betterGet(props?.theme?.space, value, value);
+      return betterGet(props?.theme?.space, value, strict ? undefined : value);
     }
 
     return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
-        let value = betterGet(props?.theme?.space, curr, curr);
+        let value = betterGet(
+          props?.theme?.space,
+          curr,
+          strict ? undefined : curr
+        );
         if (typeof value === 'number') {
           // if a number is returned, it's not converted
           // to a pixel value by the css parser in most libraries

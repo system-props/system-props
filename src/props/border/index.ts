@@ -3,7 +3,12 @@ import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
 import { tokenizeValue } from '../tokenizeValue';
 import { Property } from 'csstype';
 
-export const borderShorthandTransform: Transform = (value, scale, props) => {
+export const borderShorthandTransform: Transform = (
+  value,
+  scale,
+  props,
+  strict
+) => {
   if (typeof value !== 'string') {
     return value;
   }
@@ -12,9 +17,21 @@ export const borderShorthandTransform: Transform = (value, scale, props) => {
     return border;
   }
   const [[width, style, color]] = tokenizeValue(value);
-  const borderWidth = betterGet(props?.theme?.borderWidths, width, width);
-  const borderStyle = betterGet(props?.theme?.borderStyles, style, style);
-  const borderColor = betterGet(props?.theme?.colors, color, color);
+  const borderWidth = betterGet(
+    props?.theme?.borderWidths,
+    width,
+    strict ? undefined : width
+  );
+  const borderStyle = betterGet(
+    props?.theme?.borderStyles,
+    style,
+    strict ? undefined : style
+  );
+  const borderColor = betterGet(
+    props?.theme?.colors,
+    color,
+    strict ? undefined : color
+  );
   return [borderWidth, borderStyle, borderColor].filter(Boolean).join(' ');
 };
 

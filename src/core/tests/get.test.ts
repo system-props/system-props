@@ -1,4 +1,4 @@
-import { betterGet, systemValueParser } from '../get';
+import { betterGet } from '../get';
 
 const get = betterGet;
 
@@ -12,24 +12,6 @@ test('returns a deeply nested value', () => {
     'colors.blue.3'
   );
   expect(a).toBe('#07c');
-});
-
-test('returns a $ prefixed value', () => {
-  const a = systemValueParser(
-    {
-      borderWidths: {
-        base: '1px',
-      },
-      colors: {
-        blue: {
-          10: '#0cf',
-          20: '#0be',
-        },
-      },
-    },
-    '$borderWidths.base solid $colors.blue.10'
-  );
-  expect(a).toBe('1px solid #0cf');
 });
 
 test('supports fallback values', () => {

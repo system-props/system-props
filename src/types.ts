@@ -27,12 +27,12 @@ export interface SystemConfig {
 }
 
 export type Transform = (
-  a: unknown,
-  scale: {},
+  a: any,
+  scale: any,
   props: Props,
   strict: boolean,
   undef?: undefined
-) => unknown;
+) => any;
 
 export type PropertyConfig = {
   properties?: Array<keyof CSS.Properties>;

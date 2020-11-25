@@ -1,9 +1,7 @@
-import { Theme } from '@/types';
-
 export const get = (
-  object?: Theme,
-  path?: unknown,
-  defaultValue?: unknown,
+  object?: any,
+  path?: any,
+  defaultValue?: any,
   // Not used, should be undefined
   // To make sure we get a true undefined
   undef?: undefined
@@ -32,15 +30,15 @@ export const get = (
 };
 
 export const betterGet = (
-  scale?: Theme,
-  value?: unknown,
-  defaultValue?: unknown,
+  object?: any,
+  path?: any,
+  defaultValue?: any,
   undef?: undefined
 ) => {
-  let result = get(scale, value);
+  let result = get(object, path);
 
-  if (!result && typeof value === 'string' && value.startsWith('$')) {
-    result = get(scale, value.slice(1));
+  if (!result && typeof path === 'string' && path.startsWith('$')) {
+    result = get(object, path.slice(1));
   }
 
   return result === undef ? defaultValue : result;

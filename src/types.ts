@@ -1,12 +1,21 @@
 import * as CSS from 'csstype';
 
-export type ResponsiveObject<T> = { [x: string]: T };
+export type SystemPropValue<T> = T | ((theme: Theme) => T);
+export type ResponsiveObject<T> = Record<string | number, T>;
 export type ResponsiveArray<T> = Array<T | null>;
-export type ResponsiveProp<T> = T | ResponsiveObject<T> | ResponsiveArray<T>;
+
+export type ResponsiveObjectValue<T> = SystemPropValue<ResponsiveObject<T>>;
+export type ResponsiveArrayValue<T> = SystemPropValue<ResponsiveArray<T>>;
+export type ResponsiveProp<T> =
+  | T
+  | ResponsiveObjectValue<T>
+  | ResponsiveArrayValue<T>;
 
 export interface Theme {
   [x: string]: any;
-  breakpoints?: Record<string, string | number>;
+  breakpoints?:
+    | ResponsiveObject<string | number>
+    | ResponsiveArray<string | number>;
 }
 
 export interface SomeObject {

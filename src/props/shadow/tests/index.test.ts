@@ -58,12 +58,20 @@ describe('getShadow', () => {
       '10px 5px 1px #e3e3e3'
     );
 
-    expect(getShadow('1px -16px gray400', {}, props, false)).toEqual('1px -16px #e3e3e3')
+    expect(getShadow('1px -16px gray400', {}, props, false)).toEqual(
+      '1px -16px #e3e3e3'
+    );
 
-    expect(getShadow('inset 1px 1em gray400', {}, props, false)).toEqual('inset 1px 1em #e3e3e3')
+    expect(getShadow('inset 1px 1em gray400', {}, props, false)).toEqual(
+      'inset 1px 1em #e3e3e3'
+    );
 
-    expect(getShadow('60px -16px gray400', {}, props, false)).toEqual('60px -16px #e3e3e3')
+    expect(getShadow('60px -16px gray400', {}, props, false)).toEqual(
+      '60px -16px #e3e3e3'
+    );
 
-    expect(getShadow('60px -16px rgba(0, 242, 42, .24)', {}, props, false)).toEqual('60px -16px rgba(0, 242, 42, .24)')
+    expect(
+      getShadow('60px -16px rgba(0, 242, 42, .24)', {}, props, false)
+    ).toEqual('60px -16px rgba(0, 242, 42, .24)');
   });
 });

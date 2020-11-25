@@ -12,6 +12,7 @@
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
     "csstype": "^3.0.5",
+    "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "np": "^6.5.0",
     "prettier": "^2.1.2",
@@ -35,7 +36,7 @@
     "test": "tsdx test",
     "lint": "tsdx lint src",
     "prepare": "tsdx build",
-    "format": "yarn prettier -w **/*.{ts,tsx,js}",
+    "format": "yarn lint --fix",
     "start-sc": "yarn --cwd ./examples/styled-components start",
     "clean": "rm -rf node_modules && rm -rf examples/**/node_modules && rm -rf dist",
     "release": "np"

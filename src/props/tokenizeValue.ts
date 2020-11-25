@@ -8,7 +8,12 @@ const TOKEN_QUOTED_STRING = 2;
 const TOKEN_FUNCTION = 3;
 const TOKEN_BRACKET = 4;
 
-type TokenType = typeof TOKEN_STRING | typeof TOKEN_QUOTED_STRING | typeof TOKEN_FUNCTION | typeof TOKEN_BRACKET | 0;
+type TokenType =
+  | typeof TOKEN_STRING
+  | typeof TOKEN_QUOTED_STRING
+  | typeof TOKEN_FUNCTION
+  | typeof TOKEN_BRACKET
+  | 0;
 
 let currentType: TokenType;
 let currentToken = '';
@@ -65,7 +70,8 @@ export const tokenizeValue = (str: string) => {
       case ')':
         currentToken += char;
         currentDepth--;
-        if (currentType === TOKEN_FUNCTION && !currentDepth) addCurrentTokenToGroup();
+        if (currentType === TOKEN_FUNCTION && !currentDepth)
+          addCurrentTokenToGroup();
         break;
 
       // Bracket values:

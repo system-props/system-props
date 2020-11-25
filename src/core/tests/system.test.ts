@@ -1,6 +1,6 @@
 import { createSystem } from '../createSystem';
 
-const breakpoints = [40, 52, 64].map(n => n + 'em');
+const breakpoints = [40, 52, 64].map((n) => n + 'em');
 
 test('returns a style parser', () => {
   const system = createSystem();

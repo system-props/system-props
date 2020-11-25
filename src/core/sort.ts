@@ -14,7 +14,7 @@ export const sort = (obj: SomeObject) => {
   const next: SomeObject = {};
   Object.keys(obj)
     .sort((a, b) => collator.compare(a, b))
-    .forEach(key => {
+    .forEach((key) => {
       next[key] = obj[key];
     });
   return next;

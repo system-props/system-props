@@ -6,7 +6,7 @@ const theme = {
     secondary: 'papayawhip',
   },
   fontSize: [0, 4, 8, 16],
-  breakpoints: [40, 52, 64].map(n => n + 'em'),
+  breakpoints: [40, 52, 64].map((n) => n + 'em'),
   systemPropsId: false,
 };
 

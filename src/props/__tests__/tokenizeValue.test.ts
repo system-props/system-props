@@ -15,7 +15,9 @@ describe('Parse css values into token groups', () => {
   });
 
   test('Handles quoted strings', () => {
-    expect(tokenizeValue('1.2em "Fira Sans"')).toEqual([['1.2em', '"Fira Sans"']]);
+    expect(tokenizeValue('1.2em "Fira Sans"')).toEqual([
+      ['1.2em', '"Fira Sans"'],
+    ]);
   });
 
   test('Handles css functions', () => {
@@ -25,9 +27,9 @@ describe('Parse css values into token groups', () => {
   });
 
   test('Handles nested css functions', () => {
-    expect(tokenizeValue('linear-gradient(red, hsla(120,100%,50%,0.3))')).toEqual([
-      ['linear-gradient(red, hsla(120,100%,50%,0.3))'],
-    ]);
+    expect(
+      tokenizeValue('linear-gradient(red, hsla(120,100%,50%,0.3))')
+    ).toEqual([['linear-gradient(red, hsla(120,100%,50%,0.3))']]);
   });
 
   test('Handles multiple groups', () => {
@@ -38,7 +40,10 @@ describe('Parse css values into token groups', () => {
   });
 
   test('Handles multiple groups with css functions', () => {
-    expect(tokenizeValue('linear-gradient(red, blue), red')).toEqual([['linear-gradient(red, blue)'], ['red']]);
+    expect(tokenizeValue('linear-gradient(red, blue), red')).toEqual([
+      ['linear-gradient(red, blue)'],
+      ['red'],
+    ]);
   });
 
   test('handles slashes', () => {
@@ -49,9 +54,8 @@ describe('Parse css values into token groups', () => {
   });
 
   test('Handles nested css functions in multiple groups', () => {
-    expect(tokenizeValue('linear-gradient(red, hsla(120,100%,50%,0.3)), red')).toEqual([
-      ['linear-gradient(red, hsla(120,100%,50%,0.3))'],
-      ['red'],
-    ]);
+    expect(
+      tokenizeValue('linear-gradient(red, hsla(120,100%,50%,0.3)), red')
+    ).toEqual([['linear-gradient(red, hsla(120,100%,50%,0.3))'], ['red']]);
   });
 });

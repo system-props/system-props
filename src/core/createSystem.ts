@@ -41,6 +41,7 @@ export const createParser = (
   const parse: Parser = (props: Props) => {
     let styles: Record<string, any> = {};
     let shouldSort = false;
+    // @ts-ignore
     const isCacheDisabled = Boolean(props.theme?.disableSystemPropsCache);
 
     const parseEntry = (obj: SomeObject, key: string) => {

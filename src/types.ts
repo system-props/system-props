@@ -1,21 +1,83 @@
+import { BaseColorProps } from './props/color';
 import * as CSS from 'csstype';
 
-export type SystemPropValue<T> = T | ((theme: Theme) => T);
+// export type SystemPropValue<T> = T | ((theme: Theme) => T);
 export type ResponsiveObject<T> = Record<string | number, T>;
 export type ResponsiveArray<T> = Array<T | null>;
 
-export type ResponsiveObjectValue<T> = SystemPropValue<ResponsiveObject<T>>;
-export type ResponsiveArrayValue<T> = SystemPropValue<ResponsiveArray<T>>;
+// export type ResponsiveObjectValue<T> = SystemPropValue<ResponsiveObject<T>>;
+// export type ResponsiveArrayValue<T> = SystemPropValue<ResponsiveArray<T>>;
 export type ResponsiveProp<T> =
   | T
-  | ResponsiveObjectValue<T>
-  | ResponsiveArrayValue<T>;
+  | ResponsiveObject<T>
+  | ResponsiveArray<T>
+  | ((
+      theme: Theme
+    ) => string | number | ResponsiveArray<T> | ResponsiveObject<T>);
+
+interface TypeScale {
+  [key: string]: string;
+}
+
+export interface LooseTheme {
+  [key: string]: any;
+}
+
+// export interface Theme {
+//   [x: string]: any;
+//   colors?: {
+//     $blue100: string;
+//   };
+//   sizes?: TypeScale;
+//   space?: TypeScale;
+//   borders?: TypeScale;
+//   borderStyles?: TypeScale;
+//   borderWidths?: TypeScale;
+//   letterSpacings?: TypeScale;
+//   zIndices?: TypeScale;
+//   shadows?: TypeScale;
+//   fontWeights?: TypeScale;
+//   fontSizes?: TypeScale;
+//   lineHeights?: TypeScale;
+//   fonts?: TypeScale;
+//   breakpoints?: TypeScale;
+// }
+
+export interface StrictTheme {
+  [x: string]: any;
+  colors?: TypeScale;
+  sizes?: TypeScale;
+  space?: TypeScale;
+  borders?: TypeScale;
+  borderStyles?: TypeScale;
+  borderWidths?: TypeScale;
+  letterSpacings?: TypeScale;
+  zIndices?: TypeScale;
+  shadows?: TypeScale;
+  fontWeights?: TypeScale;
+  fontSizes?: TypeScale;
+  lineHeights?: TypeScale;
+  fonts?: TypeScale;
+  breakpoints?: TypeScale;
+}
 
 export interface Theme {
   [x: string]: any;
-  breakpoints?:
-    | ResponsiveObject<string | number>
-    | ResponsiveArray<string | number>;
+  // colors?: any;
+  // sizes?: any;
+  // space?: any;
+  // borders?: any;
+  // borderStyles?: any;
+  // borderWidths?: any;
+  // letterSpacings?: any;
+  // zIndices?: any;
+  // shadows?: any;
+  // fontWeights?: any;
+  // fontSizes?: any;
+  // lineHeights?: any;
+  // fonts?: any;
+  // breakpoints?: any;
+  // disableSystemPropsCache?: boolean;
 }
 
 export interface SomeObject {
@@ -60,3 +122,9 @@ export interface Cache {
   media?: (string | null)[];
   strict: boolean;
 }
+
+export type ColorProps = {
+  [K in keyof BaseColorProps]?: Theme['colors'] extends object
+    ? ResponsiveProp<keyof Theme['colors'] | BaseColorProps[K]>
+    : ResponsiveProp<BaseColorProps[K]>;
+};

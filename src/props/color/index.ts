@@ -1,4 +1,10 @@
-import { PropConfigCollection, ResponsiveProp } from '@/types';
+import {
+  PropConfigCollection,
+  ResponsiveProp,
+  Theme,
+  ResponsiveObjectValue,
+  ResponsiveArrayValue,
+} from '@/types';
 import * as CSS from 'csstype';
 
 const config: PropConfigCollection = {
@@ -22,13 +28,25 @@ const config: PropConfigCollection = {
 };
 config.bg = config.backgroundColor;
 
-export interface ColorProps {
-  color?: ResponsiveProp<CSS.Property.Color>;
-  backgroundColor?: ResponsiveProp<CSS.Property.Color>;
-  bg?: ResponsiveProp<CSS.Property.Color>;
-  fill?: ResponsiveProp<CSS.Property.Color>;
-  stroke?: ResponsiveProp<CSS.Property.Color>;
-  opacity?: ResponsiveProp<CSS.Property.Opacity>;
-}
+type Colors<T extends Theme> = keyof T['colors'];
+
+export type BaseColorProps = {
+  color?: CSS.Property.Color;
+  backgroundColor?: CSS.Property.BackgroundColor;
+  bg?: CSS.Property.BackgroundColor;
+  fill?: CSS.Property.Fill;
+  stroke?: CSS.Property.Stroke;
+};
+
+// export type BaseColorProps<T extends Theme> = {
+//   [K in keyof One]?: ResponsiveProp<keyof T['colors']>;
+//   // [K in keyof CoreColorProps]?: Theme extends StrictTheme
+//   //   ? keyof Theme['colors']
+//   //   : CoreColorProps[K];
+// } & { opacity?: ResponsiveProp<CSS.Property.Opacity> };
+
+// export interface BaseColorProps {
+//   color?: keyof Theme['colors'];
+// }
 
 export const color = config;

@@ -17,24 +17,8 @@ import {
   shouldForwardProp,
 } from 'system-props';
 import styled, { ThemeProvider } from 'styled-components';
+import { theme } from './theme';
 import * as CSS from 'csstype';
-
-const theme = {
-  breakpoints: ['42em', '52em', '60em'],
-  space: ['0px', '4px', '8px', '12px', '16px', '20px', '24px', '28px', '32px'],
-  colors: {
-    gray: {
-      10: '#333',
-      20: '#666',
-      30: '#999',
-    },
-    blue: {
-      10: 'skyblue',
-      20: 'teal',
-      30: 'blue',
-    },
-  },
-} as const;
 
 const system = createSystem();
 
@@ -65,7 +49,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Box
         color="$blue.10"
-        bg={(t: typeof theme) => t.colors.gray[10]}
+        bg={(theme) => theme.colors.yellow}
         padding="$2 $8"
         border="1px solid rgba(0, 0, 0, 0.1)"
         mb="$6"

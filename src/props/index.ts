@@ -1,6 +1,5 @@
 import { BackgroundProps } from './background';
 import { BorderProps } from './border';
-import { ColorProps } from './color';
 import { FlexboxProps } from './flexbox';
 import { GridProps } from './grid';
 import { LayoutProps } from './layout';
@@ -24,7 +23,6 @@ export { layout as styledSystemLayout } from './styled-system-layout';
 export interface SystemProps
   extends BackgroundProps,
     BorderProps,
-    ColorProps,
     FlexboxProps,
     GridProps,
     LayoutProps,

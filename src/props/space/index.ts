@@ -1,5 +1,11 @@
 import { betterGet } from '@/core/get';
-import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
+import {
+  PropConfigCollection,
+  Transform,
+  ResponsiveProp,
+  Theme,
+  StrictTheme,
+} from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
 import { Property } from 'csstype';
 
@@ -217,4 +223,17 @@ export interface MarginProps {
   my?: ResponsiveProp<Property.MarginTop>;
 }
 
-export interface SpaceProps extends MarginProps, PaddingProps {}
+// export interface SpaceProps extends MarginProps, PaddingProps {}
+
+type MorePadding = {
+  [K in keyof PaddingProps]?: Theme extends StrictTheme
+    ? ResponsiveProp<keyof Theme['space']>
+    : PaddingProps[K];
+};
+type MoreMargin = {
+  [K in keyof MarginProps]?: Theme extends StrictTheme
+    ? ResponsiveProp<keyof Theme['space']>
+    : MarginProps[K];
+};
+
+export type SpaceProps = MorePadding & MoreMargin;

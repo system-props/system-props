@@ -1,6 +1,6 @@
-import { Theme, StrictTheme } from 'system-props';
+import { Theme } from 'system-props';
 
-interface AppTheme extends StrictTheme {
+export interface AppTheme extends Theme {
   colors: {
     gray10: string;
     gray20: string;
@@ -22,11 +22,7 @@ interface AppTheme extends StrictTheme {
   };
 }
 
-declare module 'system-props' {
-  export interface Theme extends AppTheme {}
-}
-
-export const theme: Theme = {
+export const theme: AppTheme = {
   colors: {
     gray10: '#333',
     gray20: '#666',

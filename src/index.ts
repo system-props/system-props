@@ -6,9 +6,19 @@ export * from './pseudos';
 export * from './propNames';
 export * from './shouldForwardProp';
 export {
-  ResponsiveProp,
+  SystemProp,
   Theme,
   LooseTheme,
   StrictTheme,
   ColorProps,
+  SpaceProps,
+  BorderProps,
+  TypographyProps,
+  LayoutProps,
+  ShadowProps,
+  PositionProps,
+  GridProps,
+  FlexboxProps,
+  AllSystemProps,
+  ResponsiveObject,
 } from './types';

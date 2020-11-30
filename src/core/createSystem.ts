@@ -2,7 +2,7 @@ import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
 import { get } from './get';
 import {
-  ResponsiveProp,
+  SystemProp,
   SystemConfig,
   PropConfigCollection,
   Props,
@@ -23,7 +23,7 @@ export interface Parser {
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 
-function parseBreakpoints(breakpoints: ResponsiveProp<string | number>) {
+function parseBreakpoints(breakpoints: SystemProp<string | number>) {
   let bps = breakpoints;
   if (!Array.isArray(breakpoints)) {
     bps = Object.values(breakpoints);

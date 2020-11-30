@@ -1,6 +1,5 @@
-import { PropConfigCollection, ResponsiveProp } from '@/types';
+import { PropConfigCollection } from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
-import { Property } from 'csstype';
 
 export const position: PropConfigCollection = {
   position: true,
@@ -29,12 +28,3 @@ export const position: PropConfigCollection = {
     transform: positiveOrNegative,
   },
 };
-
-export interface PositionProps {
-  position?: ResponsiveProp<Property.Position>;
-  top?: ResponsiveProp<Property.Top>;
-  left?: ResponsiveProp<Property.Left>;
-  right?: ResponsiveProp<Property.Right>;
-  bottom?: ResponsiveProp<Property.Bottom>;
-  zIndex?: ResponsiveProp<Property.ZIndex>;
-}

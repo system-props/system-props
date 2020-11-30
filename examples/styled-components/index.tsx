@@ -1,55 +1,13 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {
-  createSystem,
-  color,
-  ResponsiveProp,
-  PseudoProps,
-  SystemProps,
-  border,
-  space,
-  layout,
-  position,
-  shadow,
-  background,
-  flexbox,
-  grid,
-  shouldForwardProp,
-} from 'system-props';
-import styled, { ThemeProvider } from 'styled-components';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import * as CSS from 'csstype';
-
-const system = createSystem();
-
-interface BoxProps extends SystemProps, PseudoProps<SystemProps> {
-  transform?: ResponsiveProp<CSS.Property.Transform>;
-}
-
-const Box = styled('div').withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    shouldForwardProp(prop) && defaultValidatorFn(prop),
-})<BoxProps>(
-  system({
-    ...color,
-    ...border,
-    ...background,
-    ...flexbox,
-    ...grid,
-    ...shadow,
-    ...position,
-    ...layout,
-    ...space,
-    transform: true,
-  })
-);
+import { Box } from './Box';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        color="$blue.10"
-        bg={(theme) => theme.colors.yellow}
         padding="$2 $8"
         border="1px solid rgba(0, 0, 0, 0.1)"
         mb="$6"

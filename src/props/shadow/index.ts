@@ -1,7 +1,6 @@
 import { betterGet } from '@/core/get';
-import { Transform, PropConfigCollection, ResponsiveProp } from '@/types';
+import { Transform, PropConfigCollection } from '@/types';
 import { tokenizeValue } from '../tokenizeValue';
-import { Property } from 'csstype';
 
 export const getShadow: Transform = (value, _, props) => {
   let result = betterGet(props?.theme?.shadows, value);
@@ -30,8 +29,3 @@ export const shadow: PropConfigCollection = {
     transform: getShadow,
   },
 };
-
-export interface ShadowProps {
-  boxShadow?: ResponsiveProp<Property.BoxShadow>;
-  textShadow?: ResponsiveProp<Property.TextShadow>;
-}

@@ -4,11 +4,11 @@ type ThemeBreakpointKey = Theme['breakpoints'] extends object
   ? keyof Theme['breakpoints'] | '_' | 'all'
   : never;
 
-type ResponsiveObject<T> = {
+export type ResponsiveObject<T> = {
   [K in ThemeBreakpointKey]?: T;
 };
-type ResponsiveArray<T> = Array<T | null>;
-type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
+export type ResponsiveArray<T> = Array<T | null>;
+export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
 
 export type SystemProp<T> =
   | T
@@ -17,13 +17,10 @@ export type SystemProp<T> =
 
 interface TypeScale {
   [key: string]: string;
+  [key: number]: string;
 }
 
-export interface LooseTheme {
-  [key: string]: any;
-}
-
-export interface StrictTheme {
+export interface Theme {
   [x: string]: any;
   colors?: TypeScale;
   sizes?: TypeScale;
@@ -39,11 +36,12 @@ export interface StrictTheme {
   lineHeights?: TypeScale;
   fonts?: TypeScale;
   breakpoints?: TypeScale;
+  disableSystemPropsCache?: boolean;
 }
 
-export interface Theme {
-  [x: string]: any;
-}
+// export interface Theme {
+//   [x: string]: any;
+// }
 
 export type Props = {
   theme?: Theme;
@@ -100,6 +98,7 @@ export type SizeLookup<T> = Theme['sizes'] extends object
 
 export interface ColorProps {
   color?: ColorLookup<CSS.BackgroundColor>;
+  textColor?: ColorLookup<CSS.BackgroundColor>;
   backgroundColor?: ColorLookup<CSS.BackgroundColor>;
   bg?: ColorLookup<CSS.BackgroundColor>;
   fill?: ColorLookup<CSS.Fill>;
@@ -280,7 +279,9 @@ export interface PositionProps {
   left?: SizeLookup<CSS.Left>;
   right?: SizeLookup<CSS.Right>;
   bottom?: SizeLookup<CSS.Bottom>;
-  zIndex?: SystemProp<CSS.ZIndex>;
+  zIndex?: Theme['zIndices'] extends object
+    ? SystemProp<keyof Theme['zIndices'] | CSS.ZIndex>
+    : SystemProp<CSS.ZIndex>;
 }
 
 export interface ShadowProps {

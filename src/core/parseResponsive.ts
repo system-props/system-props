@@ -71,9 +71,10 @@ export const parseResponsiveObject = ({
   };
   props: Props;
 }) => {
-  const breakpoints = cache.breakpoints as ResponsiveObject<string>;
+  const breakpoints = cache.breakpoints as ResponsiveObject<string | number>;
   let styles = {};
   for (const key in propValue) {
+    // @ts-ignore
     const breakpoint = breakpoints[key];
     const valueAtQuery = propValue[key];
     // e.g.

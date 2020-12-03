@@ -1,6 +1,6 @@
-import 'system-props';
+import '@emotion/react';
 import { AppTheme } from './theme';
 
-declare module 'system-props' {
+declare module '@emotion/react' {
   export interface Theme extends AppTheme {}
 }

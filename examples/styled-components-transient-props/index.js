@@ -8,27 +8,27 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        color="blue30"
-        bg="gray10"
-        padding="$2 $4"
-        border="1px solid rgba(0, 0, 0, 0.1)"
-        mb="$6"
-        transform="rotate(1deg)"
+        $color="gray10"
+        $bg="$blue10"
+        $padding="$2"
+        $border="1px solid rgba(0, 0, 0, 0.1)"
+        $mb="$4"
+        $transform="rotate(1deg)"
       >
         Hello
       </Box>
-      <Box bg="$gray20" marginTop="-$2" mb="$4" padding="$2">
+      <Box $bg="$gray20" $marginTop="-$2" $mb={4} $padding="$2">
         Welcome
       </Box>
       <Box
-        bg="blue20"
-        padding="$2"
-        // boxShadow="0px 1px 3px $blue10"
-        _hover={{ bg: 'blue10' }}
+        $bg="blue20"
+        $p="$2"
+        $boxShadow="0px 1px 3px $blue10"
+        $_hover={{ bg: 'blue10' }}
       >
         Welcome
       </Box>
-      <Box p="$4" bg="red">
+      <Box $p={4} $bg="red">
         Welcome
       </Box>
     </ThemeProvider>

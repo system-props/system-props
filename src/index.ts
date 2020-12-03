@@ -8,8 +8,6 @@ export * from './shouldForwardProp';
 export {
   SystemProp,
   Theme,
-  LooseTheme,
-  StrictTheme,
   ColorProps,
   SpaceProps,
   BorderProps,
@@ -20,5 +18,4 @@ export {
   GridProps,
   FlexboxProps,
   AllSystemProps,
-  ResponsiveObject,
 } from './types';

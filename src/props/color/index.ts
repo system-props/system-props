@@ -20,3 +20,4 @@ export const color: PropConfigCollection = {
   opacity: true,
 };
 color.bg = color.backgroundColor;
+color.textColor = color.color;

@@ -1,5 +1,4 @@
-import { PropConfigCollection, ResponsiveProp } from '@/types';
-import { Property } from 'csstype';
+import { PropConfigCollection } from '@/types';
 
 export const typography: PropConfigCollection = {
   fontFamily: {
@@ -25,13 +24,3 @@ export const typography: PropConfigCollection = {
   textAlign: true,
   fontStyle: true,
 };
-
-export interface TypographyProps {
-  fontFamily?: ResponsiveProp<Property.FontFamily>;
-  fontSize?: ResponsiveProp<Property.FontSize>;
-  fontWeight?: ResponsiveProp<Property.FontWeight>;
-  fontStyle?: ResponsiveProp<Property.FontStyle>;
-  lineHeight?: ResponsiveProp<Property.LineHeight>;
-  letterSpacing?: ResponsiveProp<Property.LetterSpacing>;
-  textAlign?: ResponsiveProp<Property.TextAlign>;
-}

@@ -1,4 +1,4 @@
-import { PropConfigCollection, Transform, ResponsiveProp } from '@/types';
+import { PropConfigCollection, Transform } from '@/types';
 import { get } from '@/core';
 import { Property } from 'csstype';
 
@@ -51,16 +51,16 @@ export const layout: PropConfigCollection = {
 };
 
 export interface LayoutProps {
-  height?: ResponsiveProp<Property.Height>;
-  width?: ResponsiveProp<Property.Width>;
-  minWidth?: ResponsiveProp<Property.MinWidth>;
-  minHeight?: ResponsiveProp<Property.MinHeight>;
-  maxWidth?: ResponsiveProp<Property.MaxWidth>;
-  maxHeight?: ResponsiveProp<Property.MaxHeight>;
-  size?: ResponsiveProp<Property.Width>;
-  overflow?: ResponsiveProp<Property.Overflow>;
-  overflowX?: ResponsiveProp<Property.OverflowX>;
-  overflowY?: ResponsiveProp<Property.OverflowY>;
-  display?: ResponsiveProp<Property.Display>;
-  verticalAlign?: ResponsiveProp<Property.VerticalAlign>;
+  height?: Property.Height;
+  width?: Property.Width;
+  minWidth?: Property.MinWidth;
+  minHeight?: Property.MinHeight;
+  maxWidth?: Property.MaxWidth;
+  maxHeight?: Property.MaxHeight;
+  size?: Property.Width;
+  overflow?: Property.Overflow;
+  overflowX?: Property.OverflowX;
+  overflowY?: Property.OverflowY;
+  display?: Property.Display;
+  verticalAlign?: Property.VerticalAlign;
 }

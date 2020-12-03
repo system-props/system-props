@@ -39,10 +39,6 @@ export interface Theme {
   disableSystemPropsCache?: boolean;
 }
 
-// export interface Theme {
-//   [x: string]: any;
-// }
-
 export type Props = {
   theme?: Theme;
   [x: string]: any;

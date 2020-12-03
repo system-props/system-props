@@ -8,6 +8,9 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
+        position="relative"
+        fontStyle="italic"
+        fontWeight="bold"
         color="blue30"
         bg="gray10"
         padding="$2 $4"
@@ -23,7 +26,7 @@ const App = () => {
       <Box
         bg="blue20"
         padding="$2"
-        // boxShadow="0px 1px 3px $blue10"
+        boxShadow="0px 1px 3px $blue10"
         _hover={{ bg: 'blue10' }}
       >
         Welcome

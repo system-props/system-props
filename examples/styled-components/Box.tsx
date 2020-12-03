@@ -1,9 +1,9 @@
 import {
   createSystem,
   color,
-  ResponsiveProp,
   PseudoProps,
-  SystemProps,
+  AllSystemProps,
+  SystemProp,
   border,
   space,
   layout,
@@ -19,8 +19,8 @@ import * as CSS from 'csstype';
 
 const system = createSystem();
 
-interface BoxProps extends SystemProps, PseudoProps<SystemProps> {
-  transform?: ResponsiveProp<CSS.Property.Transform>;
+interface BoxProps extends AllSystemProps, PseudoProps<AllSystemProps> {
+  transform?: SystemProp<CSS.Property.Transform>;
 }
 
 export const Box = styled('div').withConfig({

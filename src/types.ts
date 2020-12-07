@@ -1,4 +1,4 @@
-import { Property as CSS, Properties as CSSProperties } from 'csstype';
+import { Property as CSS, Properties as CSSProperties} from 'csstype';
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
   ? keyof Theme['breakpoints'] | '_' | 'all'
@@ -15,27 +15,54 @@ export type SystemProp<T> =
   | ResponsiveValue<T>
   | ((theme: Theme) => T | ResponsiveValue<T>);
 
-interface TypeScale {
-  [key: string]: string;
-  [key: number]: string;
+type TokenScales =
+  | 'colors'
+  | 'sizes'
+  | 'space'
+  | 'borders'
+  | 'borderStyles'
+  | 'borderWidths'
+  | 'letterSpacings'
+  | 'zIndices'
+  | 'shadows'
+  | 'fontWeights'
+  | 'fontSizes'
+  | 'lineHeights'
+  | 'fonts'
+  | 'breakpoints';
+
+type SystemPropValueOptions = 'all' | 'prefix' | 'noprefix';
+
+type TokenLookup<
+  Token extends TokenScales,
+  PrefixOption extends SystemPropValueOptions,
+  TTheme extends Theme = Theme,
+> = PrefixOption extends 'all' ? keyof TTheme[Token] | `$${string & keyof TTheme[Token]}` : PrefixOption extends 'prefix' ? `$${string & keyof TTheme[Token]}` : PrefixOption extends 'noprefix' ? keyof TTheme[Token] : never;
+
+// prettier-ignore
+type SystemPropValue<
+  CSSProperty extends any,
+  PrefixOption extends SystemPropValueOptions = 'noprefix',
+  Token extends TokenScales | null = null, 
+> = Token extends TokenScales 
+    ? Theme[Token] extends object 
+      ? SystemProp<TokenLookup<Token, PrefixOption> | CSSProperty> : SystemProp<CSSProperty> 
+      : SystemProp<CSSProperty>;
+
+export interface NewColorProps<PrefixOption extends SystemPropValueOptions> {
+  color?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
+  textColor?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
+  backgroundColor?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
+  bg?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
+  fill?: SystemPropValue<CSS.Fill, PrefixOption, 'colors'>;
+  stroke?: SystemPropValue<CSS.Stroke, PrefixOption, 'colors'>;
+  opacity?: SystemPropValue<CSS.Opacity>;
 }
 
-export interface Theme {
+type ThemeTokens = Record<TokenScales, Record<string | number, any>>;
+
+export interface Theme extends Partial<ThemeTokens> {
   [x: string]: any;
-  colors?: TypeScale;
-  sizes?: TypeScale;
-  space?: TypeScale;
-  borders?: TypeScale;
-  borderStyles?: TypeScale;
-  borderWidths?: TypeScale;
-  letterSpacings?: TypeScale;
-  zIndices?: TypeScale;
-  shadows?: TypeScale;
-  fontWeights?: TypeScale;
-  fontSizes?: TypeScale;
-  lineHeights?: TypeScale;
-  fonts?: TypeScale;
-  breakpoints?: TypeScale;
   disableSystemPropsCache?: boolean;
 }
 

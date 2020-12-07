@@ -42,11 +42,6 @@
     "release": "np"
   },
   "peerDependencies": {},
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint src"
-    }
-  },
   "prettier": {
     "printWidth": 80,
     "semi": true,

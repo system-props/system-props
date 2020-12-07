@@ -1,11 +1,11 @@
-import { Property as CSS, Properties as CSSProperties} from 'csstype';
+import { Property as CSS, Properties as CSSProperties } from 'csstype';
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
-  ? keyof Theme['breakpoints'] | '_' | 'all'
+  ? keyof Theme['breakpoints']
   : never;
 
 export type ResponsiveObject<T> = {
-  [K in ThemeBreakpointKey]?: T;
+  [K in ThemeBreakpointKey | 'all']?: T;
 };
 export type ResponsiveArray<T> = Array<T | null>;
 export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
@@ -29,42 +29,119 @@ type TokenScales =
   | 'fontSizes'
   | 'lineHeights'
   | 'fonts'
+  | 'radii'
   | 'breakpoints';
 
-type SystemPropValueOptions = 'all' | 'prefix' | 'noprefix';
+type PrefixOptions = 'all' | 'prefix' | 'noprefix';
+type PrefixDefault = 'noprefix';
 
 type TokenLookup<
   Token extends TokenScales,
-  PrefixOption extends SystemPropValueOptions,
-  TTheme extends Theme = Theme,
-> = PrefixOption extends 'all' ? keyof TTheme[Token] | `$${string & keyof TTheme[Token]}` : PrefixOption extends 'prefix' ? `$${string & keyof TTheme[Token]}` : PrefixOption extends 'noprefix' ? keyof TTheme[Token] : never;
+  PrefixOption extends PrefixOptions,
+  TTheme extends Theme = Theme
+> = PrefixOption extends 'all'
+  ? keyof TTheme[Token] | `$${string & keyof TTheme[Token]}`
+  : PrefixOption extends 'prefix'
+  ? `$${string & keyof TTheme[Token]}`
+  : PrefixOption extends 'noprefix'
+  ? keyof TTheme[Token]
+  : never;
 
-// prettier-ignore
 type SystemPropValue<
   CSSProperty extends any,
-  PrefixOption extends SystemPropValueOptions = 'noprefix',
-  Token extends TokenScales | null = null, 
-> = Token extends TokenScales 
-    ? Theme[Token] extends object 
-      ? SystemProp<TokenLookup<Token, PrefixOption> | CSSProperty> : SystemProp<CSSProperty> 
-      : SystemProp<CSSProperty>;
+  PrefixOption extends PrefixOptions = PrefixDefault,
+  Token extends TokenScales | null = null
+> = Token extends TokenScales
+  ? Theme[Token] extends object
+    ? SystemProp<TokenLookup<Token, PrefixOption> | CSSProperty>
+    : SystemProp<CSSProperty>
+  : SystemProp<CSSProperty>;
 
-export interface NewColorProps<PrefixOption extends SystemPropValueOptions> {
-  color?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
-  textColor?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
-  backgroundColor?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
-  bg?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
-  fill?: SystemPropValue<CSS.Fill, PrefixOption, 'colors'>;
-  stroke?: SystemPropValue<CSS.Stroke, PrefixOption, 'colors'>;
-  opacity?: SystemPropValue<CSS.Opacity>;
-}
-
-type ThemeTokens = Record<TokenScales, Record<string | number, any>>;
-
-export interface Theme extends Partial<ThemeTokens> {
-  [x: string]: any;
-  disableSystemPropsCache?: boolean;
-}
+// const mapCssToTokenScale: Record<string, TokenScales> = {
+//   color: 'colors',
+//   textColor: 'colors',
+//   backgroundColor: 'colors',
+//   bg: 'colors',
+//   fill: 'colors',
+//   stroke: 'colors',
+//   margin:'space',
+//   m: 'space',
+//   marginTop:'space',
+//   marginLeft:'space',
+//   marginBottom:'space',
+//   marginRight:'space',
+//   mt:'space',
+//   ml:'space',
+//   mb:'space',
+//   mr:'space',
+//   marginX:'space',
+//   marginY:'space',
+//   mx:'space',
+//   my:'space',
+//   p: 'space',
+//   paddingTop:'space',
+//   paddingLeft:'space',
+//   paddingBottom:'space',
+//   paddingRight:'space',
+//   pt:'space',
+//   pl:'space',
+//   pb:'space',
+//   pr:'space',
+//   paddingX:'space',
+//   paddingY:'space',
+//   px:'space',
+//   py:'space',
+//   border: 'borders',
+//   borderX: 'borders',
+//   borderY: 'borders',
+//   borderTop: 'borders',
+//   borderLeft: 'borders',
+//   borderBottom: 'borders',
+//   borderRight: 'borders',
+//   borderColor: 'colors',
+//   borderLeftColor: 'colors',
+//   borderRightColor: 'colors',
+//   borderTopColor: 'colors',
+//   borderBottomColor: 'colors',
+//   borderStyle: 'borderStyles',
+//   borderLeftStyle: 'borderStyles',
+//   borderRightStyle: 'borderStyles',
+//   borderTopStyle: 'borderStyles',
+//   borderBottomStyle: 'borderStyles',
+//   borderWidth: 'borderWidths',
+//   borderLeftWidth: 'borderWidths',
+//   borderRightWidth: 'borderWidths',
+//   borderTopWidth: 'borderWidths',
+//   borderBottomWidth: 'borderWidths',
+//   borderRadius: 'radii',
+//   borderTopLeftRadius: 'radii',
+//   borderTopRightRadius: 'radii',
+//   borderBottomLeftRadius: 'radii',
+//   borderBottomRightRadius: 'radii',
+//   gap: 'space',
+//   gridGap: 'space',
+//   gridColumnGap: 'space',
+//   gridRowGap: 'space',
+//   height:'space',
+//   width:'space',
+//   minWidth:'space',
+//   minHeight:'space',
+//   maxWidth:'space',
+//   maxHeight:'space',
+//   size:'space',
+//   top: 'space',
+//   left: 'space',
+//   right: 'space',
+//   bottom: 'space',
+//   zIndex: 'zIndices',
+//   fontFamily: 'fonts',
+//   fontSize: 'fontSizes',
+//   fontWeight: 'fontWeights',
+//   lineHeight: 'lineHeights',
+//   letterSpacing: 'letterSpacings',
+//   boxShadow: 'shadows',
+//   textShadow: 'shadows',
+// }
 
 export type Props = {
   theme?: Theme;
@@ -107,146 +184,154 @@ export interface SomeObject {
   [x: string]: SomeObject | string | number | ((x: Theme) => string | number);
 }
 
-export type ColorLookup<T> = Theme['colors'] extends object
-  ? SystemProp<keyof Theme['colors'] | T>
-  : SystemProp<T>;
-export type SpaceLookup<T> = Theme['space'] extends object
-  ? SystemProp<keyof Theme['space'] | T>
-  : Theme['space'] extends any[]
-  ? SystemProp<Theme['space'][number] | T>
-  : SystemProp<T>;
-export type SizeLookup<T> = Theme['sizes'] extends object
-  ? SystemProp<keyof Theme['sizes'] | T>
-  : SystemProp<T>;
-
-export interface ColorProps {
-  color?: ColorLookup<CSS.BackgroundColor>;
-  textColor?: ColorLookup<CSS.BackgroundColor>;
-  backgroundColor?: ColorLookup<CSS.BackgroundColor>;
-  bg?: ColorLookup<CSS.BackgroundColor>;
-  fill?: ColorLookup<CSS.Fill>;
-  stroke?: ColorLookup<CSS.Stroke>;
-  opacity?: SystemProp<CSS.Opacity>;
+export interface ColorProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  color?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
+  textColor?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
+  backgroundColor?: SystemPropValue<
+    CSS.BackgroundColor,
+    PrefixOption,
+    'colors'
+  >;
+  bg?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
+  fill?: SystemPropValue<CSS.Fill, PrefixOption, 'colors'>;
+  stroke?: SystemPropValue<CSS.Stroke, PrefixOption, 'colors'>;
+  opacity?: SystemPropValue<CSS.Opacity>;
 }
 
-export interface MarginProps {
-  margin?: SpaceLookup<CSS.Margin>;
-  m?: SpaceLookup<CSS.Margin>;
-  marginTop?: SpaceLookup<CSS.MarginTop>;
-  marginLeft?: SpaceLookup<CSS.MarginLeft>;
-  marginBottom?: SpaceLookup<CSS.MarginBottom>;
-  marginRight?: SpaceLookup<CSS.MarginRight>;
-  mt?: SpaceLookup<CSS.MarginTop>;
-  ml?: SpaceLookup<CSS.MarginLeft>;
-  mb?: SpaceLookup<CSS.MarginBottom>;
-  mr?: SpaceLookup<CSS.MarginRight>;
-  marginX?: SpaceLookup<CSS.MarginLeft>;
-  marginY?: SpaceLookup<CSS.MarginTop>;
-  mx?: SpaceLookup<CSS.MarginLeft>;
-  my?: SpaceLookup<CSS.MarginTop>;
+export interface MarginProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  margin?: SystemPropValue<CSS.Margin, PrefixOption, 'space'>;
+  m?: SystemPropValue<CSS.Margin, PrefixOption, 'space'>;
+  marginTop?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
+  marginLeft?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
+  marginBottom?: SystemPropValue<CSS.MarginBottom, PrefixOption, 'space'>;
+  marginRight?: SystemPropValue<CSS.MarginRight, PrefixOption, 'space'>;
+  mt?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
+  ml?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
+  mb?: SystemPropValue<CSS.MarginBottom, PrefixOption, 'space'>;
+  mr?: SystemPropValue<CSS.MarginRight, PrefixOption, 'space'>;
+  marginX?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
+  marginY?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
+  mx?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
+  my?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
 }
 
-export interface PaddingProps {
-  padding?: SpaceLookup<CSS.Padding>;
-  p?: SpaceLookup<CSS.Padding>;
-  paddingTop?: SpaceLookup<CSS.PaddingTop>;
-  paddingLeft?: SpaceLookup<CSS.PaddingLeft>;
-  paddingBottom?: SpaceLookup<CSS.PaddingBottom>;
-  paddingRight?: SpaceLookup<CSS.PaddingRight>;
-  pt?: SpaceLookup<CSS.PaddingTop>;
-  pl?: SpaceLookup<CSS.PaddingLeft>;
-  pb?: SpaceLookup<CSS.PaddingBottom>;
-  pr?: SpaceLookup<CSS.PaddingRight>;
-  paddingX?: SpaceLookup<CSS.PaddingLeft>;
-  paddingY?: SpaceLookup<CSS.PaddingTop>;
-  px?: SpaceLookup<CSS.PaddingLeft>;
-  py?: SpaceLookup<CSS.PaddingTop>;
+export interface PaddingProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  padding?: SystemPropValue<CSS.Padding, PrefixOption, 'space'>;
+  p?: SystemPropValue<CSS.Padding, PrefixOption, 'space'>;
+  paddingTop?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
+  paddingLeft?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
+  paddingBottom?: SystemPropValue<CSS.PaddingBottom, PrefixOption, 'space'>;
+  paddingRight?: SystemPropValue<CSS.PaddingRight, PrefixOption, 'space'>;
+  pt?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
+  pl?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
+  pb?: SystemPropValue<CSS.PaddingBottom, PrefixOption, 'space'>;
+  pr?: SystemPropValue<CSS.PaddingRight, PrefixOption, 'space'>;
+  paddingX?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
+  paddingY?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
+  px?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
+  py?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
 }
 
-export interface SpaceProps extends MarginProps, PaddingProps {}
+export interface SpaceProps<PrefixOption extends PrefixOptions = PrefixDefault>
+  extends MarginProps<PrefixOption>,
+    PaddingProps<PrefixOption> {}
 
-export interface BorderProps {
-  border?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.Border>
-    : SystemProp<CSS.Border>;
-  borderX?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderLeft>
-    : SystemProp<CSS.BorderLeft>;
-  borderY?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderLeft>
-    : SystemProp<CSS.BorderLeft>;
-  borderTop?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderTop>
-    : SystemProp<CSS.BorderTop>;
-  borderLeft?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderLeft>
-    : SystemProp<CSS.BorderLeft>;
-  borderRight?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderRight>
-    : SystemProp<CSS.BorderRight>;
-  borderBottom?: Theme['borders'] extends object
-    ? SystemProp<keyof Theme['borders'] | CSS.BorderBottom>
-    : SystemProp<CSS.BorderBottom>;
-  borderColor?: Theme['colors'] extends object
-    ? SystemProp<keyof Theme['colors'] | CSS.BorderColor>
-    : SystemProp<CSS.BorderColor>;
-  borderLeftColor?: Theme['colors'] extends object
-    ? SystemProp<keyof Theme['colors'] | CSS.BorderLeftColor>
-    : SystemProp<CSS.BorderLeftColor>;
-  borderRightColor?: Theme['colors'] extends object
-    ? SystemProp<keyof Theme['colors'] | CSS.BorderRightColor>
-    : SystemProp<CSS.BorderRightColor>;
-  borderBottomColor?: Theme['colors'] extends object
-    ? SystemProp<keyof Theme['colors'] | CSS.BorderBottomColor>
-    : SystemProp<CSS.BorderBottomColor>;
-  borderTopColor?: Theme['colors'] extends object
-    ? SystemProp<keyof Theme['colors'] | CSS.BorderTopColor>
-    : SystemProp<CSS.BorderTopColor>;
-  borderStyle?: Theme['borderStyles'] extends object
-    ? SystemProp<keyof Theme['borderStyles'] | CSS.BorderStyle>
-    : SystemProp<CSS.BorderStyle>;
-  borderLeftStyle?: Theme['borderStyles'] extends object
-    ? SystemProp<keyof Theme['borderStyles'] | CSS.BorderLeftStyle>
-    : SystemProp<CSS.BorderLeftStyle>;
-  borderRightStyle?: Theme['borderStyles'] extends object
-    ? SystemProp<keyof Theme['borderStyles'] | CSS.BorderRightStyle>
-    : SystemProp<CSS.BorderRightStyle>;
-  borderBottomStyle?: Theme['borderStyles'] extends object
-    ? SystemProp<keyof Theme['borderStyles'] | CSS.BorderBottomStyle>
-    : SystemProp<CSS.BorderBottomStyle>;
-  borderTopStyle?: Theme['borderStyles'] extends object
-    ? SystemProp<keyof Theme['borderStyles'] | CSS.BorderTopStyle>
-    : SystemProp<CSS.BorderTopStyle>;
-  borderWidth?: Theme['borderWidths'] extends object
-    ? SystemProp<keyof Theme['borderWidths'] | CSS.BorderWidth>
-    : SystemProp<CSS.BorderWidth>;
-  borderLeftWidth?: Theme['borderWidths'] extends object
-    ? SystemProp<keyof Theme['borderWidths'] | CSS.BorderLeftWidth>
-    : SystemProp<CSS.BorderLeftWidth>;
-  borderRightWidth?: Theme['borderWidths'] extends object
-    ? SystemProp<keyof Theme['borderWidths'] | CSS.BorderRightWidth>
-    : SystemProp<CSS.BorderRightWidth>;
-  borderBottomWidth?: Theme['borderWidths'] extends object
-    ? SystemProp<keyof Theme['borderWidths'] | CSS.BorderBottomWidth>
-    : SystemProp<CSS.BorderBottomWidth>;
-  borderTopWidth?: Theme['borderWidths'] extends object
-    ? SystemProp<keyof Theme['borderWidths'] | CSS.BorderTopWidth>
-    : SystemProp<CSS.BorderTopWidth>;
-  borderRadius?: Theme['radii'] extends object
-    ? SystemProp<keyof Theme['radii'] | CSS.BorderRadius>
-    : SystemProp<CSS.BorderRadius>;
-  borderTopLeftRadius?: Theme['radii'] extends object
-    ? SystemProp<keyof Theme['radii'] | CSS.BorderTopLeftRadius>
-    : SystemProp<CSS.BorderTopLeftRadius>;
-  borderTopRightRadius?: Theme['radii'] extends object
-    ? SystemProp<keyof Theme['radii'] | CSS.BorderTopRightRadius>
-    : SystemProp<CSS.BorderTopRightRadius>;
-  borderBottomRightRadius?: Theme['radii'] extends object
-    ? SystemProp<keyof Theme['radii'] | CSS.BorderBottomRightRadius>
-    : SystemProp<CSS.BorderBottomRightRadius>;
-  borderBottomLeftRadius?: Theme['radii'] extends object
-    ? SystemProp<keyof Theme['radii'] | CSS.BorderBottomLeftRadius>
-    : SystemProp<CSS.BorderBottomLeftRadius>;
+export interface BorderProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  border?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
+  borderX?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
+  borderY?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
+  borderTop?: SystemPropValue<CSS.BorderTop, PrefixOption, 'borders'>;
+  borderRight?: SystemPropValue<CSS.BorderRight, PrefixOption, 'borders'>;
+  borderBottom?: SystemPropValue<CSS.BorderBottom, PrefixOption, 'borders'>;
+  borderLeft?: SystemPropValue<CSS.BorderLeft, PrefixOption, 'borders'>;
+  borderColor?: SystemPropValue<CSS.BorderColor, PrefixOption, 'colors'>;
+  borderTopColor?: SystemPropValue<CSS.BorderTopColor, PrefixOption, 'colors'>;
+  borderRightColor?: SystemPropValue<
+    CSS.BorderRightColor,
+    PrefixOption,
+    'colors'
+  >;
+  borderBottomColor?: SystemPropValue<
+    CSS.BorderBottomColor,
+    PrefixOption,
+    'colors'
+  >;
+  borderLeftColor?: SystemPropValue<
+    CSS.BorderLeftColor,
+    PrefixOption,
+    'colors'
+  >;
+  borderStyle?: SystemPropValue<CSS.BorderStyle, PrefixOption, 'borderStyles'>;
+  borderTopStyle?: SystemPropValue<
+    CSS.BorderTopStyle,
+    PrefixOption,
+    'borderStyles'
+  >;
+  borderRightStyle?: SystemPropValue<
+    CSS.BorderRightStyle,
+    PrefixOption,
+    'borderStyles'
+  >;
+  borderBottomStyle?: SystemPropValue<
+    CSS.BorderBottomStyle,
+    PrefixOption,
+    'borderStyles'
+  >;
+  borderLeftStyle?: SystemPropValue<
+    CSS.BorderLeftStyle,
+    PrefixOption,
+    'borderStyles'
+  >;
+  borderWidth?: SystemPropValue<CSS.BorderWidth, PrefixOption, 'borderWidths'>;
+  borderTopWidth?: SystemPropValue<
+    CSS.BorderTopWidth,
+    PrefixOption,
+    'borderWidths'
+  >;
+  borderRightWidth?: SystemPropValue<
+    CSS.BorderRightWidth,
+    PrefixOption,
+    'borderWidths'
+  >;
+  borderBottomWidth?: SystemPropValue<
+    CSS.BorderBottomWidth,
+    PrefixOption,
+    'borderWidths'
+  >;
+  borderLeftWidth?: SystemPropValue<
+    CSS.BorderLeftWidth,
+    PrefixOption,
+    'borderWidths'
+  >;
+  borderRadius?: SystemPropValue<CSS.BorderRadius, PrefixOption, 'radii'>;
+  borderTopLeftRadius?: SystemPropValue<
+    CSS.BorderTopLeftRadius,
+    PrefixOption,
+    'radii'
+  >;
+  borderTopRightRadius?: SystemPropValue<
+    CSS.BorderTopRightRadius,
+    PrefixOption,
+    'radii'
+  >;
+  borderBottomRightRadius?: SystemPropValue<
+    CSS.BorderBottomRightRadius,
+    PrefixOption,
+    'radii'
+  >;
+  borderBottomLeftRadius?: SystemPropValue<
+    CSS.BorderBottomLeftRadius,
+    PrefixOption,
+    'radii'
+  >;
 }
 
 export interface FlexboxProps {
@@ -265,11 +350,11 @@ export interface FlexboxProps {
   order?: SystemProp<CSS.Order>;
 }
 
-export interface GridProps {
-  gap?: SpaceLookup<CSS.Gap>;
-  gridGap?: SpaceLookup<CSS.GridGap>;
-  gridColumnGap?: SpaceLookup<CSS.GridColumnGap>;
-  gridRowGap?: SpaceLookup<CSS.GridRowGap>;
+export interface GridProps<PrefixOption extends PrefixOptions = PrefixDefault> {
+  gap?: SystemPropValue<CSS.Gap, PrefixOption, 'space'>;
+  gridGap?: SystemPropValue<CSS.GridGap, PrefixOption, 'space'>;
+  gridColumnGap?: SystemPropValue<CSS.GridColumnGap, PrefixOption, 'space'>;
+  gridRowGap?: SystemPropValue<CSS.GridRowGap, PrefixOption, 'space'>;
   gridRow?: SystemProp<CSS.GridRow>;
   gridColumn?: SystemProp<CSS.GridColumn>;
   gridAutoFlow?: SystemProp<CSS.GridAutoFlow>;
@@ -281,14 +366,16 @@ export interface GridProps {
   gridArea?: SystemProp<CSS.GridArea>;
 }
 
-export interface LayoutProps {
-  height?: SizeLookup<CSS.Height>;
-  width?: SizeLookup<CSS.Width>;
-  minWidth?: SizeLookup<CSS.MinWidth>;
-  minHeight?: SizeLookup<CSS.MinHeight>;
-  maxWidth?: SizeLookup<CSS.MaxWidth>;
-  maxHeight?: SizeLookup<CSS.MaxHeight>;
-  size?: SizeLookup<CSS.Width>;
+export interface LayoutProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  height?: SystemPropValue<CSS.Height, PrefixOption, 'sizes'>;
+  width?: SystemPropValue<CSS.Width, PrefixOption, 'sizes'>;
+  minWidth?: SystemPropValue<CSS.MinWidth, PrefixOption, 'sizes'>;
+  minHeight?: SystemPropValue<CSS.MinHeight, PrefixOption, 'sizes'>;
+  maxWidth?: SystemPropValue<CSS.MaxWidth, PrefixOption, 'sizes'>;
+  maxHeight?: SystemPropValue<CSS.MaxHeight, PrefixOption, 'sizes'>;
+  size?: SystemPropValue<CSS.Width, PrefixOption, 'sizes'>;
   overflow?: SystemProp<CSS.Overflow>;
   overflowX?: SystemProp<CSS.OverflowX>;
   overflowY?: SystemProp<CSS.OverflowY>;
@@ -296,53 +383,52 @@ export interface LayoutProps {
   verticalAlign?: SystemProp<CSS.VerticalAlign>;
 }
 
-export interface PositionProps {
+export interface PositionProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
   position?: SystemProp<CSS.Position>;
-  top?: SizeLookup<CSS.Top>;
-  left?: SizeLookup<CSS.Left>;
-  right?: SizeLookup<CSS.Right>;
-  bottom?: SizeLookup<CSS.Bottom>;
-  zIndex?: Theme['zIndices'] extends object
-    ? SystemProp<keyof Theme['zIndices'] | CSS.ZIndex>
-    : SystemProp<CSS.ZIndex>;
+  top?: SystemPropValue<CSS.Top, PrefixOption, 'space'>;
+  left?: SystemPropValue<CSS.Left, PrefixOption, 'space'>;
+  right?: SystemPropValue<CSS.Right, PrefixOption, 'space'>;
+  bottom?: SystemPropValue<CSS.Bottom, PrefixOption, 'space'>;
+  zIndex?: SystemPropValue<CSS.ZIndex, PrefixOption, 'zIndices'>;
 }
 
-export interface ShadowProps {
-  boxShadow?: Theme['shadows'] extends object
-    ? SystemProp<keyof Theme['shadows'] | CSS.BoxShadow>
-    : SystemProp<CSS.BoxShadow>;
-  textShadow?: Theme['shadows'] extends object
-    ? SystemProp<keyof Theme['shadows'] | CSS.TextShadow>
-    : SystemProp<CSS.TextShadow>;
+export interface ShadowProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  boxShadow?: SystemPropValue<CSS.BoxShadow, PrefixOption, 'shadows'>;
+  textShadow?: SystemPropValue<CSS.TextShadow, PrefixOption, 'shadows'>;
 }
 
-export interface TypographyProps {
-  fontFamily?: Theme['fonts'] extends object
-    ? SystemProp<keyof Theme['fonts'] | CSS.FontFamily>
-    : SystemProp<CSS.FontFamily>;
-  fontSize?: Theme['fontSizes'] extends object
-    ? SystemProp<keyof Theme['fontSizes'] | CSS.FontSize>
-    : SystemProp<CSS.FontSize>;
-  fontWeight?: Theme['fontWeights'] extends object
-    ? SystemProp<keyof Theme['fontWeights'] | CSS.FontWeight>
-    : SystemProp<CSS.FontWeight>;
-  fontStyle?: SystemProp<CSS.FontStyle>;
-  lineHeight?: Theme['lineHeights'] extends object
-    ? SystemProp<keyof Theme['lineHeights'] | CSS.LineHeight>
-    : SystemProp<CSS.LineHeight>;
-  letterSpacing?: Theme['letterSpacings'] extends object
-    ? SystemProp<keyof Theme['letterSpacings'] | CSS.LetterSpacing>
-    : SystemProp<CSS.LetterSpacing>;
+export interface TypographyProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  fontFamily?: SystemPropValue<CSS.FontFamily, PrefixOption, 'fonts'>;
+  fontSize?: SystemPropValue<CSS.FontSize, PrefixOption, 'fontSizes'>;
+  fontWeight?: SystemPropValue<CSS.FontWeight, PrefixOption, 'fontWeights'>;
+  lineHeight?: SystemPropValue<CSS.LineHeight, PrefixOption, 'lineHeights'>;
+  letterSpacing?: SystemPropValue<
+    CSS.LetterSpacing,
+    PrefixOption,
+    'letterSpacings'
+  >;
   textAlign?: SystemProp<CSS.TextAlign>;
+  fontStyle?: SystemProp<CSS.FontStyle>;
 }
 
-export interface AllSystemProps
-  extends ColorProps,
-    SpaceProps,
-    BorderProps,
-    TypographyProps,
-    LayoutProps,
-    ShadowProps,
-    PositionProps,
-    GridProps,
+export interface AllSystemProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> extends ColorProps<PrefixOption>,
+    SpaceProps<PrefixOption>,
+    BorderProps<PrefixOption>,
+    TypographyProps<PrefixOption>,
+    LayoutProps<PrefixOption>,
+    ShadowProps<PrefixOption>,
+    PositionProps<PrefixOption>,
+    GridProps<PrefixOption>,
     FlexboxProps {}
+
+export interface Theme {
+  [x: string]: any;
+}

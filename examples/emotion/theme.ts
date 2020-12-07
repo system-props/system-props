@@ -8,11 +8,11 @@ export interface AppTheme {
     blue30: string;
   };
   space: {
-    $0: string;
-    $1: string;
-    $2: string;
-    $3: string;
-    $4: string;
+    '0': string;
+    '1': string;
+    '2': string;
+    '3': string;
+    '4': string;
   };
   breakpoints: {
     small: string;
@@ -31,11 +31,11 @@ export const theme: AppTheme = {
     blue30: 'blue',
   },
   space: {
-    $0: '0px',
-    $1: '4px',
-    $2: '8px',
-    $3: '12px',
-    $4: '16px',
+    '0': '0px',
+    '1': '4px',
+    '2': '8px',
+    '3': '12px',
+    '4': '16px',
   },
   breakpoints: {
     small: '42em',

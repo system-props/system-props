@@ -1,4 +1,4 @@
-import { Property as CSS, Properties as CSSProperties } from 'csstype';
+import { Property as P, Properties as CSSProperties } from 'csstype';
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
   ? keyof Theme['breakpoints']
@@ -35,7 +35,7 @@ type TokenScales =
 type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 type PrefixDefault = 'noprefix';
 
-type TokenLookup<
+type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
@@ -47,13 +47,13 @@ type TokenLookup<
   ? keyof TTheme[Token]
   : never;
 
-type SystemPropValue<
+type MaybeToken<
   CSSProperty extends any,
   PrefixOption extends PrefixOptions = PrefixDefault,
   Token extends TokenScales | null = null
 > = Token extends TokenScales
   ? Theme[Token] extends object
-    ? SystemProp<TokenLookup<Token, PrefixOption> | CSSProperty>
+    ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
     : SystemProp<CSSProperty>
   : SystemProp<CSSProperty>;
 
@@ -187,55 +187,55 @@ export interface SomeObject {
 export interface ColorProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  color?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
-  textColor?: SystemPropValue<CSS.Color, PrefixOption, 'colors'>;
-  backgroundColor?: SystemPropValue<
-    CSS.BackgroundColor,
+  color?: MaybeToken<P.Color, PrefixOption, 'colors'>;
+  textColor?: MaybeToken<P.Color, PrefixOption, 'colors'>;
+  backgroundColor?: MaybeToken<
+    P.BackgroundColor,
     PrefixOption,
     'colors'
   >;
-  bg?: SystemPropValue<CSS.BackgroundColor, PrefixOption, 'colors'>;
-  fill?: SystemPropValue<CSS.Fill, PrefixOption, 'colors'>;
-  stroke?: SystemPropValue<CSS.Stroke, PrefixOption, 'colors'>;
-  opacity?: SystemPropValue<CSS.Opacity>;
+  bg?: MaybeToken<P.BackgroundColor, PrefixOption, 'colors'>;
+  fill?: MaybeToken<P.Fill, PrefixOption, 'colors'>;
+  stroke?: MaybeToken<P.Stroke, PrefixOption, 'colors'>;
+  opacity?: MaybeToken<P.Opacity>;
 }
 
 export interface MarginProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  margin?: SystemPropValue<CSS.Margin, PrefixOption, 'space'>;
-  m?: SystemPropValue<CSS.Margin, PrefixOption, 'space'>;
-  marginTop?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
-  marginLeft?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
-  marginBottom?: SystemPropValue<CSS.MarginBottom, PrefixOption, 'space'>;
-  marginRight?: SystemPropValue<CSS.MarginRight, PrefixOption, 'space'>;
-  mt?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
-  ml?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
-  mb?: SystemPropValue<CSS.MarginBottom, PrefixOption, 'space'>;
-  mr?: SystemPropValue<CSS.MarginRight, PrefixOption, 'space'>;
-  marginX?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
-  marginY?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
-  mx?: SystemPropValue<CSS.MarginLeft, PrefixOption, 'space'>;
-  my?: SystemPropValue<CSS.MarginTop, PrefixOption, 'space'>;
+  margin?: MaybeToken<P.Margin, PrefixOption, 'space'>;
+  m?: MaybeToken<P.Margin, PrefixOption, 'space'>;
+  marginTop?: MaybeToken<P.MarginTop, PrefixOption, 'space'>;
+  marginLeft?: MaybeToken<P.MarginLeft, PrefixOption, 'space'>;
+  marginBottom?: MaybeToken<P.MarginBottom, PrefixOption, 'space'>;
+  marginRight?: MaybeToken<P.MarginRight, PrefixOption, 'space'>;
+  mt?: MaybeToken<P.MarginTop, PrefixOption, 'space'>;
+  ml?: MaybeToken<P.MarginLeft, PrefixOption, 'space'>;
+  mb?: MaybeToken<P.MarginBottom, PrefixOption, 'space'>;
+  mr?: MaybeToken<P.MarginRight, PrefixOption, 'space'>;
+  marginX?: MaybeToken<P.MarginLeft, PrefixOption, 'space'>;
+  marginY?: MaybeToken<P.MarginTop, PrefixOption, 'space'>;
+  mx?: MaybeToken<P.MarginLeft, PrefixOption, 'space'>;
+  my?: MaybeToken<P.MarginTop, PrefixOption, 'space'>;
 }
 
 export interface PaddingProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  padding?: SystemPropValue<CSS.Padding, PrefixOption, 'space'>;
-  p?: SystemPropValue<CSS.Padding, PrefixOption, 'space'>;
-  paddingTop?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
-  paddingLeft?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
-  paddingBottom?: SystemPropValue<CSS.PaddingBottom, PrefixOption, 'space'>;
-  paddingRight?: SystemPropValue<CSS.PaddingRight, PrefixOption, 'space'>;
-  pt?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
-  pl?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
-  pb?: SystemPropValue<CSS.PaddingBottom, PrefixOption, 'space'>;
-  pr?: SystemPropValue<CSS.PaddingRight, PrefixOption, 'space'>;
-  paddingX?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
-  paddingY?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
-  px?: SystemPropValue<CSS.PaddingLeft, PrefixOption, 'space'>;
-  py?: SystemPropValue<CSS.PaddingTop, PrefixOption, 'space'>;
+  padding?: MaybeToken<P.Padding, PrefixOption, 'space'>;
+  p?: MaybeToken<P.Padding, PrefixOption, 'space'>;
+  paddingTop?: MaybeToken<P.PaddingTop, PrefixOption, 'space'>;
+  paddingLeft?: MaybeToken<P.PaddingLeft, PrefixOption, 'space'>;
+  paddingBottom?: MaybeToken<P.PaddingBottom, PrefixOption, 'space'>;
+  paddingRight?: MaybeToken<P.PaddingRight, PrefixOption, 'space'>;
+  pt?: MaybeToken<P.PaddingTop, PrefixOption, 'space'>;
+  pl?: MaybeToken<P.PaddingLeft, PrefixOption, 'space'>;
+  pb?: MaybeToken<P.PaddingBottom, PrefixOption, 'space'>;
+  pr?: MaybeToken<P.PaddingRight, PrefixOption, 'space'>;
+  paddingX?: MaybeToken<P.PaddingLeft, PrefixOption, 'space'>;
+  paddingY?: MaybeToken<P.PaddingTop, PrefixOption, 'space'>;
+  px?: MaybeToken<P.PaddingLeft, PrefixOption, 'space'>;
+  py?: MaybeToken<P.PaddingTop, PrefixOption, 'space'>;
 }
 
 export interface SpaceProps<PrefixOption extends PrefixOptions = PrefixDefault>
@@ -245,176 +245,176 @@ export interface SpaceProps<PrefixOption extends PrefixOptions = PrefixDefault>
 export interface BorderProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  border?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
-  borderX?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
-  borderY?: SystemPropValue<CSS.Border, PrefixOption, 'borders'>;
-  borderTop?: SystemPropValue<CSS.BorderTop, PrefixOption, 'borders'>;
-  borderRight?: SystemPropValue<CSS.BorderRight, PrefixOption, 'borders'>;
-  borderBottom?: SystemPropValue<CSS.BorderBottom, PrefixOption, 'borders'>;
-  borderLeft?: SystemPropValue<CSS.BorderLeft, PrefixOption, 'borders'>;
-  borderColor?: SystemPropValue<CSS.BorderColor, PrefixOption, 'colors'>;
-  borderTopColor?: SystemPropValue<CSS.BorderTopColor, PrefixOption, 'colors'>;
-  borderRightColor?: SystemPropValue<
-    CSS.BorderRightColor,
+  border?: MaybeToken<P.Border, PrefixOption, 'borders'>;
+  borderX?: MaybeToken<P.Border, PrefixOption, 'borders'>;
+  borderY?: MaybeToken<P.Border, PrefixOption, 'borders'>;
+  borderTop?: MaybeToken<P.BorderTop, PrefixOption, 'borders'>;
+  borderRight?: MaybeToken<P.BorderRight, PrefixOption, 'borders'>;
+  borderBottom?: MaybeToken<P.BorderBottom, PrefixOption, 'borders'>;
+  borderLeft?: MaybeToken<P.BorderLeft, PrefixOption, 'borders'>;
+  borderColor?: MaybeToken<P.BorderColor, PrefixOption, 'colors'>;
+  borderTopColor?: MaybeToken<P.BorderTopColor, PrefixOption, 'colors'>;
+  borderRightColor?: MaybeToken<
+    P.BorderRightColor,
     PrefixOption,
     'colors'
   >;
-  borderBottomColor?: SystemPropValue<
-    CSS.BorderBottomColor,
+  borderBottomColor?: MaybeToken<
+    P.BorderBottomColor,
     PrefixOption,
     'colors'
   >;
-  borderLeftColor?: SystemPropValue<
-    CSS.BorderLeftColor,
+  borderLeftColor?: MaybeToken<
+    P.BorderLeftColor,
     PrefixOption,
     'colors'
   >;
-  borderStyle?: SystemPropValue<CSS.BorderStyle, PrefixOption, 'borderStyles'>;
-  borderTopStyle?: SystemPropValue<
-    CSS.BorderTopStyle,
+  borderStyle?: MaybeToken<P.BorderStyle, PrefixOption, 'borderStyles'>;
+  borderTopStyle?: MaybeToken<
+    P.BorderTopStyle,
     PrefixOption,
     'borderStyles'
   >;
-  borderRightStyle?: SystemPropValue<
-    CSS.BorderRightStyle,
+  borderRightStyle?: MaybeToken<
+    P.BorderRightStyle,
     PrefixOption,
     'borderStyles'
   >;
-  borderBottomStyle?: SystemPropValue<
-    CSS.BorderBottomStyle,
+  borderBottomStyle?: MaybeToken<
+    P.BorderBottomStyle,
     PrefixOption,
     'borderStyles'
   >;
-  borderLeftStyle?: SystemPropValue<
-    CSS.BorderLeftStyle,
+  borderLeftStyle?: MaybeToken<
+    P.BorderLeftStyle,
     PrefixOption,
     'borderStyles'
   >;
-  borderWidth?: SystemPropValue<CSS.BorderWidth, PrefixOption, 'borderWidths'>;
-  borderTopWidth?: SystemPropValue<
-    CSS.BorderTopWidth,
+  borderWidth?: MaybeToken<P.BorderWidth, PrefixOption, 'borderWidths'>;
+  borderTopWidth?: MaybeToken<
+    P.BorderTopWidth,
     PrefixOption,
     'borderWidths'
   >;
-  borderRightWidth?: SystemPropValue<
-    CSS.BorderRightWidth,
+  borderRightWidth?: MaybeToken<
+    P.BorderRightWidth,
     PrefixOption,
     'borderWidths'
   >;
-  borderBottomWidth?: SystemPropValue<
-    CSS.BorderBottomWidth,
+  borderBottomWidth?: MaybeToken<
+    P.BorderBottomWidth,
     PrefixOption,
     'borderWidths'
   >;
-  borderLeftWidth?: SystemPropValue<
-    CSS.BorderLeftWidth,
+  borderLeftWidth?: MaybeToken<
+    P.BorderLeftWidth,
     PrefixOption,
     'borderWidths'
   >;
-  borderRadius?: SystemPropValue<CSS.BorderRadius, PrefixOption, 'radii'>;
-  borderTopLeftRadius?: SystemPropValue<
-    CSS.BorderTopLeftRadius,
+  borderRadius?: MaybeToken<P.BorderRadius, PrefixOption, 'radii'>;
+  borderTopLeftRadius?: MaybeToken<
+    P.BorderTopLeftRadius,
     PrefixOption,
     'radii'
   >;
-  borderTopRightRadius?: SystemPropValue<
-    CSS.BorderTopRightRadius,
+  borderTopRightRadius?: MaybeToken<
+    P.BorderTopRightRadius,
     PrefixOption,
     'radii'
   >;
-  borderBottomRightRadius?: SystemPropValue<
-    CSS.BorderBottomRightRadius,
+  borderBottomRightRadius?: MaybeToken<
+    P.BorderBottomRightRadius,
     PrefixOption,
     'radii'
   >;
-  borderBottomLeftRadius?: SystemPropValue<
-    CSS.BorderBottomLeftRadius,
+  borderBottomLeftRadius?: MaybeToken<
+    P.BorderBottomLeftRadius,
     PrefixOption,
     'radii'
   >;
 }
 
 export interface FlexboxProps {
-  alignItems?: SystemProp<CSS.AlignItems>;
-  alignContent?: SystemProp<CSS.AlignContent>;
-  justifyItems?: SystemProp<CSS.JustifyItems>;
-  justifyContent?: SystemProp<CSS.JustifyContent>;
-  flexWrap?: SystemProp<CSS.FlexWrap>;
-  flexDirection?: SystemProp<CSS.FlexDirection>;
-  flex?: SystemProp<CSS.Flex>;
-  flexGrow?: SystemProp<CSS.FlexGrow>;
-  flexShrink?: SystemProp<CSS.FlexShrink>;
-  flexBasis?: SystemProp<CSS.FlexBasis>;
-  justifySelf?: SystemProp<CSS.JustifySelf>;
-  alignSelf?: SystemProp<CSS.AlignSelf>;
-  order?: SystemProp<CSS.Order>;
+  alignItems?: SystemProp<P.AlignItems>;
+  alignContent?: SystemProp<P.AlignContent>;
+  justifyItems?: SystemProp<P.JustifyItems>;
+  justifyContent?: SystemProp<P.JustifyContent>;
+  flexWrap?: SystemProp<P.FlexWrap>;
+  flexDirection?: SystemProp<P.FlexDirection>;
+  flex?: SystemProp<P.Flex>;
+  flexGrow?: SystemProp<P.FlexGrow>;
+  flexShrink?: SystemProp<P.FlexShrink>;
+  flexBasis?: SystemProp<P.FlexBasis>;
+  justifySelf?: SystemProp<P.JustifySelf>;
+  alignSelf?: SystemProp<P.AlignSelf>;
+  order?: SystemProp<P.Order>;
 }
 
 export interface GridProps<PrefixOption extends PrefixOptions = PrefixDefault> {
-  gap?: SystemPropValue<CSS.Gap, PrefixOption, 'space'>;
-  gridGap?: SystemPropValue<CSS.GridGap, PrefixOption, 'space'>;
-  gridColumnGap?: SystemPropValue<CSS.GridColumnGap, PrefixOption, 'space'>;
-  gridRowGap?: SystemPropValue<CSS.GridRowGap, PrefixOption, 'space'>;
-  gridRow?: SystemProp<CSS.GridRow>;
-  gridColumn?: SystemProp<CSS.GridColumn>;
-  gridAutoFlow?: SystemProp<CSS.GridAutoFlow>;
-  gridAutoColumns?: SystemProp<CSS.GridAutoColumns>;
-  gridAutoRows?: SystemProp<CSS.GridAutoRows>;
-  gridTemplateColumns?: SystemProp<CSS.GridTemplateColumns>;
-  gridTemplateRows?: SystemProp<CSS.GridTemplateRows>;
-  gridTemplateAreas?: SystemProp<CSS.GridTemplateAreas>;
-  gridArea?: SystemProp<CSS.GridArea>;
+  gap?: MaybeToken<P.Gap, PrefixOption, 'space'>;
+  gridGap?: MaybeToken<P.GridGap, PrefixOption, 'space'>;
+  gridColumnGap?: MaybeToken<P.GridColumnGap, PrefixOption, 'space'>;
+  gridRowGap?: MaybeToken<P.GridRowGap, PrefixOption, 'space'>;
+  gridRow?: SystemProp<P.GridRow>;
+  gridColumn?: SystemProp<P.GridColumn>;
+  gridAutoFlow?: SystemProp<P.GridAutoFlow>;
+  gridAutoColumns?: SystemProp<P.GridAutoColumns>;
+  gridAutoRows?: SystemProp<P.GridAutoRows>;
+  gridTemplateColumns?: SystemProp<P.GridTemplateColumns>;
+  gridTemplateRows?: SystemProp<P.GridTemplateRows>;
+  gridTemplateAreas?: SystemProp<P.GridTemplateAreas>;
+  gridArea?: SystemProp<P.GridArea>;
 }
 
 export interface LayoutProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  height?: SystemPropValue<CSS.Height, PrefixOption, 'sizes'>;
-  width?: SystemPropValue<CSS.Width, PrefixOption, 'sizes'>;
-  minWidth?: SystemPropValue<CSS.MinWidth, PrefixOption, 'sizes'>;
-  minHeight?: SystemPropValue<CSS.MinHeight, PrefixOption, 'sizes'>;
-  maxWidth?: SystemPropValue<CSS.MaxWidth, PrefixOption, 'sizes'>;
-  maxHeight?: SystemPropValue<CSS.MaxHeight, PrefixOption, 'sizes'>;
-  size?: SystemPropValue<CSS.Width, PrefixOption, 'sizes'>;
-  overflow?: SystemProp<CSS.Overflow>;
-  overflowX?: SystemProp<CSS.OverflowX>;
-  overflowY?: SystemProp<CSS.OverflowY>;
-  display?: SystemProp<CSS.Display>;
-  verticalAlign?: SystemProp<CSS.VerticalAlign>;
+  height?: MaybeToken<P.Height, PrefixOption, 'sizes'>;
+  width?: MaybeToken<P.Width, PrefixOption, 'sizes'>;
+  minWidth?: MaybeToken<P.MinWidth, PrefixOption, 'sizes'>;
+  minHeight?: MaybeToken<P.MinHeight, PrefixOption, 'sizes'>;
+  maxWidth?: MaybeToken<P.MaxWidth, PrefixOption, 'sizes'>;
+  maxHeight?: MaybeToken<P.MaxHeight, PrefixOption, 'sizes'>;
+  size?: MaybeToken<P.Width, PrefixOption, 'sizes'>;
+  overflow?: SystemProp<P.Overflow>;
+  overflowX?: SystemProp<P.OverflowX>;
+  overflowY?: SystemProp<P.OverflowY>;
+  display?: SystemProp<P.Display>;
+  verticalAlign?: SystemProp<P.VerticalAlign>;
 }
 
 export interface PositionProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  position?: SystemProp<CSS.Position>;
-  top?: SystemPropValue<CSS.Top, PrefixOption, 'space'>;
-  left?: SystemPropValue<CSS.Left, PrefixOption, 'space'>;
-  right?: SystemPropValue<CSS.Right, PrefixOption, 'space'>;
-  bottom?: SystemPropValue<CSS.Bottom, PrefixOption, 'space'>;
-  zIndex?: SystemPropValue<CSS.ZIndex, PrefixOption, 'zIndices'>;
+  position?: SystemProp<P.Position>;
+  top?: MaybeToken<P.Top, PrefixOption, 'space'>;
+  left?: MaybeToken<P.Left, PrefixOption, 'space'>;
+  right?: MaybeToken<P.Right, PrefixOption, 'space'>;
+  bottom?: MaybeToken<P.Bottom, PrefixOption, 'space'>;
+  zIndex?: MaybeToken<P.ZIndex, PrefixOption, 'zIndices'>;
 }
 
 export interface ShadowProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  boxShadow?: SystemPropValue<CSS.BoxShadow, PrefixOption, 'shadows'>;
-  textShadow?: SystemPropValue<CSS.TextShadow, PrefixOption, 'shadows'>;
+  boxShadow?: MaybeToken<P.BoxShadow, PrefixOption, 'shadows'>;
+  textShadow?: MaybeToken<P.TextShadow, PrefixOption, 'shadows'>;
 }
 
 export interface TypographyProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  fontFamily?: SystemPropValue<CSS.FontFamily, PrefixOption, 'fonts'>;
-  fontSize?: SystemPropValue<CSS.FontSize, PrefixOption, 'fontSizes'>;
-  fontWeight?: SystemPropValue<CSS.FontWeight, PrefixOption, 'fontWeights'>;
-  lineHeight?: SystemPropValue<CSS.LineHeight, PrefixOption, 'lineHeights'>;
-  letterSpacing?: SystemPropValue<
-    CSS.LetterSpacing,
+  fontFamily?: MaybeToken<P.FontFamily, PrefixOption, 'fonts'>;
+  fontSize?: MaybeToken<P.FontSize, PrefixOption, 'fontSizes'>;
+  fontWeight?: MaybeToken<P.FontWeight, PrefixOption, 'fontWeights'>;
+  lineHeight?: MaybeToken<P.LineHeight, PrefixOption, 'lineHeights'>;
+  letterSpacing?: MaybeToken<
+    P.LetterSpacing,
     PrefixOption,
     'letterSpacings'
   >;
-  textAlign?: SystemProp<CSS.TextAlign>;
-  fontStyle?: SystemProp<CSS.FontStyle>;
+  textAlign?: SystemProp<P.TextAlign>;
+  fontStyle?: SystemProp<P.FontStyle>;
 }
 
 export interface AllSystemProps<

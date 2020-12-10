@@ -35,16 +35,25 @@ type TokenScales =
 type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 type PrefixDefault = 'noprefix';
 
+type ScaleLookup<
+  Token extends TokenScales,
+  TTheme extends Theme = Theme
+> = TTheme[Token] extends object
+  ? keyof TTheme[Token]
+  : TTheme[Token] extends Array<string | number>
+  ? TTheme[Token][number]
+  : never;
+
 type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
-  ? keyof TTheme[Token] | `$${string & keyof TTheme[Token]}`
+  ? ScaleLookup<Token, TTheme> | `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'prefix'
-  ? `$${string & keyof TTheme[Token]}`
+  ? `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'noprefix'
-  ? keyof TTheme[Token]
+  ? ScaleLookup<Token, TTheme>
   : never;
 
 type MaybeToken<
@@ -52,9 +61,7 @@ type MaybeToken<
   PrefixOption extends PrefixOptions = PrefixDefault,
   Token extends TokenScales | null = null
 > = Token extends TokenScales
-  ? Theme[Token] extends object
-    ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
-    : SystemProp<CSSProperty>
+  ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
   : SystemProp<CSSProperty>;
 
 // const mapCssToTokenScale: Record<string, TokenScales> = {
@@ -175,7 +182,7 @@ export interface PropConfigCollection {
 }
 
 export interface Cache {
-  breakpoints?: SystemProp<string | number>;
+  breakpoints?: Record<string, string> | string[];
   media?: (string | null)[];
   strict: boolean;
 }
@@ -189,11 +196,7 @@ export interface ColorProps<
 > {
   color?: MaybeToken<P.Color, PrefixOption, 'colors'>;
   textColor?: MaybeToken<P.Color, PrefixOption, 'colors'>;
-  backgroundColor?: MaybeToken<
-    P.BackgroundColor,
-    PrefixOption,
-    'colors'
-  >;
+  backgroundColor?: MaybeToken<P.BackgroundColor, PrefixOption, 'colors'>;
   bg?: MaybeToken<P.BackgroundColor, PrefixOption, 'colors'>;
   fill?: MaybeToken<P.Fill, PrefixOption, 'colors'>;
   stroke?: MaybeToken<P.Stroke, PrefixOption, 'colors'>;
@@ -254,27 +257,11 @@ export interface BorderProps<
   borderLeft?: MaybeToken<P.BorderLeft, PrefixOption, 'borders'>;
   borderColor?: MaybeToken<P.BorderColor, PrefixOption, 'colors'>;
   borderTopColor?: MaybeToken<P.BorderTopColor, PrefixOption, 'colors'>;
-  borderRightColor?: MaybeToken<
-    P.BorderRightColor,
-    PrefixOption,
-    'colors'
-  >;
-  borderBottomColor?: MaybeToken<
-    P.BorderBottomColor,
-    PrefixOption,
-    'colors'
-  >;
-  borderLeftColor?: MaybeToken<
-    P.BorderLeftColor,
-    PrefixOption,
-    'colors'
-  >;
+  borderRightColor?: MaybeToken<P.BorderRightColor, PrefixOption, 'colors'>;
+  borderBottomColor?: MaybeToken<P.BorderBottomColor, PrefixOption, 'colors'>;
+  borderLeftColor?: MaybeToken<P.BorderLeftColor, PrefixOption, 'colors'>;
   borderStyle?: MaybeToken<P.BorderStyle, PrefixOption, 'borderStyles'>;
-  borderTopStyle?: MaybeToken<
-    P.BorderTopStyle,
-    PrefixOption,
-    'borderStyles'
-  >;
+  borderTopStyle?: MaybeToken<P.BorderTopStyle, PrefixOption, 'borderStyles'>;
   borderRightStyle?: MaybeToken<
     P.BorderRightStyle,
     PrefixOption,
@@ -285,17 +272,9 @@ export interface BorderProps<
     PrefixOption,
     'borderStyles'
   >;
-  borderLeftStyle?: MaybeToken<
-    P.BorderLeftStyle,
-    PrefixOption,
-    'borderStyles'
-  >;
+  borderLeftStyle?: MaybeToken<P.BorderLeftStyle, PrefixOption, 'borderStyles'>;
   borderWidth?: MaybeToken<P.BorderWidth, PrefixOption, 'borderWidths'>;
-  borderTopWidth?: MaybeToken<
-    P.BorderTopWidth,
-    PrefixOption,
-    'borderWidths'
-  >;
+  borderTopWidth?: MaybeToken<P.BorderTopWidth, PrefixOption, 'borderWidths'>;
   borderRightWidth?: MaybeToken<
     P.BorderRightWidth,
     PrefixOption,
@@ -306,11 +285,7 @@ export interface BorderProps<
     PrefixOption,
     'borderWidths'
   >;
-  borderLeftWidth?: MaybeToken<
-    P.BorderLeftWidth,
-    PrefixOption,
-    'borderWidths'
-  >;
+  borderLeftWidth?: MaybeToken<P.BorderLeftWidth, PrefixOption, 'borderWidths'>;
   borderRadius?: MaybeToken<P.BorderRadius, PrefixOption, 'radii'>;
   borderTopLeftRadius?: MaybeToken<
     P.BorderTopLeftRadius,
@@ -408,11 +383,7 @@ export interface TypographyProps<
   fontSize?: MaybeToken<P.FontSize, PrefixOption, 'fontSizes'>;
   fontWeight?: MaybeToken<P.FontWeight, PrefixOption, 'fontWeights'>;
   lineHeight?: MaybeToken<P.LineHeight, PrefixOption, 'lineHeights'>;
-  letterSpacing?: MaybeToken<
-    P.LetterSpacing,
-    PrefixOption,
-    'letterSpacings'
-  >;
+  letterSpacing?: MaybeToken<P.LetterSpacing, PrefixOption, 'letterSpacings'>;
   textAlign?: SystemProp<P.TextAlign>;
   fontStyle?: SystemProp<P.FontStyle>;
 }

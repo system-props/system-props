@@ -246,7 +246,7 @@ test('skips null values in arrays', () => {
   });
 });
 
-test('includes single property functions', () => {
+test.only('includes single property functions', () => {
   const system = createSystem();
   const parser = system({
     color: true,
@@ -277,7 +277,7 @@ test('supports non-array breakpoints object', () => {
   });
   const styles = parser({
     theme: {
-      disableSystemPropsCache: true,
+      systemPropsCacheKey: true,
       breakpoints: {
         sm: '32em',
         md: '40em',
@@ -311,7 +311,7 @@ test('sorts media queries when responsive object values are used', () => {
   });
   const styles = parser({
     theme: {
-      disableSystemPropsCache: true,
+      systemPropsCacheKey: true,
       breakpoints: {
         sm: '32em',
         md: '40em',

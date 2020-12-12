@@ -1,4 +1,4 @@
-import { betterGet } from '../get';
+import { betterGet, memoize } from '../get';
 
 const get = betterGet;
 
@@ -42,4 +42,18 @@ test('returns 0 index items', () => {
 test('returns number values with $', () => {
   const a = get([0, 4, 8], '$2');
   expect(a).toBe(8);
+});
+
+test('memoize', () => {
+  const obj = {
+    colors: {
+      blue: ['#0cf', '#0be', '#09d', '#07c'],
+    },
+  };
+  const _get = jest.fn(() => true);
+  const memoizedGet = memoize(_get);
+  expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
+  expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
+  expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
+  expect(_get).toHaveBeenCalledTimes(1);
 });

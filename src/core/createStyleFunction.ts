@@ -1,15 +1,14 @@
-import { betterGet } from './get';
+import { memoizedGet } from './get';
 import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
 import * as CSS from 'csstype';
 
 const getValue = (
-  value: any,
+  value: string | number,
   scale: any,
   _props: Props,
-  strict: boolean,
-  undef?: undefined
+  strict: boolean
 ) => {
-  return betterGet(scale, value, strict === true ? undef : value);
+  return memoizedGet(scale, value, strict === true ? undefined : value);
 };
 
 export const createStyleFunction = ({
@@ -22,13 +21,16 @@ export const createStyleFunction = ({
   const _properties = properties || [property];
 
   const systemConfig = (
-    value: unknown,
+    value: number | string,
     scale: any,
     props: Props,
     cache: Cache
   ) => {
     const result: Record<string, any> = {};
-    const n = transform(value, scale, props, cache.strict);
+
+    let n = value;
+    n = transform(value, scale, props, cache.strict);
+
     if (n === null) {
       return result;
     }

@@ -1,11 +1,8 @@
-export const get = (
-  object?: any,
-  path?: any,
-  defaultValue?: any,
-  // Not used, should be undefined
-  // To make sure we get a true undefined
-  undef?: undefined
-) => {
+interface Get {
+  (obj?: any, path?: any, fallback?: any): any;
+}
+
+export const get: Get = (object, path, defaultValue) => {
   if (!object) {
     return defaultValue;
   }
@@ -22,24 +19,49 @@ export const get = (
     if (result && (typeof next === 'number' || typeof next === 'string')) {
       result = result[next];
     } else {
-      result = undef;
+      result = undefined;
     }
   }
 
-  return result === undef ? defaultValue : result;
+  return result === undefined ? defaultValue : result;
 };
 
-export const betterGet = (
-  object?: any,
-  path?: any,
-  defaultValue?: any,
-  undef?: undefined
-) => {
+export const betterGet: Get = (object, path, defaultValue) => {
   let result = get(object, path);
 
   if (!result && typeof path === 'string' && path.startsWith('$')) {
     result = get(object, path.slice(1));
   }
 
-  return result === undef ? defaultValue : result;
+  return result === undefined ? defaultValue : result;
 };
+
+export const memoize = (fn: Get) => {
+  let cache = new WeakMap();
+
+  const memoizedFn: Get = (obj, path, fallback) => {
+    if (typeof obj === 'undefined') {
+      return fn(obj, path, fallback);
+    }
+
+    if (!cache.has(obj)) {
+      cache.set(obj, new Map());
+    }
+
+    const map = cache.get(obj);
+
+    if (map.has(path)) {
+      return map.get(path);
+    }
+
+    const value = fn(obj, path, fallback);
+
+    map.set(path, value);
+
+    return value;
+  };
+
+  return memoizedFn;
+};
+
+export const memoizedGet = memoize(betterGet);

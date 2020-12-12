@@ -1,4 +1,4 @@
-import { betterGet } from '@/core/get';
+import { memoizedGet } from '@/core/get';
 import { PropConfigCollection, Transform } from '@/types';
 import { positiveOrNegative } from '../positiveOrNegative';
 
@@ -52,7 +52,7 @@ const getMargin: Transform = (value, _, props, strict) => {
 const getPadding: Transform = (value, _, props, strict) => {
   // Not using shorthand, just a theme value, e.g, p={4}
   if (typeof value === 'number') {
-    const result = betterGet(props?.theme?.space, value);
+    const result = memoizedGet(props?.theme?.space, value);
     if (result) {
       return result;
     }
@@ -64,13 +64,17 @@ const getPadding: Transform = (value, _, props, strict) => {
     // applied to all sides, return a number or string
     // e.g., m="2" or m="$2"
     if (arr.length === 1) {
-      return betterGet(props?.theme?.space, value, strict ? undefined : value);
+      return memoizedGet(
+        props?.theme?.space,
+        value,
+        strict ? undefined : value
+      );
     }
 
     return value
       .split(' ')
       .reduce((acc: string[], curr: string) => {
-        let value = betterGet(
+        let value = memoizedGet(
           props?.theme?.space,
           curr,
           strict ? undefined : curr

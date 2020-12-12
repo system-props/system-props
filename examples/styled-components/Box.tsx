@@ -19,9 +19,11 @@ import * as CSS from 'csstype';
 
 const system = createSystem();
 
-interface BoxProps extends AllSystemProps, PseudoProps<AllSystemProps> {
+interface BaseProps extends AllSystemProps<'prefix'> {
   transform?: SystemProp<CSS.Property.Transform>;
 }
+
+interface BoxProps extends BaseProps, PseudoProps<BaseProps> {}
 
 export const Box = styled('div').withConfig({
   shouldForwardProp: (prop, defaultValidatorFn) =>

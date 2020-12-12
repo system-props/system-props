@@ -24,7 +24,7 @@ const App = () => {
         bg="blue20"
         padding="$2"
         boxShadow="0px 1px 3px $blue10"
-        _hover={{ bg: 'blue10' }}
+        _hover={{ bg: '$blue10' }}
       >
         Welcome
       </Box>

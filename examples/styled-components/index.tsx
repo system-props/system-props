@@ -8,14 +8,14 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
+        color="$gray30"
+        margin="0"
         position="relative"
         fontStyle="italic"
         fontWeight="bold"
-        color="blue30"
-        bg="gray10"
-        padding="$2 $4"
+        p="$2 $4"
         border="1px solid rgba(0, 0, 0, 0.1)"
-        mb="$6"
+        mb="$4"
         transform="rotate(1deg)"
       >
         Hello

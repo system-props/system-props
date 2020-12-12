@@ -19,7 +19,9 @@ import * as CSS from 'csstype';
 
 const system = createSystem();
 
-interface BoxProps extends AllSystemProps, PseudoProps<AllSystemProps> {
+interface BoxProps
+  extends AllSystemProps<'prefix'>,
+    PseudoProps<AllSystemProps<'prefix'>> {
   transform?: SystemProp<CSS.Property.Transform>;
 }
 

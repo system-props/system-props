@@ -162,8 +162,8 @@ export interface SystemConfig {
 }
 
 export type Transform = (
-  object: any,
   path: any,
+  object: any,
   props: Props,
   strict: boolean,
   undef?: undefined

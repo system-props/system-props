@@ -1,4 +1,4 @@
-import { betterGet } from '@/core/get';
+import { memoizedGet } from '@/core/get';
 import { PropConfigCollection, Transform } from '@/types';
 import { tokenizeValue } from '../tokenizeValue';
 
@@ -11,22 +11,22 @@ export const borderShorthandTransform: Transform = (
   if (typeof value !== 'string') {
     return value;
   }
-  let border = betterGet(props?.theme?.borders || scale, value);
+  let border = memoizedGet(props?.theme?.borders || scale, value);
   if (border) {
     return border;
   }
   const [[width, style, color]] = tokenizeValue(value);
-  const borderWidth = betterGet(
+  const borderWidth = memoizedGet(
     props?.theme?.borderWidths,
     width,
     strict ? undefined : width
   );
-  const borderStyle = betterGet(
+  const borderStyle = memoizedGet(
     props?.theme?.borderStyles,
     style,
     strict ? undefined : style
   );
-  const borderColor = betterGet(
+  const borderColor = memoizedGet(
     props?.theme?.colors,
     color,
     strict ? undefined : color

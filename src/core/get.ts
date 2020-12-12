@@ -40,6 +40,10 @@ export const memoize = (fn: Get) => {
   let cache = new WeakMap();
 
   const memoizedFn: Get = (obj, path, fallback) => {
+    if (typeof obj === 'undefined') {
+      return fn(obj, path, fallback);
+    }
+
     if (!cache.has(obj)) {
       cache.set(obj, new Map());
     }

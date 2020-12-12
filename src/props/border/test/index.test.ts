@@ -25,7 +25,7 @@ test('returns border styles', () => {
   });
 });
 
-test('returns individual border styles', () => {
+test.only('returns individual border styles', () => {
   const style = parser({
     theme: {
       breakpoints: [],

@@ -1,8 +1,13 @@
-import { betterGet, memoizedGet } from './get';
+import { memoizedGet } from './get';
 import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
 import * as CSS from 'csstype';
 
-const getValue = (value: any, scale: any, _props: Props, strict: boolean) => {
+const getValue = (
+  value: string | number,
+  scale: any,
+  _props: Props,
+  strict: boolean
+) => {
   return memoizedGet(scale, value, strict === true ? undefined : value);
 };
 
@@ -24,9 +29,7 @@ export const createStyleFunction = ({
     const result: Record<string, any> = {};
 
     let n = value;
-    if (scale) {
-      n = transform(value, scale, props, cache.strict);
-    }
+    n = transform(value, scale, props, cache.strict);
 
     if (n === null) {
       return result;

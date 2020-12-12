@@ -111,7 +111,7 @@ test.skip('uses dynamically changed breakpoints', () => {
     theme: {
       ...theme,
       breakpoints: ['11em', '22em', '33em'],
-      disableSystemPropsCache: true,
+      systemPropsCacheKey: 'foo',
     },
     fontSize: [1, 2, 3],
     color: ['primary', null, 'secondary'],
@@ -132,7 +132,7 @@ test.skip('uses dynamically changed breakpoints', () => {
     theme: {
       ...theme,
       breakpoints: ['9em', '8em', '7em'],
-      disableSystemPropsCache: true,
+      systemPropsCacheKey: 'bar',
     },
     fontSize: [1, 2, 3],
     color: ['primary', null, 'secondary'],
@@ -190,7 +190,7 @@ test.skip('uses dynamically changed breakpoints', () => {
 test('parses raw function values', () => {
   // flush cache from previous tests
   const styles = parser({
-    theme: { ...theme, systemPropsId: 'bar', disableSystemPropsCache: true },
+    theme: { ...theme, systemPropsId: 'bar', systemPropsCacheKey: 'baz' },
     border(t: typeof theme) {
       return `1px solid ${t.colors.primary}`;
     },
@@ -239,7 +239,7 @@ test('parses raw function values at each breakpoint', () => {
     theme: {
       ...themeWithObjectBPs,
       // flush cache from previous tests
-      disableSystemPropsCache: true,
+      systemPropsCacheKey: 'oof',
     },
     color: {
       all: (t: any) => t.colors.primary,

@@ -56,11 +56,4 @@ test('memoize', () => {
   expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
   expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
   expect(_get).toHaveBeenCalledTimes(1);
-
-  // @ts-ignore
-  memoizedGet.bustCache();
-
-  expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
-  expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
-  expect(_get).toHaveBeenCalledTimes(2);
 });

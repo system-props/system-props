@@ -225,7 +225,7 @@ test('supports object values', () => {
 
 test('supports non-array breakpoints', () => {
   const theme = {
-    disableSystemPropsCache: true,
+    systemPropsCacheKey: 'foo',
     space: ['0px', '4px', '8px', '12px', '16px'],
     breakpoints: {
       small: '40em',

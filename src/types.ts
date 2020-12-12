@@ -156,14 +156,14 @@ export type Props = {
 };
 
 export interface SystemConfig {
-  (value: unknown, scale: string, props: Props, cache: Cache): {};
+  (value: string | number, scale: string, props: Props, cache: Cache): {};
   scale?: 'string';
   defaultScale?: unknown;
 }
 
 export type Transform = (
-  a: any,
-  scale: any,
+  object: any,
+  path: any,
   props: Props,
   strict: boolean,
   undef?: undefined
@@ -185,6 +185,7 @@ export interface Cache {
   breakpoints?: Record<string, string> | string[];
   media?: (string | null)[];
   strict: boolean;
+  key: string;
 }
 
 export interface SomeObject {

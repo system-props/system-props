@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { get } from './get';
+import { memoizedGet as get } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -36,13 +36,21 @@ export const createParser = (
   pseudoSelectors: { [x: string]: string } = {},
   strict: boolean = false
 ): Parser => {
-  const cache: Cache = { strict };
+  const cache: Cache = { strict, key: '__systemprops__' };
 
   const parse: Parser = (props: Props) => {
     let styles: Record<string, any> = {};
     let shouldSort = false;
-    // @ts-ignore
-    const isCacheDisabled = Boolean(props.theme?.disableSystemPropsCache);
+
+    // check cache
+    let isCacheBusted = false;
+    if (
+      typeof props.theme?.systemPropsCacheKey !== 'undefined' &&
+      props.theme.systemPropsCacheKey !== cache.key
+    ) {
+      cache.key = props.theme.systemPropsCacheKey;
+      isCacheBusted = true;
+    }
 
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
@@ -57,7 +65,7 @@ export const createParser = (
 
       if (typeof propValue === 'object') {
         cache.breakpoints =
-          (!isCacheDisabled && cache.breakpoints) || props?.theme?.breakpoints;
+          (!isCacheBusted && cache.breakpoints) || props?.theme?.breakpoints;
 
         if (Array.isArray(propValue)) {
           if (typeof cache.breakpoints === 'undefined') {
@@ -66,7 +74,7 @@ export const createParser = (
             );
           }
 
-          cache.media = (!isCacheDisabled && cache.media) || [
+          cache.media = (!isCacheBusted && cache.media) || [
             null,
             ...parseBreakpoints(cache.breakpoints),
           ];

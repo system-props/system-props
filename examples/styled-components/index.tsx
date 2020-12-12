@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './theme';
+import { theme, AppTheme } from './theme';
 import { Box } from './Box';
 
+const alternateTheme: AppTheme = {
+  ...theme,
+  colors: {
+    blue10: 'yellow',
+    blue20: 'red',
+    blue30: 'green',
+    gray10: 'orange',
+    gray20: 'blue',
+    gray30: 'periwinkle',
+  },
+};
+
 const App = () => {
+  const [activeTheme, setActiveTheme] = useState(theme);
+  function handleThemeChange() {
+    setActiveTheme((prev: AppTheme) =>
+      prev === theme ? alternateTheme : theme
+    );
+  }
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={activeTheme}>
+      <label>
+        <input
+          type="checkbox"
+          checked={activeTheme === alternateTheme}
+          onChange={handleThemeChange}
+        />
+        Use alternate theme
+      </label>
       <Box
         color="$gray30"
         margin="0"

@@ -28,7 +28,11 @@ Functions almost identically to styled-system, but adds the following features:
 
 ## Quick Start
 
-See the [examples](./examples) directory for more.
+CodeSandbox demos:
+
+- [styled-components](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/styled-components)
+- [styled-components with transient props](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/styled-components-transient-props)
+- [emotion](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/emotion)
 
 ```tsx
 import { createSystem, color, space } from 'system-props';

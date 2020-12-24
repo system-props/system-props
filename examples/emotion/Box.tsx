@@ -12,6 +12,7 @@ import {
   background,
   flexbox,
   grid,
+  typography,
   shouldForwardProp,
 } from 'system-props';
 import styled from '@emotion/styled';
@@ -19,13 +20,19 @@ import * as CSS from 'csstype';
 
 const system = createSystem();
 
-interface BoxProps
-  extends AllSystemProps<'prefix'>,
-    PseudoProps<AllSystemProps<'prefix'>> {
+interface BaseProps extends AllSystemProps<'all'> {
   transform?: SystemProp<CSS.Property.Transform>;
+  textDecoration?: SystemProp<CSS.Property.TextDecoration>;
+  transition?: SystemProp<CSS.Property.Transition>;
 }
 
-export const Box = styled('div', { shouldForwardProp })<BoxProps>(
+interface BoxProps extends BaseProps, PseudoProps<BaseProps> {}
+
+export const Box = styled('div').withConfig({
+  shouldForwardProp: (prop, defaultValidatorFn) =>
+    shouldForwardProp(prop) && defaultValidatorFn(prop),
+})<BoxProps>(
+  { boxSizing: 'border-box' },
   system({
     ...color,
     ...border,
@@ -36,6 +43,9 @@ export const Box = styled('div', { shouldForwardProp })<BoxProps>(
     ...position,
     ...layout,
     ...space,
+    ...typography,
     transform: true,
+    textDecoration: true,
+    transition: true,
   })
 );

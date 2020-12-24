@@ -1,35 +1,47 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { ThemeProvider } from '@emotion/react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
 import { Box } from './Box';
+
+const Button = (props) => {
+  return (
+    <Box
+      fontFamily="$base"
+      backgroundColor="$blue400"
+      borderRadius="$pill"
+      color="white"
+      fontSize="$body"
+      fontWeight="600"
+      p="$2 $3"
+      textDecoration="none"
+      transition="all 200ms ease"
+      margin="0 $2"
+      _hover={{
+        boxShadow: '0 5px 15px rgba(0, 0, 0, .12)',
+        transform: 'translateY(-2px)',
+      }}
+      {...props}
+    />
+  );
+};
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        color="$blue10"
-        bg={(t) => t.colors.gray10}
-        padding="$2 $4"
-        border="1px solid rgba(0, 0, 0, 0.1)"
-        mb="$4"
-        transform="rotate(1deg)"
-      >
-        Hello
-      </Box>
-      <Box bg="$gray20" marginTop="-$2" mb="$4" padding="$2">
-        Welcome
-      </Box>
-      <Box
-        bg="blue20"
-        padding="$2"
-        boxShadow="0px 1px 3px $blue10"
-        _hover={{ bg: '$blue10' }}
-      >
-        Welcome
-      </Box>
-      <Box p="$4" bg="red">
-        Welcome
+      <Box display="flex" justifyContent="center" mt="100px">
+        <Button as="a" href="/docs/installation">
+          Documentation
+        </Button>
+
+        <Button
+          backgroundColor="transparent"
+          color="$gray400"
+          as="a"
+          href="https://github.com/roginfarrer/system-props"
+        >
+          GitHub
+        </Button>
       </Box>
     </ThemeProvider>
   );

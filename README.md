@@ -7,8 +7,8 @@ Inspired by [styled-system](https://github.com/styled-system), a responsive, the
 ![MIT License][license]
 
 [npm]: https://npmjs.com/package/system-props
-[version]: https://flat.badgen.net/npm/v/system-props
 [size]: https://flat.badgen.net/bundlephobia/minzip/system-props
+[license]: https://flat.badgen.net/badge/license/MIT/blue
 
 ```sh
 yarn add system-props

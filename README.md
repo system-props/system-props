@@ -1,11 +1,12 @@
 # System Props
 
-Inspired by [styled-system](https://github.com/styled-system), a responsive, theme-based style props for building design systems with React. https://system-props.com
+Inspired by styled-system, a responsive, theme-based style props for building design systems with React. https://system-props.com
 
 [![Version][]][npm]
 ![size][]
 ![MIT License][license]
 
+[version]: https://flat.badgen.net/npm/v/styled-system
 [npm]: https://npmjs.com/package/system-props
 [size]: https://flat.badgen.net/bundlephobia/minzip/system-props
 [license]: https://flat.badgen.net/badge/license/MIT/blue

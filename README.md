@@ -6,7 +6,7 @@ Inspired by styled-system, a responsive, theme-based style props for building de
 ![size][]
 ![MIT License][license]
 
-[version]: https://flat.badgen.net/npm/v/styled-system
+[version]: https://flat.badgen.net/npm/v/system-props
 [npm]: https://npmjs.com/package/system-props
 [size]: https://flat.badgen.net/bundlephobia/minzip/system-props
 [license]: https://flat.badgen.net/badge/license/MIT/blue

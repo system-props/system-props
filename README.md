@@ -1,6 +1,6 @@
 # System Props
 
-Inspired by styled-system, a responsive, theme-based style props for building design systems with React. https://system-props.com
+Responsive, theme-based style props for building design systems with React. https://system-props.com
 
 [![Version][]][npm]
 ![size][]

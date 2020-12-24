@@ -7,6 +7,7 @@ import { layout } from './props/layout';
 import { position } from './props/position';
 import { shadow } from './props/shadow';
 import { space } from './props/space';
+import { typography } from './props/typography';
 import { pseudoSelectors } from './pseudos';
 
 const allProps = {
@@ -20,6 +21,7 @@ const allProps = {
   ...position,
   ...shadow,
   ...space,
+  ...typography,
 };
 
 export const propNames = Object.keys(allProps);

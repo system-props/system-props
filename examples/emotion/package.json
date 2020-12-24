@@ -8,12 +8,13 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@emotion/is-prop-valid": "^1.0.0",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
     "react": "^16",
     "react-dom": "^16",
     "react-is": "^16",
-    "system-props": "latest"
+    "system-props": "^0.11.0"
   },
   "devDependencies": {
     "@types/react": "^16",

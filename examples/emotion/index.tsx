@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@emotion/react';
 import { theme } from './theme';
 import { Box } from './Box';
 
 const Button = (props) => {
   return (
     <Box
+      as="a"
       fontFamily="$base"
       backgroundColor="$blue400"
       borderRadius="$pill"

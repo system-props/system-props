@@ -9,6 +9,7 @@ import {
   background,
   flexbox,
   grid,
+  typography,
   shouldForwardProp,
 } from 'system-props';
 import styled from 'styled-components';
@@ -25,7 +26,10 @@ const config = {
   ...position,
   ...layout,
   ...space,
+  ...typography,
   transform: true,
+  transition: true,
+  textDecoration: true,
 };
 
 const transientConfig = Object.entries(config).reduce((acc, [prop, value]) => {
@@ -34,7 +38,5 @@ const transientConfig = Object.entries(config).reduce((acc, [prop, value]) => {
     [`$${prop}`]: value,
   };
 }, {});
-
-console.log(transientConfig);
 
 export const Box = styled('div')(system(transientConfig));

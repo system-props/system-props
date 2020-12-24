@@ -1,6 +1,20 @@
 # System Props
 
-Inspired by [styled-system](https://github.com/styled-system), a responsive, theme-based style props for building design systems with React.
+Inspired by [styled-system](https://github.com/styled-system), a responsive, theme-based style props for building design systems with React. https://system-props.com
+
+[![Version][]][npm]
+![size][]
+![MIT License][license]
+
+[npm]: https://npmjs.com/package/system-props
+[version]: https://flat.badgen.net/npm/v/system-props
+[size]: https://flat.badgen.net/bundlephobia/minzip/system-props
+
+```sh
+yarn add system-props
+```
+
+## Features
 
 Functions almost identically to styled-system, but adds the following features:
 
@@ -10,12 +24,6 @@ Functions almost identically to styled-system, but adds the following features:
 - Supports common themed shorthand properties, like `border`, `margin`, `padding`, and `box-shadow`
 - Strict mode: allow only values that are present in the theme
 - Visually distinguish theme values by prefixing system prop values with `$`
-
-## Installation
-
-```sh
-yarn add system-props
-```
 
 ## Quick Start
 
@@ -48,7 +56,7 @@ const App = () => {
         bg="$blue500"
         margin="$1 $2 $3 $4"
         border="1px solid $blue200"
-        borderBottom={theme => `3px dotted ${theme.colors.blue200}`}
+        borderBottom={(theme) => `3px dotted ${theme.colors.blue200}`}
         _hover={{
           bg: 'blue700',
         }}
@@ -57,12 +65,6 @@ const App = () => {
   );
 };
 ```
-
-## TODO
-
-- [ ] Improve TypeScript support for users
-- [ ] Improve API documentation
-- [ ] Add `variant` API
 
 ## Credits
 

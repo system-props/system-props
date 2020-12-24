@@ -404,3 +404,7 @@ export interface AllSystemProps<
 export interface Theme {
   [x: string]: any;
 }
+
+export type SystemPropsTheme = Partial<
+  Record<TokenScales, Record<string, string | number>>
+>;

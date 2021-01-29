@@ -58,9 +58,11 @@ type PrefixToken<
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
-  ? ScaleLookup<Token, TTheme> | `$${string & ScaleLookup<Token, TTheme>}`
+  ?
+      | ScaleLookup<Token, TTheme>
+      | `$${(number | string) & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'prefix'
-  ? `$${string & ScaleLookup<Token, TTheme>}`
+  ? `$${(number | string) & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'noprefix'
   ? ScaleLookup<Token, TTheme>
   : never;

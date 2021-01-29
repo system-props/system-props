@@ -105,6 +105,12 @@ interface Colors extends BaseColors {
 export interface AppTheme {
   colors: Colors;
   fontSizes: FontSizes;
+  zIndices: {
+    0: number;
+    10: number;
+    20: number;
+    100: number;
+  };
   space: {
     '0': string;
     '1': string;
@@ -300,6 +306,12 @@ export const theme: AppTheme = {
   sizes: ['450px', '550px', '585px', '865px'],
   breakpoints: {
     bp2: '900px',
+  },
+  zIndices: {
+    0: 0,
+    10: 10,
+    20: 20,
+    100: 100,
   },
 };
 

@@ -26,7 +26,7 @@ const extraProps = {
   transition: true,
 } as const;
 
-type BaseProps = AllSystemProps<'all'> &
+type BaseProps = AllSystemProps<'prefix'> &
   {
     [k in keyof typeof extraProps]?: SystemProp<CSS.Properties[k]>;
   };

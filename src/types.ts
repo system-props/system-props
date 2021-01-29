@@ -1,4 +1,13 @@
-import { Property as P, Properties as CSSProperties } from 'csstype';
+import { Property as P, Properties as CSSProperties, Globals } from 'csstype';
+
+type Color = Globals | 'currentcolor' | (string & {});
+type Paint =
+  | Color
+  | 'child'
+  | 'context-fill'
+  | 'context-stroke'
+  | 'none'
+  | (string & {});
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
   ? keyof Theme['breakpoints']
@@ -64,92 +73,6 @@ type MaybeToken<
   ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
   : SystemProp<CSSProperty>;
 
-// const mapCssToTokenScale: Record<string, TokenScales> = {
-//   color: 'colors',
-//   textColor: 'colors',
-//   backgroundColor: 'colors',
-//   bg: 'colors',
-//   fill: 'colors',
-//   stroke: 'colors',
-//   margin:'space',
-//   m: 'space',
-//   marginTop:'space',
-//   marginLeft:'space',
-//   marginBottom:'space',
-//   marginRight:'space',
-//   mt:'space',
-//   ml:'space',
-//   mb:'space',
-//   mr:'space',
-//   marginX:'space',
-//   marginY:'space',
-//   mx:'space',
-//   my:'space',
-//   p: 'space',
-//   paddingTop:'space',
-//   paddingLeft:'space',
-//   paddingBottom:'space',
-//   paddingRight:'space',
-//   pt:'space',
-//   pl:'space',
-//   pb:'space',
-//   pr:'space',
-//   paddingX:'space',
-//   paddingY:'space',
-//   px:'space',
-//   py:'space',
-//   border: 'borders',
-//   borderX: 'borders',
-//   borderY: 'borders',
-//   borderTop: 'borders',
-//   borderLeft: 'borders',
-//   borderBottom: 'borders',
-//   borderRight: 'borders',
-//   borderColor: 'colors',
-//   borderLeftColor: 'colors',
-//   borderRightColor: 'colors',
-//   borderTopColor: 'colors',
-//   borderBottomColor: 'colors',
-//   borderStyle: 'borderStyles',
-//   borderLeftStyle: 'borderStyles',
-//   borderRightStyle: 'borderStyles',
-//   borderTopStyle: 'borderStyles',
-//   borderBottomStyle: 'borderStyles',
-//   borderWidth: 'borderWidths',
-//   borderLeftWidth: 'borderWidths',
-//   borderRightWidth: 'borderWidths',
-//   borderTopWidth: 'borderWidths',
-//   borderBottomWidth: 'borderWidths',
-//   borderRadius: 'radii',
-//   borderTopLeftRadius: 'radii',
-//   borderTopRightRadius: 'radii',
-//   borderBottomLeftRadius: 'radii',
-//   borderBottomRightRadius: 'radii',
-//   gap: 'space',
-//   gridGap: 'space',
-//   gridColumnGap: 'space',
-//   gridRowGap: 'space',
-//   height:'space',
-//   width:'space',
-//   minWidth:'space',
-//   minHeight:'space',
-//   maxWidth:'space',
-//   maxHeight:'space',
-//   size:'space',
-//   top: 'space',
-//   left: 'space',
-//   right: 'space',
-//   bottom: 'space',
-//   zIndex: 'zIndices',
-//   fontFamily: 'fonts',
-//   fontSize: 'fontSizes',
-//   fontWeight: 'fontWeights',
-//   lineHeight: 'lineHeights',
-//   letterSpacing: 'letterSpacings',
-//   boxShadow: 'shadows',
-//   textShadow: 'shadows',
-// }
-
 export type Props = {
   theme?: Theme;
   [x: string]: any;
@@ -195,12 +118,12 @@ export interface SomeObject {
 export interface ColorProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > {
-  color?: MaybeToken<P.Color, PrefixOption, 'colors'>;
-  textColor?: MaybeToken<P.Color, PrefixOption, 'colors'>;
-  backgroundColor?: MaybeToken<P.BackgroundColor, PrefixOption, 'colors'>;
-  bg?: MaybeToken<P.BackgroundColor, PrefixOption, 'colors'>;
-  fill?: MaybeToken<P.Fill, PrefixOption, 'colors'>;
-  stroke?: MaybeToken<P.Stroke, PrefixOption, 'colors'>;
+  color?: MaybeToken<Color, PrefixOption, 'colors'>;
+  textColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  backgroundColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  bg?: MaybeToken<Color, PrefixOption, 'colors'>;
+  fill?: MaybeToken<Paint, PrefixOption, 'colors'>;
+  stroke?: MaybeToken<Paint, PrefixOption, 'colors'>;
   opacity?: MaybeToken<P.Opacity>;
 }
 
@@ -256,11 +179,11 @@ export interface BorderProps<
   borderRight?: MaybeToken<P.BorderRight, PrefixOption, 'borders'>;
   borderBottom?: MaybeToken<P.BorderBottom, PrefixOption, 'borders'>;
   borderLeft?: MaybeToken<P.BorderLeft, PrefixOption, 'borders'>;
-  borderColor?: MaybeToken<P.BorderColor, PrefixOption, 'colors'>;
-  borderTopColor?: MaybeToken<P.BorderTopColor, PrefixOption, 'colors'>;
-  borderRightColor?: MaybeToken<P.BorderRightColor, PrefixOption, 'colors'>;
-  borderBottomColor?: MaybeToken<P.BorderBottomColor, PrefixOption, 'colors'>;
-  borderLeftColor?: MaybeToken<P.BorderLeftColor, PrefixOption, 'colors'>;
+  borderColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  borderTopColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  borderRightColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  borderBottomColor?: MaybeToken<Color, PrefixOption, 'colors'>;
+  borderLeftColor?: MaybeToken<Color, PrefixOption, 'colors'>;
   borderStyle?: MaybeToken<P.BorderStyle, PrefixOption, 'borderStyles'>;
   borderTopStyle?: MaybeToken<P.BorderTopStyle, PrefixOption, 'borderStyles'>;
   borderRightStyle?: MaybeToken<

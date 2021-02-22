@@ -1,5 +1,11 @@
 import { Property as P, Properties as CSSProperties, Globals } from 'csstype';
 
+export interface Theme {}
+
+type AnyIfEmpty<T extends object> = keyof T extends never ? any : T;
+
+type WrappedTheme = AnyIfEmpty<Theme>;
+
 type Color = Globals | 'currentcolor' | (string & {});
 type Paint =
   | Color
@@ -9,12 +15,12 @@ type Paint =
   | 'none'
   | (string & {});
 
-type ThemeBreakpointKey = Theme['breakpoints'] extends object
-  ? keyof Theme['breakpoints']
+type WrappedThemeBreakpointKey = WrappedTheme['breakpoints'] extends object
+  ? keyof WrappedTheme['breakpoints']
   : never;
 
 export type ResponsiveObject<T> = {
-  [K in ThemeBreakpointKey | 'all']?: T;
+  [K in WrappedThemeBreakpointKey | 'all']?: T;
 };
 export type ResponsiveArray<T> = Array<T | null>;
 export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
@@ -22,7 +28,7 @@ export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
 export type SystemProp<T> =
   | T
   | ResponsiveValue<T>
-  | ((theme: Theme) => T | ResponsiveValue<T>);
+  | ((theme: WrappedTheme) => T | ResponsiveValue<T>);
 
 type TokenScales =
   | 'colors'
@@ -46,7 +52,7 @@ type PrefixDefault = 'noprefix';
 
 type ScaleLookup<
   Token extends TokenScales,
-  TTheme extends Theme = Theme
+  TTheme extends WrappedTheme = WrappedTheme
 > = TTheme[Token] extends object
   ? keyof TTheme[Token]
   : TTheme[Token] extends Array<string | number>
@@ -56,7 +62,7 @@ type ScaleLookup<
 type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
-  TTheme extends Theme = Theme
+  TTheme extends WrappedTheme = WrappedTheme
 > = PrefixOption extends 'all'
   ?
       | ScaleLookup<Token, TTheme>
@@ -76,7 +82,7 @@ type MaybeToken<
   : SystemProp<CSSProperty>;
 
 export type Props = {
-  theme?: Theme;
+  theme?: WrappedTheme;
   [x: string]: any;
 };
 
@@ -114,7 +120,11 @@ export interface Cache {
 }
 
 export interface SomeObject {
-  [x: string]: SomeObject | string | number | ((x: Theme) => string | number);
+  [x: string]:
+    | SomeObject
+    | string
+    | number
+    | ((x: WrappedTheme) => string | number);
 }
 
 export interface ColorProps<
@@ -325,10 +335,6 @@ export interface AllSystemProps<
     PositionProps<PrefixOption>,
     GridProps<PrefixOption>,
     FlexboxProps {}
-
-export interface Theme {
-  [x: string]: any;
-}
 
 export type SystemPropsTheme = Partial<
   Record<TokenScales, Record<string, string | number>>

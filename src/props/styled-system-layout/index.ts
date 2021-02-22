@@ -1,5 +1,5 @@
-import { PropConfigCollection, Transform } from '@/types';
-import { get } from '@/core';
+import { PropConfigCollection, Transform } from '../../types';
+import { get } from '../../core/get';
 import { Property } from 'csstype';
 
 const isNumber = (n: unknown) => typeof n === 'number' && !isNaN(n);

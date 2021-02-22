@@ -1,4 +1,4 @@
-import { PropConfigCollection } from '@/types';
+import { PropConfigCollection } from '../../types';
 
 export const grid: PropConfigCollection = {
   gap: {

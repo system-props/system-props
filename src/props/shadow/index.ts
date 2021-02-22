@@ -1,5 +1,5 @@
-import { memoizedGet } from '@/core/get';
-import { Transform, PropConfigCollection } from '@/types';
+import { memoizedGet } from '../../core/get';
+import { Transform, PropConfigCollection } from '../../types';
 import { tokenizeValue } from '../tokenizeValue';
 
 export const getShadow: Transform = (value, _, props) => {

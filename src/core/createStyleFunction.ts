@@ -1,5 +1,5 @@
 import { memoizedGet } from './get';
-import { Props, PropertyConfig, SystemConfig, Cache } from '@/types';
+import { Props, PropertyConfig, SystemConfig, Cache } from '../types';
 import * as CSS from 'csstype';
 
 const getValue = (

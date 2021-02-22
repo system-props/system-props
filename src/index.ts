@@ -7,7 +7,6 @@ export * from './propNames';
 export * from './shouldForwardProp';
 export {
   SystemProp,
-  Theme,
   ColorProps,
   SpaceProps,
   BorderProps,
@@ -18,4 +17,6 @@ export {
   GridProps,
   FlexboxProps,
   AllSystemProps,
+  PropConfigCollection,
+  Theme,
 } from './types';

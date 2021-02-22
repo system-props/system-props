@@ -1,5 +1,5 @@
-import { Transform } from '@/types';
-import { betterGet } from '@/core/get';
+import { Transform } from '../types';
+import { betterGet } from '../core/get';
 
 const isNumber = (n: unknown): boolean => typeof n === 'number' && !isNaN(n);
 

@@ -1,36 +1,6 @@
 import { Property as P, Properties as CSSProperties, Globals } from 'csstype';
 
-export interface Theme {}
-
-type AnyIfEmpty<T extends object> = keyof T extends never ? any : T;
-
-type WrappedTheme = AnyIfEmpty<Theme>;
-
-type Color = Globals | 'currentcolor' | (string & {});
-type Paint =
-  | Color
-  | 'child'
-  | 'context-fill'
-  | 'context-stroke'
-  | 'none'
-  | (string & {});
-
-type WrappedThemeBreakpointKey = WrappedTheme['breakpoints'] extends object
-  ? keyof WrappedTheme['breakpoints']
-  : never;
-
-export type ResponsiveObject<T> = {
-  [K in WrappedThemeBreakpointKey | 'all']?: T;
-};
-export type ResponsiveArray<T> = Array<T | null>;
-export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
-
-export type SystemProp<T> =
-  | T
-  | ResponsiveValue<T>
-  | ((theme: WrappedTheme) => T | ResponsiveValue<T>);
-
-type TokenScales =
+type TokenScaleNames =
   | 'colors'
   | 'sizes'
   | 'space'
@@ -47,12 +17,55 @@ type TokenScales =
   | 'radii'
   | 'breakpoints';
 
+export interface Theme {
+  colors?: any;
+  sizes?: any;
+  space?: any;
+  borders?: any;
+  borderStyles?: any;
+  borderWidths?: any;
+  letterSpacings?: any;
+  zIndices?: any;
+  shadows?: any;
+  fontWeights?: any;
+  fontSizes?: any;
+  lineHeights?: any;
+  fonts?: any;
+  radii?: any;
+  breakpoints?: any;
+  systemPropsCacheKey?: string;
+}
+
+type Color = Globals | 'currentcolor' | (string & {});
+type Paint =
+  | Color
+  | 'child'
+  | 'context-fill'
+  | 'context-stroke'
+  | 'none'
+  | (string & {});
+
+type ThemeBreakpointKey = Theme['breakpoints'] extends object
+  ? keyof Theme['breakpoints']
+  : never;
+
+export type ResponsiveObject<T> = {
+  [K in ThemeBreakpointKey | 'all']?: T;
+};
+export type ResponsiveArray<T> = Array<T | null>;
+export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
+
+export type SystemProp<T> =
+  | T
+  | ResponsiveValue<T>
+  | ((theme: Theme) => T | ResponsiveValue<T>);
+
 type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 type PrefixDefault = 'noprefix';
 
 type ScaleLookup<
-  Token extends TokenScales,
-  TTheme extends WrappedTheme = WrappedTheme
+  Token extends TokenScaleNames,
+  TTheme extends Theme = Theme
 > = TTheme[Token] extends object
   ? keyof TTheme[Token]
   : TTheme[Token] extends Array<string | number>
@@ -60,9 +73,9 @@ type ScaleLookup<
   : never;
 
 type PrefixToken<
-  Token extends TokenScales,
+  Token extends TokenScaleNames,
   PrefixOption extends PrefixOptions,
-  TTheme extends WrappedTheme = WrappedTheme
+  TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
   ?
       | ScaleLookup<Token, TTheme>
@@ -76,13 +89,13 @@ type PrefixToken<
 type MaybeToken<
   CSSProperty extends any,
   PrefixOption extends PrefixOptions = PrefixDefault,
-  Token extends TokenScales | null = null
-> = Token extends TokenScales
+  Token extends TokenScaleNames | null = null
+> = Token extends TokenScaleNames
   ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
   : SystemProp<CSSProperty>;
 
 export type Props = {
-  theme?: WrappedTheme;
+  theme?: Theme;
   [x: string]: any;
 };
 
@@ -120,11 +133,7 @@ export interface Cache {
 }
 
 export interface SomeObject {
-  [x: string]:
-    | SomeObject
-    | string
-    | number
-    | ((x: WrappedTheme) => string | number);
+  [x: string]: SomeObject | string | number | ((x: Theme) => string | number);
 }
 
 export interface ColorProps<
@@ -337,5 +346,5 @@ export interface AllSystemProps<
     FlexboxProps {}
 
 export type SystemPropsTheme = Partial<
-  Record<TokenScales, Record<string, string | number>>
+  Record<TokenScaleNames, Record<string, string | number>>
 >;

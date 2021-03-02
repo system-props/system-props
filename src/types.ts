@@ -1,6 +1,11 @@
-import { Property as P, Properties as CSSProperties, Globals } from 'csstype';
+import {
+  Property as P,
+  Properties as CSSProperties,
+  Color,
+  Paint,
+} from './css-types';
 
-type TokenScaleNames =
+type TokenScales =
   | 'colors'
   | 'sizes'
   | 'space'
@@ -18,32 +23,8 @@ type TokenScaleNames =
   | 'breakpoints';
 
 export interface Theme {
-  colors?: any;
-  sizes?: any;
-  space?: any;
-  borders?: any;
-  borderStyles?: any;
-  borderWidths?: any;
-  letterSpacings?: any;
-  zIndices?: any;
-  shadows?: any;
-  fontWeights?: any;
-  fontSizes?: any;
-  lineHeights?: any;
-  fonts?: any;
-  radii?: any;
-  breakpoints?: any;
-  systemPropsCacheKey?: string;
+  [key: string]: any;
 }
-
-type Color = Globals | 'currentcolor' | (string & {});
-type Paint =
-  | Color
-  | 'child'
-  | 'context-fill'
-  | 'context-stroke'
-  | 'none'
-  | (string & {});
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
   ? keyof Theme['breakpoints']
@@ -64,7 +45,7 @@ type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 type PrefixDefault = 'noprefix';
 
 type ScaleLookup<
-  Token extends TokenScaleNames,
+  Token extends TokenScales,
   TTheme extends Theme = Theme
 > = TTheme[Token] extends object
   ? keyof TTheme[Token]
@@ -73,7 +54,7 @@ type ScaleLookup<
   : never;
 
 type PrefixToken<
-  Token extends TokenScaleNames,
+  Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
@@ -89,8 +70,8 @@ type PrefixToken<
 type MaybeToken<
   CSSProperty extends any,
   PrefixOption extends PrefixOptions = PrefixDefault,
-  Token extends TokenScaleNames | null = null
-> = Token extends TokenScaleNames
+  Token extends TokenScales | null = null
+> = Token extends TokenScales
   ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
   : SystemProp<CSSProperty>;
 
@@ -346,5 +327,5 @@ export interface AllSystemProps<
     FlexboxProps {}
 
 export type SystemPropsTheme = Partial<
-  Record<TokenScaleNames, Record<string, string | number>>
+  Record<TokenScales, Record<string, string | number>>
 >;

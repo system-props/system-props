@@ -1,4 +1,4 @@
-import { createSystem } from '@/core';
+import { createSystem } from '../../../core';
 import { layout } from '..';
 
 const system = createSystem();

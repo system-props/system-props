@@ -1,4 +1,4 @@
-import { createSystem } from '@/core';
+import { createSystem } from '../../../core';
 import grid from '..';
 
 const system = createSystem();

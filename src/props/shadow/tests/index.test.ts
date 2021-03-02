@@ -1,5 +1,5 @@
 import { shadow, getShadow } from '../index';
-import { createSystem } from '@/core/createSystem';
+import { createSystem } from '../../../core';
 
 const system = createSystem();
 

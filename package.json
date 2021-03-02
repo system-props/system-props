@@ -11,15 +11,11 @@
   "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
-    "@types/react": "^16",
-    "@types/styled-components": "^5.1.7",
     "csstype": "^3.0.5",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "np": "^6.5.0",
     "prettier": "^2.1.2",
-    "react": "^16",
-    "styled-components": "^5.2.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.1",
     "typescript": "^4.1.0"

@@ -3,9 +3,9 @@ import {
   SystemConfig,
   ResponsiveObject,
   ResponsiveArray,
-  Theme,
   Props,
-} from '@/types';
+  Theme,
+} from '../types';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 

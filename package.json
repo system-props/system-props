@@ -35,6 +35,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint src",
+    "lint:examples": "tsdx lint examples/styled-components/{index,Box}.tsx",
     "prepare": "tsdx build",
     "format": "yarn lint --fix",
     "start-sc": "yarn --cwd ./examples/styled-components start",

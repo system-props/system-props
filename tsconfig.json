@@ -13,11 +13,6 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "*": ["node_modules/*"]
-    }
+    "esModuleInterop": true
   }
 }

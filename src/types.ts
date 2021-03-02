@@ -1,28 +1,9 @@
-import { Property as P, Properties as CSSProperties, Globals } from 'csstype';
-
-type Color = Globals | 'currentcolor' | (string & {});
-type Paint =
-  | Color
-  | 'child'
-  | 'context-fill'
-  | 'context-stroke'
-  | 'none'
-  | (string & {});
-
-type ThemeBreakpointKey = Theme['breakpoints'] extends object
-  ? keyof Theme['breakpoints']
-  : never;
-
-export type ResponsiveObject<T> = {
-  [K in ThemeBreakpointKey | 'all']?: T;
-};
-export type ResponsiveArray<T> = Array<T | null>;
-export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
-
-export type SystemProp<T> =
-  | T
-  | ResponsiveValue<T>
-  | ((theme: Theme) => T | ResponsiveValue<T>);
+import {
+  Property as P,
+  Properties as CSSProperties,
+  Color,
+  Paint,
+} from './css-types';
 
 type TokenScales =
   | 'colors'
@@ -40,6 +21,25 @@ type TokenScales =
   | 'fonts'
   | 'radii'
   | 'breakpoints';
+
+export interface Theme {
+  [key: string]: any;
+}
+
+type ThemeBreakpointKey = Theme['breakpoints'] extends object
+  ? keyof Theme['breakpoints']
+  : never;
+
+export type ResponsiveObject<T> = {
+  [K in ThemeBreakpointKey | 'all']?: T;
+};
+export type ResponsiveArray<T> = Array<T | null>;
+export type ResponsiveValue<T> = ResponsiveArray<T> | ResponsiveObject<T>;
+
+export type SystemProp<T> =
+  | T
+  | ResponsiveValue<T>
+  | ((theme: Theme) => T | ResponsiveValue<T>);
 
 type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 type PrefixDefault = 'noprefix';
@@ -325,10 +325,6 @@ export interface AllSystemProps<
     PositionProps<PrefixOption>,
     GridProps<PrefixOption>,
     FlexboxProps {}
-
-export interface Theme {
-  [x: string]: any;
-}
 
 export type SystemPropsTheme = Partial<
   Record<TokenScales, Record<string, string | number>>

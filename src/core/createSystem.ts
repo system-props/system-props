@@ -8,7 +8,7 @@ import {
   Props,
   SomeObject,
   Cache,
-} from '@/types';
+} from '../types';
 import { sort } from './sort';
 import { merge } from './merge';
 import { pseudoSelectors as defaultPseudos } from '../pseudos';

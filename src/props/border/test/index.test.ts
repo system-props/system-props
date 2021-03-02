@@ -1,5 +1,5 @@
 import { border, borderShorthandTransform } from '..';
-import { createSystem } from '@/core/createSystem';
+import { createSystem } from '../../../core';
 
 const system = createSystem();
 

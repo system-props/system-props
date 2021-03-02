@@ -1,4 +1,4 @@
-import { PropConfigCollection } from '@/types';
+import { PropConfigCollection } from '../../types';
 import { positiveOrNegative } from '../positiveOrNegative';
 
 export const position: PropConfigCollection = {

@@ -1,5 +1,5 @@
-import { memoizedGet } from '@/core/get';
-import { PropConfigCollection, Transform } from '@/types';
+import { memoizedGet } from '../../core/get';
+import { PropConfigCollection, Transform } from '../../types';
 import { tokenizeValue } from '../tokenizeValue';
 
 export const borderShorthandTransform: Transform = (

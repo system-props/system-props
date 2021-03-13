@@ -25,7 +25,15 @@ export const grid: PropConfigCollection = {
   gridTemplateColumns: true,
   gridTemplateRows: true,
   gridTemplateAreas: true,
+  // Grid Item props
   gridArea: true,
+  gridColumnStart: true,
+  gridColumnEnd: true,
+  gridRowStart: true,
+  gridRowEnd: true,
+  justifySelf: true,
+  alignSelf: true,
+  placeSelf: true
 };
 
 export default grid;

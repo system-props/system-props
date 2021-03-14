@@ -1,6 +1,17 @@
 import { PropConfigCollection } from '../../types';
 
-export const grid: PropConfigCollection = {
+export const gridItem: PropConfigCollection = {
+  gridArea: true,
+  gridColumnStart: true,
+  gridColumnEnd: true,
+  gridRowStart: true,
+  gridRowEnd: true,
+  justifySelf: true,
+  alignSelf: true,
+  placeSelf: true,
+};
+
+export const gridContainer: PropConfigCollection = {
   gap: {
     property: 'gap',
     scale: 'space',
@@ -25,15 +36,11 @@ export const grid: PropConfigCollection = {
   gridTemplateColumns: true,
   gridTemplateRows: true,
   gridTemplateAreas: true,
-  // Grid Item props
-  gridArea: true,
-  gridColumnStart: true,
-  gridColumnEnd: true,
-  gridRowStart: true,
-  gridRowEnd: true,
-  justifySelf: true,
-  alignSelf: true,
-  placeSelf: true
+};
+
+export const grid: PropConfigCollection = {
+  ...gridItem,
+  ...gridContainer,
 };
 
 export default grid;

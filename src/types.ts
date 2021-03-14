@@ -235,13 +235,17 @@ export interface BorderProps<
   >;
 }
 
-export interface FlexboxProps {
+export interface FlexContainerProps {
   alignItems?: SystemProp<P.AlignItems>;
   alignContent?: SystemProp<P.AlignContent>;
   justifyItems?: SystemProp<P.JustifyItems>;
   justifyContent?: SystemProp<P.JustifyContent>;
   flexWrap?: SystemProp<P.FlexWrap>;
   flexDirection?: SystemProp<P.FlexDirection>;
+  flexFlow?: SystemProp<P.FlexFlow>;
+}
+
+export interface FlexItemProps {
   flex?: SystemProp<P.Flex>;
   flexGrow?: SystemProp<P.FlexGrow>;
   flexShrink?: SystemProp<P.FlexShrink>;
@@ -251,7 +255,11 @@ export interface FlexboxProps {
   order?: SystemProp<P.Order>;
 }
 
-export interface GridProps<PrefixOption extends PrefixOptions = PrefixDefault> {
+export interface FlexboxProps extends FlexItemProps, FlexContainerProps {}
+
+export interface GridContainerProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
   gap?: MaybeToken<P.Gap, PrefixOption, 'space'>;
   gridGap?: MaybeToken<P.GridGap, PrefixOption, 'space'>;
   gridColumnGap?: MaybeToken<P.GridColumnGap, PrefixOption, 'space'>;
@@ -264,8 +272,22 @@ export interface GridProps<PrefixOption extends PrefixOptions = PrefixDefault> {
   gridTemplateColumns?: SystemProp<P.GridTemplateColumns>;
   gridTemplateRows?: SystemProp<P.GridTemplateRows>;
   gridTemplateAreas?: SystemProp<P.GridTemplateAreas>;
-  gridArea?: SystemProp<P.GridArea>;
 }
+
+export interface GridItemProps {
+  gridArea?: SystemProp<P.GridArea>;
+  gridColumnStart?: SystemProp<P.GridColumnStart>;
+  gridColumnEnd?: SystemProp<P.GridColumnEnd>;
+  gridRowStart?: SystemProp<P.GridRowStart>;
+  gridRowEnd?: SystemProp<P.GridRowEnd>;
+  justifySelf?: SystemProp<P.JustifySelf>;
+  alignSelf?: SystemProp<P.AlignSelf>;
+  placeSelf?: SystemProp<P.PlaceSelf>;
+}
+
+export interface GridProps<PrefixOption extends PrefixOptions = PrefixDefault>
+  extends GridContainerProps<PrefixOption>,
+    GridItemProps {}
 
 export interface LayoutProps<
   PrefixOption extends PrefixOptions = PrefixDefault

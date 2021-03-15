@@ -24,3 +24,4 @@ export {
   PropConfigCollection,
   Theme,
 } from './types';
+export { CSSObject } from './css-prop';

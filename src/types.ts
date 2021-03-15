@@ -5,7 +5,7 @@ import {
   Paint,
 } from './css-types';
 
-type TokenScales =
+export type TokenScales =
   | 'colors'
   | 'sizes'
   | 'space'
@@ -20,6 +20,7 @@ type TokenScales =
   | 'lineHeights'
   | 'fonts'
   | 'radii'
+  | 'mediaQueries'
   | 'breakpoints';
 
 export interface Theme {
@@ -41,8 +42,8 @@ export type SystemProp<T> =
   | ResponsiveValue<T>
   | ((theme: Theme) => T | ResponsiveValue<T>);
 
-type PrefixOptions = 'all' | 'prefix' | 'noprefix';
-type PrefixDefault = 'noprefix';
+export type PrefixOptions = 'all' | 'prefix' | 'noprefix';
+export type PrefixDefault = 'noprefix';
 
 type ScaleLookup<
   Token extends TokenScales,
@@ -53,7 +54,7 @@ type ScaleLookup<
   ? TTheme[Token][number]
   : never;
 
-type PrefixToken<
+export type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme

@@ -11,7 +11,6 @@ const Button = (props) => {
       fontFamily="$base"
       backgroundColor="$blue400"
       borderRadius="$pill"
-      color="white"
       fontSize="$body"
       fontWeight="600"
       p="$2 $3"

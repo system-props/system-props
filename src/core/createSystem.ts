@@ -166,25 +166,23 @@ export const createSystem = ({
   strict?: boolean;
   get?: Get;
 } = {}) => {
-  const system = (...args: PropConfigCollection[]) => {
+  const system = (arg: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
-    args.forEach((arg) => {
-      Object.keys(arg).forEach((key) => {
-        const conf = arg[key];
-        if (conf === true) {
-          // shortcut definition
-          config[key] = createStyleFunction({
-            property: key as keyof CSS.Properties,
-            scale: key,
-            get,
-          });
-          return;
-        }
-        if (typeof conf === 'function') {
-          return;
-        }
-        config[key] = createStyleFunction({ ...conf, get });
-      });
+    Object.keys(arg).forEach((key) => {
+      const conf = arg[key];
+      if (conf === true) {
+        // shortcut definition
+        config[key] = createStyleFunction({
+          property: key as keyof CSS.Properties,
+          scale: key,
+          get,
+        });
+        return;
+      }
+      if (typeof conf === 'function') {
+        return;
+      }
+      config[key] = createStyleFunction({ ...conf, get });
     });
     const parser = createParser(config, pseudoSelectors, strict);
     return parser;

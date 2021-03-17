@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { memoizedGet as get } from './get';
+import { memoizedGet as defaultGet, get } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -8,6 +8,7 @@ import {
   Props,
   SomeObject,
   Cache,
+  Get,
 } from '../types';
 import { sort } from './sort';
 import { merge } from './merge';
@@ -159,28 +160,32 @@ export const createParser = (
 export const createSystem = ({
   strict = false,
   pseudoSelectors = defaultPseudos,
+  get = defaultGet,
 }: {
   pseudoSelectors?: Record<string, string>;
   strict?: boolean;
+  get?: Get;
 } = {}) => {
-  const system = (args: PropConfigCollection) => {
+  const system = (...args: PropConfigCollection[]) => {
     const config: { [x: string]: SystemConfig } = {};
-    Object.keys(args).forEach((key) => {
-      const conf = args[key];
-      if (conf === true) {
-        // shortcut definition
-        config[key] = createStyleFunction({
-          property: key as keyof CSS.Properties,
-          scale: key,
-        });
-        return;
-      }
-      if (typeof conf === 'function') {
-        return;
-      }
-      config[key] = createStyleFunction(conf);
+    args.forEach((arg) => {
+      Object.keys(arg).forEach((key) => {
+        const conf = arg[key];
+        if (conf === true) {
+          // shortcut definition
+          config[key] = createStyleFunction({
+            property: key as keyof CSS.Properties,
+            scale: key,
+            get,
+          });
+          return;
+        }
+        if (typeof conf === 'function') {
+          return;
+        }
+        config[key] = createStyleFunction({ ...conf, get });
+      });
     });
-
     const parser = createParser(config, pseudoSelectors, strict);
     return parser;
   };

@@ -1,24 +1,31 @@
-import { memoizedGet } from './get';
-import { Props, PropertyConfig, SystemConfig, Cache } from '../types';
+// import { memoizedGet } from './get';
+import {
+  Props,
+  // PropertyConfig,
+  // SystemConfig,
+  Cache,
+  StyleFunction,
+  Transform,
+} from '../types';
 import * as CSS from 'csstype';
 
-const getValue = (
-  value: string | number,
-  scale: any,
-  _props: Props,
-  strict: boolean
-) => {
-  return memoizedGet(scale, value, strict === true ? undefined : value);
+const getValue: Transform = (get) => (value, scale, _props, strict) => {
+  return get(scale, value, strict === true ? undefined : value);
 };
 
-export const createStyleFunction = ({
+export const createStyleFunction: StyleFunction = ({
   properties,
   property,
   scale,
   transform = getValue,
   defaultScale,
-}: PropertyConfig): SystemConfig => {
+  get,
+}) => {
   const _properties = properties || [property];
+
+  if (typeof get !== 'function') {
+    throw new Error('');
+  }
 
   const systemConfig = (
     value: number | string,
@@ -29,7 +36,7 @@ export const createStyleFunction = ({
     const result: Record<string, any> = {};
 
     let n = value;
-    n = transform(value, scale, props, cache.strict);
+    n = transform(get)(value, scale, props, cache.strict);
 
     if (n === null) {
       return result;

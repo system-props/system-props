@@ -1,4 +1,5 @@
 import { createSystem } from '../createSystem';
+import { get } from '../get';
 
 const breakpoints = [40, 52, 64].map((n) => n + 'em');
 
@@ -246,7 +247,7 @@ test('skips null values in arrays', () => {
   });
 });
 
-test.only('includes single property functions', () => {
+test('includes single property functions', () => {
   const system = createSystem();
   const parser = system({
     color: true,
@@ -332,19 +333,35 @@ test('sorts media queries when responsive object values are used', () => {
   ]);
 });
 
-// test('transforms values', () => {
-//   const system = createSystem({ breakpoints });
-//   const parser = system({
-//     margin: {
-//       property: 'margin',
-//       transform: (n, scale, props) => {
-//         const m = props.multiply || 1;
-//         return m * n;
-//       },
-//     },
-//   });
-//   const a = parser({ margin: 8 });
-//   const b = parser({ margin: 12, multiply: 2 });
-//   expect(a).toEqual({ margin: 8 });
-//   expect(b).toEqual({ margin: 24 });
-// });
+test.only('supports custom get function', () => {
+  const system = createSystem({ get });
+  const parser = system({
+    margin: true,
+    padding: true,
+    backgroundColor: { property: 'backgroundColor', scale: 'colors' },
+    color: { property: 'color', scale: 'colors' },
+  });
+  const styles = parser({
+    theme: {
+      systemPropsCacheKey: true,
+      colors: {
+        red: '#ff0000',
+        blue: '#0000ff',
+        green: '#00ff00',
+      },
+      margin: {
+        250: '2px',
+        500: '4px',
+        1000: '8px',
+      },
+    },
+    color: 'red',
+    backgroundColor: 'green',
+    margin: 250,
+  });
+  expect(styles).toStrictEqual({
+    color: '#ff0000',
+    backgroundColor: '#00ff00',
+    margin: '2px',
+  });
+});

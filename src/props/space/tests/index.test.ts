@@ -47,7 +47,7 @@ test('returns negative theme values', () => {
   expect(styles).toEqual({ margin: -8 });
 });
 
-test('returns positive theme values', () => {
+test.only('returns positive theme values', () => {
   const styles = parser({
     theme: {
       breakpoints: [],

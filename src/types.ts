@@ -110,9 +110,11 @@ export interface Transform {
   }): any;
 }
 
+export type MaybeCSSProperty = keyof CSSProperties | (string & {});
+
 export type PropertyConfig = {
-  properties?: Array<keyof CSSProperties>;
-  property?: keyof CSSProperties;
+  properties?: Array<MaybeCSSProperty>;
+  property?: MaybeCSSProperty;
   scale?: string;
   defaultScale?: Array<string | number>;
   transform?: Transform;
@@ -120,7 +122,7 @@ export type PropertyConfig = {
 };
 
 export interface PropConfigCollection {
-  [x: string]: true | PropertyConfig;
+  [key: string]: true | PropertyConfig;
 }
 
 export interface Cache {

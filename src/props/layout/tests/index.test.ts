@@ -33,8 +33,8 @@ test('returns 0 from theme.sizes', () => {
       breakpoints: [],
       sizes: [24, 48, 96],
     },
-    width: 0,
-    height: 0,
+    width: '$0',
+    height: '$0',
   });
   expect(style).toEqual({
     width: 24,

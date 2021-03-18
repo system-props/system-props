@@ -1,6 +1,4 @@
-import { betterGet, memoize } from '../get';
-
-const get = betterGet;
+import { get, tokenGet, memoizeGet } from '../get';
 
 test('returns a deeply nested value', () => {
   const a = get(
@@ -40,7 +38,7 @@ test('returns 0 index items', () => {
 });
 
 test('returns number values with $', () => {
-  const a = get([0, 4, 8], '$2');
+  const a = tokenGet([0, 4, 8], '$2');
   expect(a).toBe(8);
 });
 
@@ -51,7 +49,7 @@ test('memoize', () => {
     },
   };
   const _get = jest.fn(() => true);
-  const memoizedGet = memoize(_get);
+  const memoizedGet = memoizeGet(_get);
   expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
   expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);
   expect(memoizedGet(obj, 'colors.blue.3')).toStrictEqual(true);

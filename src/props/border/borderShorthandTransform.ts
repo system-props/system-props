@@ -1,32 +1,32 @@
 import { Transform } from '../../types';
-import { memoizedGet } from '../../core/get';
 import { tokenizeValue } from '../tokenizeValue';
 
-export const borderShorthandTransform: Transform = (
-  value,
-  scale,
+export const borderShorthandTransform: Transform = ({
+  path,
+  object,
   props,
-  strict
-) => {
-  if (typeof value !== 'string') {
-    return value;
+  strict,
+  get,
+}) => {
+  if (typeof path !== 'string') {
+    return path;
   }
-  let border = memoizedGet(props?.theme?.borders || scale, value);
+  let border = get(props?.theme?.borders || object, path);
   if (border) {
     return border;
   }
-  const [[width, style, color]] = tokenizeValue(value);
-  const borderWidth = memoizedGet(
+  const [[width, style, color]] = tokenizeValue(path);
+  const borderWidth = get(
     props?.theme?.borderWidths,
     width,
     strict ? undefined : width
   );
-  const borderStyle = memoizedGet(
+  const borderStyle = get(
     props?.theme?.borderStyles,
     style,
     strict ? undefined : style
   );
-  const borderColor = memoizedGet(
+  const borderColor = get(
     props?.theme?.colors,
     color,
     strict ? undefined : color

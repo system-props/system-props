@@ -86,13 +86,29 @@ export interface SystemConfig {
   defaultScale?: unknown;
 }
 
-export type Transform = (
-  path: any,
-  object: any,
-  props: Props,
-  strict: boolean,
-  undef?: undefined
-) => any;
+export interface Get {
+  (obj?: any, path?: any, fallback?: any): any;
+}
+
+export interface StyleFunction {
+  (propertyConfig: PropertyConfig): SystemConfig;
+}
+
+export interface Transform {
+  ({
+    path,
+    object,
+    props,
+    strict,
+    get,
+  }: {
+    path?: any;
+    object?: any;
+    props?: Props;
+    strict?: boolean;
+    get: Get;
+  }): any;
+}
 
 export type PropertyConfig = {
   properties?: Array<keyof CSSProperties>;
@@ -100,6 +116,7 @@ export type PropertyConfig = {
   scale?: string;
   defaultScale?: Array<string | number>;
   transform?: Transform;
+  get?: Get;
 };
 
 export interface PropConfigCollection {

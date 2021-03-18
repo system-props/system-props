@@ -40,11 +40,11 @@ test('parses pseudo selectors', () => {
   const styles = parser({
     theme,
     _hover: {
-      color: 'secondary',
-      fontSize: [2, 1],
+      color: '$secondary',
+      fontSize: ['$2', '$1'],
     },
-    fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
+    fontSize: ['$1', '$2', '$3'],
+    color: ['$primary', null, '$secondary'],
   });
   expect(styles).toEqual({
     color: 'rebeccapurple',
@@ -69,8 +69,8 @@ test('parses pseudo selectors', () => {
 test('uses breakpoints', () => {
   const styles = parser({
     theme,
-    fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
+    fontSize: ['$1', '$2', '$3'],
+    color: ['$primary', null, '$secondary'],
   });
   expect(styles).toEqual({
     color: 'rebeccapurple',
@@ -89,8 +89,8 @@ test('uses breakpoints', () => {
 test('does *not* use dynamically changed breakpoints', () => {
   const styles = parser({
     theme: { ...theme, breakpoints: ['11em', '22em', '33em'] },
-    fontSize: [1, 2, 3],
-    color: ['primary', null, 'secondary'],
+    fontSize: ['$1', '$2', '$3'],
+    color: ['$primary', null, '$secondary'],
   });
   expect(styles).toEqual({
     color: 'rebeccapurple',
@@ -167,26 +167,6 @@ test.skip('uses dynamically changed breakpoints', () => {
   });
 });
 
-// // Skipped since I moved breakpoints into the createSystem signature
-// test.skip('throws an error if no "breakpoints" entry found in theme', () => {
-//   expect(() =>
-//     parser({
-//       theme: {
-//         disableSystemPropsCache: true,
-//         colors: {
-//           primary: 'rebeccapurple',
-//           secondary: 'papayawhip',
-//         },
-//         fontSize: [0, 4, 8, 16],
-//       },
-//       fontSize: [1, 2, 3],
-//       color: ['primary', null, 'secondary'],
-//     })
-//   ).toThrowErrorMatchingInlineSnapshot(
-//     `"The system props parser could not find a \`breakpoints\` property in the theme object, which is required for responsive styles to work. Make sure that the theme object has a breakpoints property."`
-//   );
-// });
-
 test('parses raw function values', () => {
   // flush cache from previous tests
   const styles = parser({
@@ -201,7 +181,7 @@ test('parses raw function values', () => {
       color(t: typeof theme) {
         return t.colors.secondary;
       },
-      fontSize: 2,
+      fontSize: '$2',
     },
   });
   expect(styles).toEqual({

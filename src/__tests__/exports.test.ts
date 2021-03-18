@@ -16,6 +16,7 @@ test('package has expected exports', () => {
       "gridItem",
       "layout",
       "margin",
+      "memoizeGet",
       "padding",
       "position",
       "propNames",
@@ -24,6 +25,7 @@ test('package has expected exports', () => {
       "shouldForwardProp",
       "space",
       "styledSystemLayout",
+      "tokenGet",
       "typography",
     ]
   `);

@@ -1,4 +1,4 @@
-export { betterGet as get } from './core/get';
+export { memoizeGet, get, tokenGet } from './core/get';
 export { createSystem } from './core/createSystem';
 
 export * from './props';

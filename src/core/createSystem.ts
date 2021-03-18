@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { memoizedGet as defaultGet, get } from './get';
+import { get } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -8,7 +8,6 @@ import {
   Props,
   SomeObject,
   Cache,
-  Get,
 } from '../types';
 import { sort } from './sort';
 import { merge } from './merge';

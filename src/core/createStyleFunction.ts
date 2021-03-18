@@ -1,4 +1,4 @@
-// import { memoizedGet } from './get';
+import { memoizedGet } from './get';
 import {
   Props,
   Cache,

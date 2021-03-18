@@ -1,4 +1,3 @@
-export { memoizeGet, get, tokenGet } from './core/get';
 export { createSystem } from './core/createSystem';
 
 export * from './props';

@@ -1,2 +1,2 @@
-export { tokenGet, memoizeGet, get, memoizedGet } from './get';
+export { get } from './get';
 export { createSystem } from './createSystem';

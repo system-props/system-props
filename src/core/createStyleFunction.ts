@@ -16,8 +16,10 @@ export const createStyleFunction: StyleFunction = ({
 }) => {
   const _properties = properties || [property];
 
-  if (typeof tokenPrefix !== 'string') {
-    throw new Error('');
+  if (!tokenPrefix || !['all', 'noprefix', 'prefix'].includes(tokenPrefix)) {
+    throw new Error(
+      `Invalid tokenPrefix configuration option. Expected "all", "noprefix" or "prefix". Received: ${tokenPrefix}`
+    );
   }
 
   const get = memoizedGet[tokenPrefix];

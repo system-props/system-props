@@ -160,11 +160,11 @@ export const createParser = (
 export const createSystem = ({
   strict = false,
   pseudoSelectors = defaultPseudos,
-  get = defaultGet,
+  tokenPrefix = 'prefix',
 }: {
   pseudoSelectors?: Record<string, string>;
   strict?: boolean;
-  get?: Get;
+  tokenPrefix?: 'prefix' | 'noprefix' | 'all';
 } = {}) => {
   const system = (arg: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
@@ -175,14 +175,14 @@ export const createSystem = ({
         config[key] = createStyleFunction({
           property: key as keyof CSS.Properties,
           scale: key,
-          get,
+          tokenPrefix,
         });
         return;
       }
       if (typeof conf === 'function') {
         return;
       }
-      config[key] = createStyleFunction({ ...conf, get });
+      config[key] = createStyleFunction({ ...conf, tokenPrefix });
     });
     const parser = createParser(config, pseudoSelectors, strict);
     return parser;

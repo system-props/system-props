@@ -1,12 +1,5 @@
-// import { memoizedGet } from './get';
-import {
-  Props,
-  // PropertyConfig,
-  // SystemConfig,
-  Cache,
-  StyleFunction,
-  Transform,
-} from '../types';
+import { memoizedGet } from './get';
+import { Props, Cache, StyleFunction, Transform } from '../types';
 import * as CSS from 'csstype';
 
 const defaultTransform: Transform = ({ path, object, strict, get }) => {
@@ -19,13 +12,15 @@ export const createStyleFunction: StyleFunction = ({
   scale,
   transform = defaultTransform,
   defaultScale,
-  get,
+  tokenPrefix,
 }) => {
   const _properties = properties || [property];
 
-  if (typeof get !== 'function') {
+  if (typeof tokenPrefix !== 'string') {
     throw new Error('');
   }
+
+  const get = memoizedGet[tokenPrefix];
 
   const systemConfig = (
     value: number | string,

@@ -1,5 +1,5 @@
 import { createSystem } from '../createSystem';
-import { get } from '../get';
+import { space, color } from '../../props';
 
 const breakpoints = [40, 52, 64].map((n) => n + 'em');
 
@@ -333,35 +333,103 @@ test('sorts media queries when responsive object values are used', () => {
   ]);
 });
 
-test('supports custom get function', () => {
-  const system = createSystem({ get });
-  const parser = system({
-    margin: true,
-    padding: true,
-    backgroundColor: { property: 'backgroundColor', scale: 'colors' },
-    color: { property: 'color', scale: 'colors' },
-  });
-  const styles = parser({
-    theme: {
-      systemPropsCacheKey: true,
-      colors: {
-        red: '#ff0000',
-        blue: '#0000ff',
-        green: '#00ff00',
+describe('tokenPrefix', () => {
+  test('default (prefix)', () => {
+    const system = createSystem();
+    const parser = system({
+      ...space,
+      ...color,
+    });
+    const styles = parser({
+      theme: {
+        systemPropsCacheKey: true,
+        colors: {
+          red: '#ff0000',
+          blue: '#0000ff',
+          green: '#00ff00',
+        },
+        space: {
+          250: '2px',
+          500: '4px',
+          1000: '8px',
+        },
       },
-      margin: {
-        250: '2px',
-        500: '4px',
-        1000: '8px',
-      },
-    },
-    color: 'red',
-    backgroundColor: 'green',
-    margin: 250,
+      color: '$red',
+      backgroundColor: '$green',
+      margin: 250,
+      padding: '$500',
+    });
+    expect(styles).toStrictEqual({
+      color: '#ff0000',
+      backgroundColor: '#00ff00',
+      margin: 250,
+      padding: '4px',
+    });
   });
-  expect(styles).toStrictEqual({
-    color: '#ff0000',
-    backgroundColor: '#00ff00',
-    margin: '2px',
+
+  test('all', () => {
+    const system = createSystem({ tokenPrefix: 'all' });
+    const parser = system({
+      ...space,
+      ...color,
+    });
+    const styles = parser({
+      theme: {
+        systemPropsCacheKey: true,
+        colors: {
+          red: '#ff0000',
+          blue: '#0000ff',
+          green: '#00ff00',
+        },
+        space: {
+          250: '2px',
+          500: '4px',
+          1000: '8px',
+        },
+      },
+      color: 'red',
+      backgroundColor: 'green',
+      margin: 250,
+      padding: '$500',
+    });
+    expect(styles).toStrictEqual({
+      color: '#ff0000',
+      backgroundColor: '#00ff00',
+      margin: '2px',
+      padding: '4px',
+    });
+  });
+
+  test('noprefix', () => {
+    const system = createSystem({ tokenPrefix: 'noprefix' });
+    const parser = system({
+      ...space,
+      ...color,
+    });
+    const styles = parser({
+      theme: {
+        systemPropsCacheKey: true,
+        colors: {
+          red: '#ff0000',
+          blue: '#0000ff',
+          green: '#00ff00',
+        },
+        space: {
+          250: '2px',
+          500: '4px',
+          1000: '8px',
+        },
+      },
+      color: 'red',
+      backgroundColor: 'green',
+      margin: 1000,
+      padding: '$500',
+    });
+    expect(styles).toStrictEqual({
+      color: '#ff0000',
+      backgroundColor: '#00ff00',
+      margin: '8px',
+      padding: '$500',
+    });
   });
 });

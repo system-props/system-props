@@ -6,7 +6,6 @@ import {
   Transform,
   MaybeCSSProperty,
 } from '../types';
-import * as CSS from 'csstype';
 
 const defaultTransform: Transform = ({ path, object, strict, get }) => {
   return get(object, path, strict === true ? undefined : path);

@@ -9,15 +9,15 @@ import {
 } from '../types';
 import * as CSS from 'csstype';
 
-const getValue: Transform = (get) => (value, scale, _props, strict) => {
-  return get(scale, value, strict === true ? undefined : value);
+const defaultTransform: Transform = ({ path, object, strict, get }) => {
+  return get(object, path, strict === true ? undefined : path);
 };
 
 export const createStyleFunction: StyleFunction = ({
   properties,
   property,
   scale,
-  transform = getValue,
+  transform = defaultTransform,
   defaultScale,
   get,
 }) => {
@@ -36,7 +36,13 @@ export const createStyleFunction: StyleFunction = ({
     const result: Record<string, any> = {};
 
     let n = value;
-    n = transform(get)(value, scale, props, cache.strict);
+    n = transform({
+      path: value,
+      object: scale,
+      props,
+      strict: cache.strict,
+      get,
+    });
 
     if (n === null) {
       return result;

@@ -1,7 +1,8 @@
-interface Get {
-  (obj?: any, path?: any, fallback?: any): any;
-}
+import { Get } from '../types';
 
+/**
+ * Generic "get" function
+ */
 export const get: Get = (object, path, defaultValue) => {
   if (!object) {
     return defaultValue;
@@ -26,10 +27,13 @@ export const get: Get = (object, path, defaultValue) => {
   return result === undefined ? defaultValue : result;
 };
 
+/**
+ * Requires path to have '$' prefixing the value
+ */
 export const betterGet: Get = (object, path, defaultValue) => {
-  let result = get(object, path);
+  let result;
 
-  if (!result && typeof path === 'string' && path.startsWith('$')) {
+  if (typeof path === 'string' && path.startsWith('$')) {
     result = get(object, path.slice(1));
   }
 

@@ -2,37 +2,33 @@
 import { PropConfigCollection, Transform } from '../../types';
 import { positiveOrNegative } from '../positiveOrNegative';
 
-const getMargin: Transform = (get) => (value, _, props, strict) => {
+const getMargin: Transform = ({ path, object, props, strict, get }) => {
   // Not using shorthand, just a theme value, e.g, m={4}
-  if (typeof value === 'number') {
-    const result = positiveOrNegative(get)(
-      value,
-      props?.theme?.space,
-      props,
-      strict
-    );
+  if (typeof path === 'number') {
+    const result = positiveOrNegative({ path, object, props, strict, get });
     if (result) {
       return result;
     }
   }
 
-  if (typeof value === 'string') {
-    const arr = value.split(' ');
+  if (typeof path === 'string') {
+    const arr = path.split(' ');
 
     // applied to all sides, return a number or string
     // e.g., m="2" or m="$2"
     if (arr.length === 1) {
-      return positiveOrNegative(get)(value, props?.theme?.space, props, strict);
+      return positiveOrNegative({ path, object, props, strict, get });
     }
 
     return arr
       .reduce((acc: string[], curr: string) => {
-        let value = positiveOrNegative(get)(
-          curr,
-          props?.theme?.space,
+        let value = positiveOrNegative({
+          get,
+          path: curr,
+          object,
           props,
-          strict
-        );
+          strict,
+        });
 
         if (typeof value === 'number') {
           // if a number is returned, it's not converted
@@ -46,13 +42,13 @@ const getMargin: Transform = (get) => (value, _, props, strict) => {
       .join(' ');
   }
 
-  return value;
+  return path;
 };
 
-const getPadding: Transform = (get) => (value, _, props, strict) => {
+const getPadding: Transform = ({ path: value, object, props, strict, get }) => {
   // Not using shorthand, just a theme value, e.g, p={4}
   if (typeof value === 'number') {
-    const result = get(props?.theme?.space, value);
+    const result = get(object, value);
     if (result) {
       return result;
     }

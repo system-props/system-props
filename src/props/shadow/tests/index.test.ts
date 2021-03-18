@@ -25,7 +25,7 @@ const themedParser = (config: { [x: string]: any }) =>
 test('returns shadow styles', () => {
   const style = themedParser({
     textShadow: '0 -1px rgba(255, 255, 255, .25)',
-    boxShadow: 'small',
+    boxShadow: '$small',
   });
   expect(style).toEqual({
     textShadow: '0 -1px rgba(255, 255, 255, .25)',
@@ -35,7 +35,7 @@ test('returns shadow styles', () => {
 
 test('uses theme colors if it can', () => {
   const style = themedParser({
-    textShadow: '0 -1px blue.10',
+    textShadow: '0 -1px $blue.10',
     boxShadow: '0 -1px $blue.10',
   });
   expect(style).toEqual({

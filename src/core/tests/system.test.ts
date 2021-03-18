@@ -129,8 +129,8 @@ test('gets values from theme', () => {
       },
       space: [0, 6, 12, 24, 48, 96],
     },
-    mx: ['0', '1', '2', '3'],
-    color: ['primary', 'black'],
+    mx: ['$0', '$1', '$2', '$3'],
+    color: ['$primary', 'black'],
   });
   expect(style).toEqual({
     color: 'tomato',
@@ -176,8 +176,8 @@ test('if strict, only allows theme values', () => {
       },
       space: [0, 6, 12, 24],
     },
-    mx: ['0', '1', '2', '3', '4'],
-    color: ['primary', 'black'],
+    mx: ['$0', '$1', '$2', '$3', '$4'],
+    color: ['$primary', 'black'],
     bg: 'blue',
   });
   expect(style).toEqual({
@@ -212,7 +212,7 @@ test('gets 0 index values from theme', () => {
       breakpoints,
       sizes: [24, 48],
     },
-    width: '0',
+    width: '$0',
   });
   expect(style).toEqual({ width: 24 });
 });
@@ -333,7 +333,7 @@ test('sorts media queries when responsive object values are used', () => {
   ]);
 });
 
-test.only('supports custom get function', () => {
+test('supports custom get function', () => {
   const system = createSystem({ get });
   const parser = system({
     margin: true,

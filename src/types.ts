@@ -94,15 +94,21 @@ export interface StyleFunction {
   (propertyConfig: PropertyConfig): SystemConfig;
 }
 
-export type Transform = (
-  get: Get
-) => (
-  path: any,
-  object: any,
-  props: Props,
-  strict: boolean,
-  undef?: undefined
-) => any;
+export interface Transform {
+  ({
+    path,
+    object,
+    props,
+    strict,
+    get,
+  }: {
+    path?: any;
+    object?: any;
+    props?: Props;
+    strict?: boolean;
+    get: Get;
+  }): any;
+}
 
 export type PropertyConfig = {
   properties?: Array<keyof CSSProperties>;

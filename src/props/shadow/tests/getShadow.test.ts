@@ -1,5 +1,5 @@
 import { getShadow } from '../getShadow';
-import { get } from '../../../core';
+import { tokenGet } from '../../../core';
 
 describe('getShadow', () => {
   const props = {
@@ -11,7 +11,7 @@ describe('getShadow', () => {
   };
 
   const _getShadow = (path: string) =>
-    getShadow({ path, object: {}, get, props });
+    getShadow({ path, object: {}, get: tokenGet, props });
 
   test('handles tokens in box-shadow', () => {
     expect(_getShadow('10px 5px 1px $gray400')).toEqual('10px 5px 1px #e3e3e3');

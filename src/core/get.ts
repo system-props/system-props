@@ -30,7 +30,7 @@ export const get: Get = (object, path, defaultValue) => {
 /**
  * Requires path to have '$' prefixing the value
  */
-export const betterGet: Get = (object, path, defaultValue) => {
+export const tokenGet: Get = (object, path, defaultValue) => {
   let result;
 
   if (typeof path === 'string' && path.startsWith('$')) {
@@ -40,7 +40,7 @@ export const betterGet: Get = (object, path, defaultValue) => {
   return result === undefined ? defaultValue : result;
 };
 
-export const memoize = (fn: Get) => {
+export const memoizeGet = (fn: Get) => {
   let cache = new WeakMap();
 
   const memoizedFn: Get = (obj, path, fallback) => {
@@ -68,4 +68,4 @@ export const memoize = (fn: Get) => {
   return memoizedFn;
 };
 
-export const memoizedGet = memoize(betterGet);
+export const memoizedGet = memoizeGet(tokenGet);

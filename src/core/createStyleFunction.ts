@@ -1,11 +1,10 @@
 // import { memoizedGet } from './get';
 import {
   Props,
-  // PropertyConfig,
-  // SystemConfig,
   Cache,
   StyleFunction,
   Transform,
+  MaybeCSSProperty,
 } from '../types';
 import * as CSS from 'csstype';
 
@@ -47,7 +46,7 @@ export const createStyleFunction: StyleFunction = ({
     if (n === null) {
       return result;
     }
-    _properties.forEach((prop: keyof CSS.Properties | undefined) => {
+    _properties.forEach((prop: MaybeCSSProperty | undefined) => {
       if (prop) {
         result[prop] = n;
       }

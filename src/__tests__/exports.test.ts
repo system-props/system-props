@@ -23,6 +23,7 @@ test('package has expected exports', () => {
       "shouldForwardProp",
       "space",
       "styledSystemLayout",
+      "transition",
       "typography",
     ]
   `);

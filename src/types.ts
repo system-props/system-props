@@ -20,6 +20,9 @@ type TokenScales =
   | 'lineHeights'
   | 'fonts'
   | 'radii'
+  | 'transitions'
+  | 'transitionDurations'
+  | 'transitionTimingFunctions'
   | 'breakpoints';
 
 export interface Theme {
@@ -355,6 +358,24 @@ export interface TypographyProps<
   fontStyle?: SystemProp<P.FontStyle>;
 }
 
+export interface TransitionProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  transition?: MaybeToken<P.Transition, PrefixOption, 'transitions'>;
+  transitionDuration?: MaybeToken<
+    P.TransitionDuration,
+    PrefixOption,
+    'transitionDurations'
+  >;
+  transitionTimingFunction?: MaybeToken<
+    P.TransitionTimingFunction,
+    PrefixOption,
+    'transitionTimingFunctions'
+  >;
+  transitionProperty?: SystemProp<P.TransitionProperty>;
+  transitionDelay?: SystemProp<P.TransitionDelay>;
+}
+
 export interface AllSystemProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > extends ColorProps<PrefixOption>,
@@ -365,7 +386,8 @@ export interface AllSystemProps<
     ShadowProps<PrefixOption>,
     PositionProps<PrefixOption>,
     GridProps<PrefixOption>,
-    FlexboxProps {}
+    FlexboxProps,
+    TransitionProps<PrefixOption> {}
 
 export type SystemPropsTheme = Partial<
   Record<TokenScales, Record<string, string | number>>

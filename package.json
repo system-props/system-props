@@ -1,6 +1,6 @@
 {
   "name": "system-props",
-  "version": "0.17.0",
+  "version": "0.18.0",
   "description": "Inspired by styled-system, a responsive, theme-based style props for building design systems with React.",
   "author": "Rogin Farrer",
   "homepage": "https://github.com/system-props/system-props#readme",

@@ -81,7 +81,6 @@ export const memoizeGet = (fn: Get) => {
     return value;
   };
 
-  Object.assign(memoizedFn, { displayName: fn.name });
 
   return memoizedFn;
 };

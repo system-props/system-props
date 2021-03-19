@@ -19,6 +19,7 @@ export {
   FlexItemProps,
   FlexContainerProps,
   FlexboxProps,
+  TransitionProps,
   AllSystemProps,
   PropConfigCollection,
   Theme,

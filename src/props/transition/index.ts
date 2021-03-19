@@ -6,6 +6,9 @@ const parseTransition: Transform = ({ path, object, get, strict }) => {
   if (result) {
     return result;
   }
+
+  // '$tokenValue, $anotherTokenValue'
+  // '$tokenValue, property duration easing'
   if (typeof path === 'string') {
     const transitions = tokenizeValue(path);
     result = transitions
@@ -18,6 +21,7 @@ const parseTransition: Transform = ({ path, object, get, strict }) => {
       .join(', ');
     return result;
   }
+
   return path;
 };
 

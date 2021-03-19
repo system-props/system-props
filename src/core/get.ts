@@ -81,7 +81,6 @@ export const memoizeGet = (fn: Get) => {
     return value;
   };
 
-
   return memoizedFn;
 };
 

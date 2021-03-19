@@ -2,6 +2,7 @@ import { Get } from '../types';
 
 /**
  * Generic "get" function
+ * Used with 'noprefix' tokenPrefix value
  */
 export const get: Get = (object, path, defaultValue) => {
   if (!object) {
@@ -29,9 +30,24 @@ export const get: Get = (object, path, defaultValue) => {
 
 /**
  * Requires path to have '$' prefixing the value
+ * Used with 'prefix' tokenPrefix value
  */
-export const tokenGet: Get = (object, path, defaultValue) => {
+export const prefixGet: Get = (object, path, defaultValue) => {
   let result;
+
+  if (typeof path === 'string' && path.startsWith('$')) {
+    result = get(object, path.slice(1));
+  }
+
+  return result === undefined ? defaultValue : result;
+};
+
+/**
+ * Supports '$' prefix or not
+ * Used with 'all' tokenPrefix value
+ */
+export const allGet: Get = (object, path, defaultValue) => {
+  let result = get(object, path);
 
   if (typeof path === 'string' && path.startsWith('$')) {
     result = get(object, path.slice(1));
@@ -68,4 +84,8 @@ export const memoizeGet = (fn: Get) => {
   return memoizedFn;
 };
 
-export const memoizedGet = memoizeGet(tokenGet);
+export const memoizedGet = {
+  all: memoizeGet(allGet),
+  prefix: memoizeGet(prefixGet),
+  noprefix: memoizeGet(get),
+};

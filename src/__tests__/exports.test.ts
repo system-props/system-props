@@ -10,13 +10,11 @@ test('package has expected exports', () => {
       "flexContainer",
       "flexItem",
       "flexbox",
-      "get",
       "grid",
       "gridContainer",
       "gridItem",
       "layout",
       "margin",
-      "memoizeGet",
       "padding",
       "position",
       "propNames",
@@ -25,7 +23,6 @@ test('package has expected exports', () => {
       "shouldForwardProp",
       "space",
       "styledSystemLayout",
-      "tokenGet",
       "typography",
     ]
   `);

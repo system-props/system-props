@@ -1,4 +1,3 @@
-// import { memoizedGet } from '../../core/get';
 import { PropConfigCollection, Transform } from '../../types';
 import { positiveOrNegative } from '../positiveOrNegative';
 

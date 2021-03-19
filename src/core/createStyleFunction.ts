@@ -1,4 +1,4 @@
-// import { memoizedGet } from './get';
+import { memoizedGet } from './get';
 import {
   Props,
   Cache,
@@ -17,13 +17,17 @@ export const createStyleFunction: StyleFunction = ({
   scale,
   transform = defaultTransform,
   defaultScale,
-  get,
+  tokenPrefix,
 }) => {
   const _properties = properties || [property];
 
-  if (typeof get !== 'function') {
-    throw new Error('');
+  if (!tokenPrefix || !['all', 'noprefix', 'prefix'].includes(tokenPrefix)) {
+    throw new Error(
+      `Invalid tokenPrefix configuration option. Expected "all", "noprefix" or "prefix". Received: ${tokenPrefix}`
+    );
   }
+
+  const get = memoizedGet[tokenPrefix];
 
   const systemConfig = (
     value: number | string,

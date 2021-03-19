@@ -118,7 +118,7 @@ export type PropertyConfig = {
   scale?: string;
   defaultScale?: Array<string | number>;
   transform?: Transform;
-  get?: Get;
+  tokenPrefix?: 'prefix' | 'noprefix' | 'all';
 };
 
 export interface PropConfigCollection {

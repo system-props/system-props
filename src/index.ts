@@ -1,4 +1,3 @@
-export { betterGet as get } from './core/get';
 export { createSystem } from './core/createSystem';
 
 export * from './props';
@@ -20,6 +19,7 @@ export {
   FlexItemProps,
   FlexContainerProps,
   FlexboxProps,
+  TransitionProps,
   AllSystemProps,
   PropConfigCollection,
   Theme,

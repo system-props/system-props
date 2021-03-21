@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { memoizedGet as get } from './get';
+import { get } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -159,28 +159,30 @@ export const createParser = (
 export const createSystem = ({
   strict = false,
   pseudoSelectors = defaultPseudos,
+  tokenPrefix = 'prefix',
 }: {
   pseudoSelectors?: Record<string, string>;
   strict?: boolean;
+  tokenPrefix?: 'prefix' | 'noprefix' | 'all';
 } = {}) => {
-  const system = (args: PropConfigCollection) => {
+  const system = (arg: PropConfigCollection) => {
     const config: { [x: string]: SystemConfig } = {};
-    Object.keys(args).forEach((key) => {
-      const conf = args[key];
+    Object.keys(arg).forEach((key) => {
+      const conf = arg[key];
       if (conf === true) {
         // shortcut definition
         config[key] = createStyleFunction({
           property: key as keyof CSS.Properties,
           scale: key,
+          tokenPrefix,
         });
         return;
       }
       if (typeof conf === 'function') {
         return;
       }
-      config[key] = createStyleFunction(conf);
+      config[key] = createStyleFunction({ ...conf, tokenPrefix });
     });
-
     const parser = createParser(config, pseudoSelectors, strict);
     return parser;
   };

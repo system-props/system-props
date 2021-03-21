@@ -1,26 +1,30 @@
 import { Transform } from '../types';
-import { betterGet } from '../core/get';
 
 const isNumber = (n: unknown): boolean => typeof n === 'number' && !isNaN(n);
 
-export const positiveOrNegative: Transform = (n, scale, _props, strict) => {
-  if (!isNumber(n)) {
-    if (typeof n === 'string' && n.startsWith('-')) {
-      const raw = n.slice(1);
-      const value = betterGet(scale, raw, raw);
+export const positiveOrNegative: Transform = ({
+  path,
+  object,
+  strict,
+  get,
+}) => {
+  if (!isNumber(path)) {
+    if (typeof path === 'string' && path.startsWith('-')) {
+      const raw = path.slice(1);
+      const value = get(object, raw, raw);
       if (isNumber(value)) {
         return value * -1;
       }
       return `-${value}`;
     }
-    return betterGet(scale, n, strict ? undefined : n);
+    return get(object, path, strict ? undefined : path);
   }
 
-  const num = n as number;
+  const num = path as number;
 
   const isNegative = num < 0;
   const absolute = Math.abs(num);
-  const value = betterGet(scale, absolute, strict ? undefined : absolute);
+  const value = get(object, absolute, strict ? undefined : absolute);
   if (isNumber(value)) {
     return value * (isNegative ? -1 : 1);
   }

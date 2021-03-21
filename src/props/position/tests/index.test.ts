@@ -27,10 +27,10 @@ test('returns theme values', () => {
       breakpoints: [],
       space: ['0px', '4px', '8px', '16px', '32px'],
     },
-    top: 1,
-    right: -2,
-    bottom: 3,
-    left: '4',
+    top: '$1',
+    right: '-$2',
+    bottom: '$3',
+    left: '$4',
   });
   expect(style).toEqual({
     top: '4px',

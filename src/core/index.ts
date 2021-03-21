@@ -1,2 +1,2 @@
-export { betterGet as get } from './get';
+export { get } from './get';
 export { createSystem } from './createSystem';

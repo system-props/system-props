@@ -1,7 +1,9 @@
-interface Get {
-  (obj?: any, path?: any, fallback?: any): any;
-}
+import { Get } from '../types';
 
+/**
+ * Generic "get" function
+ * Used with 'noprefix' tokenPrefix value
+ */
 export const get: Get = (object, path, defaultValue) => {
   if (!object) {
     return defaultValue;
@@ -26,17 +28,35 @@ export const get: Get = (object, path, defaultValue) => {
   return result === undefined ? defaultValue : result;
 };
 
-export const betterGet: Get = (object, path, defaultValue) => {
-  let result = get(object, path);
+/**
+ * Requires path to have '$' prefixing the value
+ * Used with 'prefix' tokenPrefix value
+ */
+export const prefixGet: Get = (object, path, defaultValue) => {
+  let result;
 
-  if (!result && typeof path === 'string' && path.startsWith('$')) {
+  if (typeof path === 'string' && path.startsWith('$')) {
     result = get(object, path.slice(1));
   }
 
   return result === undefined ? defaultValue : result;
 };
 
-export const memoize = (fn: Get) => {
+/**
+ * Supports '$' prefix or not
+ * Used with 'all' tokenPrefix value
+ */
+export const allGet: Get = (object, path, defaultValue) => {
+  let result = get(object, path);
+
+  if (typeof path === 'string' && path.startsWith('$')) {
+    result = get(object, path.slice(1));
+  }
+
+  return result === undefined ? defaultValue : result;
+};
+
+export const memoizeGet = (fn: Get) => {
   let cache = new WeakMap();
 
   const memoizedFn: Get = (obj, path, fallback) => {
@@ -64,4 +84,8 @@ export const memoize = (fn: Get) => {
   return memoizedFn;
 };
 
-export const memoizedGet = memoize(betterGet);
+export const memoizedGet = {
+  all: memoizeGet(allGet),
+  prefix: memoizeGet(prefixGet),
+  noprefix: memoizeGet(get),
+};

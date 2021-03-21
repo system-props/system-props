@@ -21,6 +21,9 @@ export type TokenScales =
   | 'fonts'
   | 'radii'
   | 'mediaQueries'
+  | 'transitions'
+  | 'transitionDurations'
+  | 'transitionTimingFunctions'
   | 'breakpoints';
 
 export interface Theme {
@@ -87,24 +90,43 @@ export interface SystemConfig {
   defaultScale?: unknown;
 }
 
-export type Transform = (
-  path: any,
-  object: any,
-  props: Props,
-  strict: boolean,
-  undef?: undefined
-) => any;
+export interface Get {
+  (obj?: any, path?: any, fallback?: any): any;
+}
+
+export interface StyleFunction {
+  (propertyConfig: PropertyConfig): SystemConfig;
+}
+
+export interface Transform {
+  ({
+    path,
+    object,
+    props,
+    strict,
+    get,
+  }: {
+    path?: any;
+    object?: any;
+    props?: Props;
+    strict?: boolean;
+    get: Get;
+  }): any;
+}
+
+export type MaybeCSSProperty = keyof CSSProperties | (string & {});
 
 export type PropertyConfig = {
-  properties?: Array<keyof CSSProperties>;
-  property?: keyof CSSProperties;
+  properties?: Array<MaybeCSSProperty>;
+  property?: MaybeCSSProperty;
   scale?: string;
   defaultScale?: Array<string | number>;
   transform?: Transform;
+  tokenPrefix?: 'prefix' | 'noprefix' | 'all';
 };
 
 export interface PropConfigCollection {
-  [x: string]: true | PropertyConfig;
+  [key: string]: true | PropertyConfig;
 }
 
 export interface Cache {
@@ -337,6 +359,24 @@ export interface TypographyProps<
   fontStyle?: SystemProp<P.FontStyle>;
 }
 
+export interface TransitionProps<
+  PrefixOption extends PrefixOptions = PrefixDefault
+> {
+  transition?: MaybeToken<P.Transition, PrefixOption, 'transitions'>;
+  transitionDuration?: MaybeToken<
+    P.TransitionDuration,
+    PrefixOption,
+    'transitionDurations'
+  >;
+  transitionTimingFunction?: MaybeToken<
+    P.TransitionTimingFunction,
+    PrefixOption,
+    'transitionTimingFunctions'
+  >;
+  transitionProperty?: SystemProp<P.TransitionProperty>;
+  transitionDelay?: SystemProp<P.TransitionDelay>;
+}
+
 export interface AllSystemProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > extends ColorProps<PrefixOption>,
@@ -347,7 +387,8 @@ export interface AllSystemProps<
     ShadowProps<PrefixOption>,
     PositionProps<PrefixOption>,
     GridProps<PrefixOption>,
-    FlexboxProps {}
+    FlexboxProps,
+    TransitionProps<PrefixOption> {}
 
 export type SystemPropsTheme = Partial<
   Record<TokenScales, Record<string, string | number>>

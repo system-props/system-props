@@ -7,5 +7,6 @@ export * from './layout';
 export * from './position';
 export * from './shadow';
 export * from './space';
+export * from './transition';
 export * from './typography';
 export { layout as styledSystemLayout } from './styled-system-layout';

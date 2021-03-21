@@ -1,24 +1,33 @@
 import { memoizedGet } from './get';
-import { Props, PropertyConfig, SystemConfig, Cache } from '../types';
-import * as CSS from 'csstype';
+import {
+  Props,
+  Cache,
+  StyleFunction,
+  Transform,
+  MaybeCSSProperty,
+} from '../types';
 
-const getValue = (
-  value: string | number,
-  scale: any,
-  _props: Props,
-  strict: boolean
-) => {
-  return memoizedGet(scale, value, strict === true ? undefined : value);
+const defaultTransform: Transform = ({ path, object, strict, get }) => {
+  return get(object, path, strict === true ? undefined : path);
 };
 
-export const createStyleFunction = ({
+export const createStyleFunction: StyleFunction = ({
   properties,
   property,
   scale,
-  transform = getValue,
+  transform = defaultTransform,
   defaultScale,
-}: PropertyConfig): SystemConfig => {
+  tokenPrefix,
+}) => {
   const _properties = properties || [property];
+
+  if (!tokenPrefix || !['all', 'noprefix', 'prefix'].includes(tokenPrefix)) {
+    throw new Error(
+      `Invalid tokenPrefix configuration option. Expected "all", "noprefix" or "prefix". Received: ${tokenPrefix}`
+    );
+  }
+
+  const get = memoizedGet[tokenPrefix];
 
   const systemConfig = (
     value: number | string,
@@ -29,12 +38,18 @@ export const createStyleFunction = ({
     const result: Record<string, any> = {};
 
     let n = value;
-    n = transform(value, scale, props, cache.strict);
+    n = transform({
+      path: value,
+      object: scale,
+      props,
+      strict: cache.strict,
+      get,
+    });
 
     if (n === null) {
       return result;
     }
-    _properties.forEach((prop: keyof CSS.Properties | undefined) => {
+    _properties.forEach((prop: MaybeCSSProperty | undefined) => {
       if (prop) {
         result[prop] = n;
       }

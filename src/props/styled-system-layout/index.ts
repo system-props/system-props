@@ -1,16 +1,15 @@
 import { PropConfigCollection, Transform } from '../../types';
-import { get } from '../../core/get';
 import { Property } from 'csstype';
 
 const isNumber = (n: unknown) => typeof n === 'number' && !isNaN(n);
 
-const getWidth: Transform = (value, scale) => {
-  let defaultValue = value;
-  if (isNumber(value)) {
-    const n = value as number;
-    defaultValue = n > 1 ? value : `${n * 100}%`;
+const getWidth: Transform = ({ path, object, get }) => {
+  let defaultValue = path;
+  if (isNumber(path)) {
+    const n = path as number;
+    defaultValue = n > 1 ? path : `${n * 100}%`;
   }
-  return get(scale, value, defaultValue);
+  return get(object, path, defaultValue);
 };
 
 export const layout: PropConfigCollection = {

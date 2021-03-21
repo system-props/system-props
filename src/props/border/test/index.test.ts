@@ -13,8 +13,8 @@ test('returns border styles', () => {
       borders: { base: '1px solid papayawhip' },
     },
     border: '1px solid $red500',
-    borderLeft: '1px solid red500',
-    borderRight: 'base',
+    borderLeft: '1px solid $red500',
+    borderRight: '$base',
     borderBottom: '1px solid',
   });
   expect(style).toEqual({
@@ -25,7 +25,7 @@ test('returns border styles', () => {
   });
 });
 
-test.only('returns individual border styles', () => {
+test('returns individual border styles', () => {
   const style = parser({
     theme: {
       breakpoints: [],
@@ -34,23 +34,23 @@ test.only('returns individual border styles', () => {
       borderStyles: { thick: 'solid' },
       radii: { small: 5 },
     },
-    borderTopWidth: 'thin',
-    borderTopColor: 'primary',
-    borderTopStyle: 'thick',
-    borderTopLeftRadius: 'small',
-    borderTopRightRadius: 'small',
-    borderBottomWidth: 'thin',
-    borderBottomColor: 'primary',
-    borderBottomStyle: 'thick',
-    borderBottomLeftRadius: 'small',
-    borderBottomRightRadius: 'small',
-    borderRightWidth: 'thin',
-    borderRightColor: 'primary',
-    borderRightStyle: 'thick',
-    borderLeftWidth: 'thin',
-    borderLeftColor: 'primary',
-    borderLeftStyle: 'thick',
-    border: 'thin thick primary',
+    borderTopWidth: '$thin',
+    borderTopColor: '$primary',
+    borderTopStyle: '$thick',
+    borderTopLeftRadius: '$small',
+    borderTopRightRadius: '$small',
+    borderBottomWidth: '$thin',
+    borderBottomColor: '$primary',
+    borderBottomStyle: '$thick',
+    borderBottomLeftRadius: '$small',
+    borderBottomRightRadius: '$small',
+    borderRightWidth: '$thin',
+    borderRightColor: '$primary',
+    borderRightStyle: '$thick',
+    borderLeftWidth: '$thin',
+    borderLeftColor: '$primary',
+    borderLeftStyle: '$thick',
+    border: '$thin $thick $primary',
   });
   expect(style).toEqual({
     borderTopColor: 'red',
@@ -79,10 +79,10 @@ test('returns border top and bottom radii', () => {
       radii: { small: 5 },
       breakpoints: [],
     },
-    borderTopLeftRadius: 'small',
-    borderTopRightRadius: 'small',
-    borderBottomRightRadius: 'small',
-    borderBottomLeftRadius: 'small',
+    borderTopLeftRadius: '$small',
+    borderTopRightRadius: '$small',
+    borderBottomRightRadius: '$small',
+    borderBottomLeftRadius: '$small',
   });
   expect(style).toEqual({
     borderTopLeftRadius: 5,

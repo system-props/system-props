@@ -64,10 +64,10 @@ export const Bar = ({ css, ...props }: BoxProps) => {
   return <BaseBar css="background-color: blue;" />;
 };
 
-export const Box = ({ css, ...props }: BoxProps) => {
+export const Box = ({ cx, ...props }: BoxProps) => {
   const theme = React.useContext(ThemeContext);
   // @ts-ignore
-  console.log(foo.css(css)({ theme: props.theme }));
+  // console.log(foo.css(css)({ theme: props.theme }));
   // @ts-ignore
-  return <BaseBox {...props} css={new Date()} />;
+  return <BaseBox {...props} css={foo.css(cx)} />;
 };

@@ -16,9 +16,11 @@
     "system-props": "latest"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
     "@types/react": "^16",
     "@types/react-dom": "^16",
     "@types/styled-components": "^5.1.4",
+    "babel-plugin-styled-components": "^1.12.0",
     "csstype": "^3.0.5",
     "parcel": "^1.12.3",
     "typescript": "^4.1.0"

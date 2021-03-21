@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import { Box } from './Box';
+import { Box, Bar } from './Box';
 
 const Button = (props) => {
   return (
@@ -43,6 +43,7 @@ const App = () => {
           GitHub
         </Button>
       </Box>
+      <Bar css={{ bg: 'blue', size: '300px' }} />
     </ThemeProvider>
   );
 };

@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { get } from './get';
+import { get, memoizedGet } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -8,17 +8,20 @@ import {
   Props,
   SomeObject,
   Cache,
+  Theme,
 } from '../types';
 import { sort } from './sort';
 import { merge } from './merge';
 import { pseudoSelectors as defaultPseudos } from '../pseudos';
 import * as CSS from 'csstype';
+import { CSSObject } from '../css-prop';
 
 export interface Parser {
   (...args: any[]): any;
   config: { [key: string]: SystemConfig };
   propNames: string[];
   cache: Cache;
+  css?: CSSObject | ((theme: Theme) => CSSObject);
 }
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
@@ -156,6 +159,64 @@ export const createParser = (
   return parse;
 };
 
+const createCss = (
+  config: { [x: string]: SystemConfig },
+  tokenPrefix: 'all' | 'prefix' | 'noprefix'
+) => {
+  const css = (args?: CSSObject | ((theme: Theme) => CSSObject)) => ({
+    theme,
+  }: {
+    theme: Theme;
+  }) => {
+    if (typeof args === 'undefined') {
+      return;
+    }
+
+    let result: CSSObject = {};
+    const styles = typeof args === 'function' ? args(theme) : args;
+
+    console.log({ args, theme });
+
+    for (let key in styles) {
+      const x = styles[key];
+
+      // Nested selectors (pseudo selectors, media query)
+      if (x && typeof x === 'object') {
+        // If key is a mediaQueries token value
+        const _get = memoizedGet[tokenPrefix];
+        const maybeQuery = _get(theme.mediaQueries, key);
+        if (typeof maybeQuery !== 'undefined') {
+          // @ts-ignore
+          result[maybeQuery] = merge(result[key], css(x)({ theme }));
+          continue;
+        }
+
+        // @ts-ignore
+        result[key] = merge(result[key], css(x)({ theme }));
+        continue;
+      }
+
+      const systemConfig = config[key];
+
+      // Not a token in the config, let pass through
+      if (!systemConfig) {
+        result[key] = x;
+        continue;
+      }
+
+      const scale = get(theme, systemConfig.scale);
+
+      const propValue = x as string;
+
+      result = merge(result, systemConfig(propValue, scale, { theme }));
+    }
+
+    return result;
+  };
+
+  return css;
+};
+
 export const createSystem = ({
   strict = false,
   pseudoSelectors = defaultPseudos,
@@ -184,6 +245,7 @@ export const createSystem = ({
       config[key] = createStyleFunction({ ...conf, tokenPrefix });
     });
     const parser = createParser(config, pseudoSelectors, strict);
+    Object.assign(parser, { css: createCss(config, tokenPrefix) });
     return parser;
   };
 

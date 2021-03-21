@@ -1,0 +1,25 @@
+{
+  "name": "styled-components-vite",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "styled-components": "^5.2.1",
+    "system-props": "^0.18.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.9",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "csstype": "^3.0.7",
+    "typescript": "^4.1.2",
+    "vite": "^2.1.0",
+    "vite-babel-plugin": "^0.0.2"
+  }
+}

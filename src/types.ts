@@ -85,7 +85,7 @@ export type Props = {
 };
 
 export interface SystemConfig {
-  (value: string | number, scale: string, props: Props, cache: Cache): {};
+  (value: string | number, scale: string, props: Props, cache?: Cache): {};
   scale?: 'string';
   defaultScale?: unknown;
 }

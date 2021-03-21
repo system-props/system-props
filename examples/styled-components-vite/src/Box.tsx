@@ -15,9 +15,15 @@ import {
   grid,
   typography,
   shouldForwardProp,
+  CSSObject,
 } from 'system-props';
-import styled, { CSSProp, ThemeContext, css as scCss } from 'styled-components';
+import styled from 'styled-components';
 import * as CSS from 'csstype';
+
+const test: CSSObject = {
+  margin: '$5',
+  backgroundColor: '$green500',
+};
 
 const system = createSystem();
 
@@ -33,7 +39,7 @@ type BaseProps = AllSystemProps<'prefix'> &
   };
 
 interface BoxProps extends BaseProps, PseudoProps<BaseProps> {
-  css?: CSSProp;
+  cx?: CSSObject;
 }
 
 const foo = system({
@@ -57,17 +63,7 @@ const BaseBox = styled('div').withConfig({
     !Object.keys(extraProps).includes(prop),
 })<BoxProps>({ boxSizing: 'border-box' }, foo);
 
-const BaseBar = styled.div({});
-
-export const Bar = ({ css, ...props }: BoxProps) => {
-  // @ts-ignore
-  return <BaseBar css="background-color: blue;" />;
-};
-
 export const Box = ({ cx, ...props }: BoxProps) => {
-  const theme = React.useContext(ThemeContext);
-  // @ts-ignore
-  // console.log(foo.css(css)({ theme: props.theme }));
   // @ts-ignore
   return <BaseBox {...props} css={foo.css(cx)} />;
 };

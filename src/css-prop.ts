@@ -6,12 +6,8 @@ import {
   PrefixOptions,
   PrefixDefault,
   TokenScales,
+  KeyOf,
 } from './types';
-import { ConditionalKeys } from 'type-fest';
-
-// All of the alias props from AllSystemProps,
-// e.g., "bgColor", "mx", "size", etc
-type AliasProps = Exclude<keyof AllSystemProps, keyof CSS.Properties>;
 
 type TrimmedCSSProperties = Exclude<keyof CSS.Properties, keyof AllSystemProps>;
 type VanillaCSSProperties = {
@@ -83,14 +79,6 @@ interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
   borderLeft: 'borders';
 }
 
-// type Something<
-//   Property extends keyof CSS.Properties,
-//   PrefixOption extends PrefixOptions = PrefixDefault,
-//   TTheme extends Theme = Theme
-// > = PropertiesToScales[Property] extends TokenScales
-//   ? PrefixToken<PropertiesToScales[Property], PrefixOption, TTheme>
-//   : never;
-
 type TokenProperties<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
@@ -102,22 +90,12 @@ type TokenProperties<
     : CSS.Properties[K];
 };
 
-type CSSPseudos<PrefixOption extends PrefixOptions = PrefixDefault> = {
-  [K in CSS.Pseudos]?: CSSObject<PrefixOption>;
+type CSSPseudos<
+  PrefixOption extends PrefixOptions = PrefixDefault,
+  TTheme extends Theme = Theme
+> = {
+  [K in CSS.Pseudos]?: CSSObject<PrefixOption, TTheme>;
 };
-
-// type PrefixQuery<K, PrefixOption> = PrefixOption extends 'all'
-//   ? `$${(string | number) & K}` | ((string | number) & K)
-//   : PrefixOption extends 'prefix'
-//   ? `$${(string | number) & K}`
-//   : PrefixOption extends 'noprefix'
-//   ? (string | number) & K
-//   : never;
-
-// type Queries<PrefixOption, TTheme extends Theme = Theme> = PrefixQuery<
-//   keyof TTheme['mediaQueries'],
-//   PrefixOption
-// >;
 
 // Creates key values for theme "mediaQueries"
 // Observes the PrefixOption parameter passed
@@ -125,8 +103,8 @@ type ThemeMediaQueries<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = {
-  [K in keyof TTheme['mediaQueries']]?:
-    | CSSObject<PrefixOption>
+  [K in KeyOf<TTheme['mediaQueries']>]?:
+    | CSSObject<PrefixOption, TTheme>
     | string
     | number
     | undefined;
@@ -135,21 +113,17 @@ type ThemeMediaQueries<
 export type CSSObject<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
-> = CSSProperties<PrefixOption> &
-  CSSPseudos<PrefixOption> &
+> = CSSProperties<PrefixOption, TTheme> &
+  CSSPseudos<PrefixOption, TTheme> &
   ThemeMediaQueries<PrefixOption, TTheme> & {
-    [key: string]: CSSObject<PrefixOption> | string | number | undefined;
+    [key: string]:
+      | CSSObject<PrefixOption, TTheme>
+      | string
+      | number
+      | undefined;
   };
 
 type CSSProperties<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
-> = VanillaCSSProperties &
-  TokenProperties<PrefixOption> &
-  {
-    [K in keyof PropertiesToScales]?: PropertiesToScales[K] extends TokenScales
-      ?
-          | CSS.Properties[K]
-          | PrefixToken<PropertiesToScales[K], PrefixOption, TTheme>
-      : CSS.Properties[K];
-  };
+> = VanillaCSSProperties & TokenProperties<PrefixOption, TTheme>;

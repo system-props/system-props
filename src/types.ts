@@ -5,6 +5,9 @@ import {
   Paint,
 } from './css-types';
 
+type KeysOfArray = keyof [];
+export type KeyOf<T extends []> = Exclude<keyof T, KeysOfArray>;
+
 export type TokenScales =
   | 'colors'
   | 'sizes'
@@ -31,7 +34,7 @@ export interface Theme {
 }
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
-  ? keyof Theme['breakpoints']
+  ? KeyOf<Theme['breakpoints']>
   : never;
 
 export type ResponsiveObject<T> = {
@@ -46,15 +49,15 @@ export type SystemProp<T> =
   | ((theme: Theme) => T | ResponsiveValue<T>);
 
 export type PrefixOptions = 'all' | 'prefix' | 'noprefix';
-export type PrefixDefault = 'noprefix';
+export type PrefixDefault = 'prefix';
 
 type ScaleLookup<
   Token extends TokenScales,
   TTheme extends Theme = Theme
 > = TTheme[Token] extends object
-  ? keyof TTheme[Token]
+  ? KeyOf<TTheme[Token]>
   : TTheme[Token] extends Array<string | number>
-  ? TTheme[Token][number]
+  ? KeyOf<TTheme[Token]>
   : never;
 
 export type PrefixToken<

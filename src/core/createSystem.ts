@@ -1,6 +1,6 @@
 import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
-import { get, memoizedGet } from './get';
+import { get } from './get';
 import {
   SystemProp,
   SystemConfig,
@@ -15,6 +15,7 @@ import { merge } from './merge';
 import { pseudoSelectors as defaultPseudos } from '../pseudos';
 import * as CSS from 'csstype';
 import { CSSObject } from '../css-prop';
+import { createCss } from './createCss';
 
 export interface Parser {
   (...args: any[]): any;
@@ -157,64 +158,6 @@ export const createParser = (
   }
 
   return parse;
-};
-
-const createCss = (
-  config: { [x: string]: SystemConfig },
-  tokenPrefix: 'all' | 'prefix' | 'noprefix'
-) => {
-  const css = (args?: CSSObject | ((theme: Theme) => CSSObject)) => ({
-    theme,
-  }: {
-    theme: Theme;
-  }) => {
-    if (typeof args === 'undefined') {
-      return;
-    }
-
-    let result: CSSObject = {};
-    const styles = typeof args === 'function' ? args(theme) : args;
-
-    console.log({ args, theme });
-
-    for (let key in styles) {
-      const x = styles[key];
-
-      // Nested selectors (pseudo selectors, media query)
-      if (x && typeof x === 'object') {
-        // If key is a mediaQueries token value
-        const _get = memoizedGet[tokenPrefix];
-        const maybeQuery = _get(theme.mediaQueries, key);
-        if (typeof maybeQuery !== 'undefined') {
-          // @ts-ignore
-          result[maybeQuery] = merge(result[key], css(x)({ theme }));
-          continue;
-        }
-
-        // @ts-ignore
-        result[key] = merge(result[key], css(x)({ theme }));
-        continue;
-      }
-
-      const systemConfig = config[key];
-
-      // Not a token in the config, let pass through
-      if (!systemConfig) {
-        result[key] = x;
-        continue;
-      }
-
-      const scale = get(theme, systemConfig.scale);
-
-      const propValue = x as string;
-
-      result = merge(result, systemConfig(propValue, scale, { theme }));
-    }
-
-    return result;
-  };
-
-  return css;
 };
 
 export const createSystem = ({

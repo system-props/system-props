@@ -9,11 +9,6 @@ import {
   KeyOf,
 } from './types';
 
-type TrimmedCSSProperties = Exclude<keyof CSS.Properties, keyof AllSystemProps>;
-type VanillaCSSProperties = {
-  [K in TrimmedCSSProperties]?: CSS.Properties<string | number>[K];
-};
-
 interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
   color: 'colors';
   backgroundColor: 'colors';
@@ -90,51 +85,12 @@ type CSSProperties<
     | CSS.Properties[K];
 };
 
-type CSSPseudos<
-  PrefixOption extends PrefixOptions = PrefixDefault,
-  TTheme extends Theme = Theme
-> = {
-  [K in CSS.Pseudos]?: CSSObject<PrefixOption, TTheme>;
-};
-
-// Creates key values for theme "mediaQueries"
-// Observes the PrefixOption parameter passed
-type ThemeMediaQueries<
-  PrefixOption extends PrefixOptions = PrefixDefault,
-  TTheme extends Theme = Theme
-> = {
-  [K in KeyOf<TTheme['mediaQueries']>]?:
-    | CSSObject<PrefixOption, TTheme>
-    | string
-    | number
-    | undefined;
-};
-
 export type CSSObject<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = CSSProperties<PrefixOption, TTheme> &
   {
-    [K in CSS.Pseudos]?: CSSProperties<PrefixOption, TTheme>;
-  } &
-  {
-    [K in KeyOf<TTheme['mediaQueries']>]?: CSSProperties<PrefixOption, TTheme>;
-  };
-
-type BaseCss<
-  PrefixOption extends PrefixOptions = PrefixDefault,
-  TTheme extends Theme = Theme
-> = CSSProperties<PrefixOption, TTheme> &
-  {
-    [K in CSS.Pseudos]?: BaseCss<PrefixOption, TTheme>;
+    [K in CSS.Pseudos]?: CSSObject<PrefixOption, TTheme>;
   } & {
-    [k: string]: BaseCss<PrefixOption, TTheme> | string | number | undefined;
+    [k: string]: CSSObject<PrefixOption, TTheme> | string | number | undefined;
   };
-
-const foo: BaseCss = {
-  color: 'purple',
-  ':hover': {
-    color: 'red',
-  },
-  background: 'top',
-};

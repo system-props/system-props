@@ -27,6 +27,9 @@ function App() {
       <div className="App">
         <Box
           cx={{
+            ':focus': {
+              bottom: '$4',
+            },
             color: '$blue900',
             bottom: '$4',
             fontSize: '$body',

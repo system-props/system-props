@@ -4,6 +4,20 @@ import { Box } from './Box';
 import './App.css';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
+import * as CSS from 'csstype';
+import { CSSObject } from 'system-props';
+
+const test2: CSSObject = {
+  background: 'lavender',
+};
+
+type Pseudos = {
+  [K in CSS.Pseudos]?: CSS.Properties;
+};
+
+const test: CSS.Properties & Pseudos = {
+  color: 'red',
+};
 
 function App() {
   const [count, setCount] = useState(0);
@@ -13,12 +27,11 @@ function App() {
       <div className="App">
         <Box
           cx={{
-            fontSize: '$4',
-            bg: '$neutral400',
-            size: '400px',
-            ':hover': { bg: '$blue400', m: '20px' },
-            $bp640: {
-              bg: '$purple400',
+            color: '$blue900',
+            bottom: '$4',
+            fontSize: '$body',
+            ':hover': {
+              gap: '$1',
             },
           }}
         />

@@ -56,7 +56,7 @@ type ScaleLookup<
   TTheme extends Theme = Theme
 > = TTheme[Token] extends object
   ? KeyOf<TTheme[Token]>
-  : TTheme[Token] extends Array<string | number>
+  : TTheme[Token] extends []
   ? KeyOf<TTheme[Token]>
   : never;
 

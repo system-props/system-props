@@ -79,15 +79,15 @@ interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
   borderLeft: 'borders';
 }
 
-type TokenProperties<
+type CSSProperties<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = {
-  [K in keyof PropertiesToScales]?: PropertiesToScales[K] extends TokenScales
-    ?
-        | CSS.Properties[K]
-        | PrefixToken<PropertiesToScales[K], PrefixOption, TTheme>
-    : CSS.Properties[K];
+  [K in keyof CSS.Properties]?:
+    | (PropertiesToScales[K] extends TokenScales
+        ? PrefixToken<PropertiesToScales[K], PrefixOption, TTheme>
+        : never)
+    | CSS.Properties[K];
 };
 
 type CSSPseudos<
@@ -114,16 +114,27 @@ export type CSSObject<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = CSSProperties<PrefixOption, TTheme> &
-  CSSPseudos<PrefixOption, TTheme> &
-  ThemeMediaQueries<PrefixOption, TTheme> & {
-    [key: string]:
-      | CSSObject<PrefixOption, TTheme>
-      | string
-      | number
-      | undefined;
+  {
+    [K in CSS.Pseudos]?: CSSProperties<PrefixOption, TTheme>;
+  } &
+  {
+    [K in KeyOf<TTheme['mediaQueries']>]?: CSSProperties<PrefixOption, TTheme>;
   };
 
-type CSSProperties<
+type BaseCss<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
-> = VanillaCSSProperties & TokenProperties<PrefixOption, TTheme>;
+> = CSSProperties<PrefixOption, TTheme> &
+  {
+    [K in CSS.Pseudos]?: BaseCss<PrefixOption, TTheme>;
+  } & {
+    [k: string]: BaseCss<PrefixOption, TTheme> | string | number | undefined;
+  };
+
+const foo: BaseCss = {
+  color: 'purple',
+  ':hover': {
+    color: 'red',
+  },
+  background: 'top',
+};

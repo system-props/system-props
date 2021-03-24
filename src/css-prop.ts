@@ -1,12 +1,10 @@
 import * as CSS from 'csstype';
 import {
-  AllSystemProps,
   Theme,
   PrefixToken,
   PrefixOptions,
   PrefixDefault,
   TokenScales,
-  KeyOf,
 } from './types';
 
 interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
@@ -74,23 +72,85 @@ interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
   borderLeft: 'borders';
 }
 
-type CSSProperties<
+interface AliasPropertiesToScales {
+  textColor: 'colors';
+  bg: 'colors';
+  size: 'sizes';
+  p: 'space';
+  pt: 'space';
+  pr: 'space';
+  pb: 'space';
+  pl: 'space';
+  px: 'space';
+  py: 'space';
+  paddingX: 'space';
+  paddingY: 'space';
+  m: 'space';
+  mt: 'space';
+  mr: 'space';
+  mb: 'space';
+  ml: 'space';
+  mx: 'space';
+  my: 'space';
+  marginX: 'space';
+  marginY: 'space';
+}
+
+interface AliasToProperties {
+  textColor: 'color';
+  bg: 'backgroundColor';
+  p: 'padding';
+  pt: 'paddingTop';
+  pr: 'paddingRight';
+  pb: 'paddingBottom';
+  pl: 'paddingLeft';
+  m: 'margin';
+  mt: 'marginTop';
+  mr: 'marginRight';
+  mb: 'marginBottom';
+  ml: 'marginLeft';
+  // Multiple Property Aliases
+  size: 'width';
+  px: 'paddingLeft';
+  py: 'paddingTop';
+  paddingX: 'paddingLeft';
+  paddingY: 'paddingTop';
+  mx: 'marginLeft';
+  my: 'marginTop';
+  marginX: 'marginLeft';
+  marginY: 'marginTop';
+}
+
+export type CSSObject<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = {
+  // All regular CSS Property Keys to theme values & csstype
   [K in keyof CSS.Properties]?:
     | (PropertiesToScales[K] extends TokenScales
         ? PrefixToken<PropertiesToScales[K], PrefixOption, TTheme>
         : never)
     | CSS.Properties[K];
-};
-
-export type CSSObject<
-  PrefixOption extends PrefixOptions = PrefixDefault,
-  TTheme extends Theme = Theme
-> = CSSProperties<PrefixOption, TTheme> &
+} &
+  // Alias properties to theme values & csstype
+  {
+    [K in keyof AliasPropertiesToScales]?:
+      | (AliasPropertiesToScales[K] extends TokenScales
+          ? PrefixToken<AliasPropertiesToScales[K], PrefixOption, TTheme>
+          : never)
+      | CSS.Properties[AliasToProperties[K]];
+  } &
+  // Pseudo Selectors
   {
     [K in CSS.Pseudos]?: CSSObject<PrefixOption, TTheme>;
+  } &
+  // Theme Media Queries
+  {
+    [K in PrefixToken<'mediaQueries', PrefixOption, TTheme>]?: CSSObject<
+      PrefixOption,
+      TTheme
+    >;
   } & {
+    // Any unknown selectors or properties
     [k: string]: CSSObject<PrefixOption, TTheme> | string | number | undefined;
   };

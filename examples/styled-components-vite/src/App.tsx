@@ -9,6 +9,8 @@ import { CSSObject } from 'system-props';
 
 const test2: CSSObject = {
   background: 'lavender',
+  color: '$blue100',
+  paddingX: '$4',
 };
 
 type Pseudos = {
@@ -27,14 +29,9 @@ function App() {
       <div className="App">
         <Box
           cx={{
+            color: '$cyan50',
             ':focus': {
-              bottom: '$4',
-            },
-            color: '$blue900',
-            bottom: '$4',
-            fontSize: '$body',
-            ':hover': {
-              gap: '$1',
+              color: 'lavender',
             },
           }}
         />

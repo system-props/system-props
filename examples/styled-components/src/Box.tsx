@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode, ElementType, PropsWithChildren } from 'react';
 import {
   createSystem,
   color,
@@ -16,14 +16,10 @@ import {
   typography,
   shouldForwardProp,
   CSSObject,
+  Theme,
 } from 'system-props';
-import styled from 'styled-components';
+import { CSSProp } from 'styled-components';
 import * as CSS from 'csstype';
-
-const test: CSSObject = {
-  margin: '$5',
-  backgroundColor: '$green500',
-};
 
 const system = createSystem();
 
@@ -39,10 +35,12 @@ type BaseProps = AllSystemProps<'prefix'> &
   };
 
 interface BoxProps extends BaseProps, PseudoProps<BaseProps> {
-  cx?: CSSObject;
+  cx?: CSSObject | ((theme: Theme) => CSSObject);
+  children?: ReactNode;
+  css?: CSSProp;
 }
 
-const foo = system({
+const styles = system({
   ...color,
   ...border,
   ...background,
@@ -56,14 +54,28 @@ const foo = system({
   ...extraProps,
 });
 
-const BaseBox = styled('div').withConfig({
-  shouldForwardProp: (prop, defaultValidatorFn) =>
-    shouldForwardProp(prop) &&
-    defaultValidatorFn(prop) &&
-    !Object.keys(extraProps).includes(prop),
-})<BoxProps>({ boxSizing: 'border-box' }, foo);
+const BaseElement = ({
+  is: Component = 'div',
+  ...props
+}: PropsWithChildren<{ is?: ElementType }>) => {
+  const rest = Object.keys(props).reduce((acc, curr) => {
+    if (shouldForwardProp(curr)) {
+      return { ...acc, [curr]: props[curr] };
+    }
+    return acc;
+  }, {});
+
+  return <Component {...rest} />;
+};
 
 export const Box = ({ cx, ...props }: BoxProps) => {
-  // @ts-ignore
-  return <BaseBox {...props} css={foo.css(cx)} />;
+  return (
+    <BaseElement
+      css={`
+        ${styles.css(cx)}
+        ${styles}
+      `}
+      {...props}
+    />
+  );
 };

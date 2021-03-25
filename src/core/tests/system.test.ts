@@ -434,7 +434,7 @@ describe('tokenPrefix', () => {
   });
 });
 
-test.only('parser has a css property that also parses styles', () => {
+test('parser has a css property that also parses styles', () => {
   const system = createSystem();
   const parser = system({
     color: true,

@@ -4,6 +4,7 @@
     "target": "es5",
     "module": "commonjs",
     "jsx": "react",
+    "jsxImportSource": "@emotion/react",
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noUnusedLocals": false,

@@ -22,7 +22,12 @@ export interface Parser {
   config: { [key: string]: SystemConfig };
   propNames: string[];
   cache: Cache;
-  css?: CSSObject | ((theme: Theme) => CSSObject);
+}
+
+interface ParserWithCSS extends Parser {
+  css: (
+    args?: CSSObject | ((theme: Theme) => CSSObject)
+  ) => (theme: Theme) => any;
 }
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
@@ -39,7 +44,7 @@ export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {},
   strict: boolean = false
-): Parser => {
+) => {
   const cache: Cache = { strict, key: '__systemprops__' };
 
   const parse: Parser = (props: Props) => {
@@ -153,6 +158,7 @@ export const createParser = (
   const keys = Object.keys(config).filter((k) => k !== 'config');
   if (keys.length > 1) {
     keys.forEach((key) => {
+      // parse[key] = createParser({ [key]: config[key] });
       Object.assign(parse, { [key]: createParser({ [key]: config[key] }) });
     });
   }
@@ -189,7 +195,7 @@ export const createSystem = ({
     });
     const parser = createParser(config, pseudoSelectors, strict);
     Object.assign(parser, { css: createCss(config, tokenPrefix) });
-    return parser;
+    return parser as ParserWithCSS;
   };
 
   return system;

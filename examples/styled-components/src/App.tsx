@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import { Box, Bar } from './Box';
+import { Box } from './Box';
 
 const Button = (props) => {
   return (
     <Box
+      color="white"
       as="a"
       fontFamily="$base"
       backgroundColor="$blue400"
@@ -43,9 +43,8 @@ const App = () => {
           GitHub
         </Button>
       </Box>
-      <Bar css={{ bg: 'blue', size: '300px' }} />
     </ThemeProvider>
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default App;

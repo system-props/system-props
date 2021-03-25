@@ -130,6 +130,9 @@ export interface AppTheme {
     base: string;
     mono: string;
   };
+  mediaQueries: {
+    bp2: string;
+  };
   breakpoints: {
     bp2: string;
   };
@@ -267,6 +270,9 @@ export const theme: AppTheme = {
   sizes: ['450px', '550px', '585px', '865px'],
   breakpoints: {
     bp2: '900px',
+  },
+  mediaQueries: {
+    bp2: '@media and (min-width:900px)',
   },
   zIndices: {
     0: 0,

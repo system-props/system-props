@@ -54,9 +54,9 @@ export type PrefixDefault = 'prefix';
 type ScaleLookup<
   Token extends TokenScales,
   TTheme extends Theme = Theme
-> = TTheme[Token] extends object
-  ? KeyOf<TTheme[Token]>
-  : TTheme[Token] extends []
+> = TTheme[Token] extends Array<string | number>
+  ? KeyOf<TTheme[Token]> & TTheme[Token][number]
+  : TTheme[Token] extends object
   ? KeyOf<TTheme[Token]>
   : never;
 

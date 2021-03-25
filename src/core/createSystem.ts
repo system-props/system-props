@@ -158,7 +158,6 @@ export const createParser = (
   const keys = Object.keys(config).filter((k) => k !== 'config');
   if (keys.length > 1) {
     keys.forEach((key) => {
-      // parse[key] = createParser({ [key]: config[key] });
       Object.assign(parse, { [key]: createParser({ [key]: config[key] }) });
     });
   }

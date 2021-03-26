@@ -29,13 +29,13 @@ const extraProps = {
   transition: true,
 } as const;
 
-type BaseProps = AllSystemProps<'prefix'> &
+type BaseProps = AllSystemProps<'all'> &
   {
     [k in keyof typeof extraProps]?: SystemProp<CSS.Properties[k]>;
   };
 
 interface BoxProps extends BaseProps, PseudoProps<BaseProps> {
-  cx?: CSSObject | ((theme: Theme) => CSSObject);
+  cx?: CSSObject<'all'> | ((theme: Theme) => CSSObject<'all'>);
   children?: ReactNode;
   css?: CSSProp;
 }

@@ -8,26 +8,21 @@ import {
   Props,
   SomeObject,
   Cache,
-  Theme,
+  PrefixDefault,
+  PrefixOptions,
 } from '../types';
 import { sort } from './sort';
 import { merge } from './merge';
 import { pseudoSelectors as defaultPseudos } from '../pseudos';
 import * as CSS from 'csstype';
-import { CSSObject } from '../css-prop';
-import { createCss } from './createCss';
+import { createCss, CSSFunction } from './createCss';
 
-export interface Parser {
+export interface Parser<TokenPrefix extends PrefixOptions = PrefixDefault> {
   (...args: any[]): any;
   config: { [key: string]: SystemConfig };
   propNames: string[];
   cache: Cache;
-}
-
-interface ParserWithCSS extends Parser {
-  css: (
-    args?: CSSObject | ((theme: Theme) => CSSObject)
-  ) => (theme: Theme) => any;
+  css?: CSSFunction<TokenPrefix>;
 }
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
@@ -193,8 +188,9 @@ export const createSystem = ({
       config[key] = createStyleFunction({ ...conf, tokenPrefix });
     });
     const parser = createParser(config, pseudoSelectors, strict);
-    Object.assign(parser, { css: createCss(config, tokenPrefix) });
-    return parser as ParserWithCSS;
+    const cssFunction = createCss(config, tokenPrefix);
+    parser.css = cssFunction;
+    return parser as Required<Parser<typeof tokenPrefix>>;
   };
 
   return system;

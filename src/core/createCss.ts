@@ -1,22 +1,26 @@
 import { get, memoizedGet } from './get';
-import { Theme, SystemConfig } from '../types';
+import { Theme, SystemConfig, PrefixOptions } from '../types';
 import { CSSObject } from '../css-prop';
 import { merge } from './merge';
+
+type CSSFunctionArgs<T extends PrefixOptions> =
+  | CSSObject<T>
+  | ((theme: Theme) => CSSObject<T>);
+
+export type CSSFunction<T extends PrefixOptions> = (
+  args?: CSSFunctionArgs<T>
+) => (theme: Theme) => CSSObject<T> | undefined;
 
 export const createCss = (
   config: { [x: string]: SystemConfig },
   tokenPrefix: 'all' | 'prefix' | 'noprefix'
 ) => {
-  const css = (args?: CSSObject | ((theme: Theme) => CSSObject)) => ({
-    theme,
-  }: {
-    theme: Theme;
-  }) => {
+  const css: CSSFunction<typeof tokenPrefix> = (args) => ({ theme }) => {
     if (typeof args === 'undefined') {
       return;
     }
 
-    let result: CSSObject = {};
+    let result: CSSObject<typeof tokenPrefix> = {};
     const styles = typeof args === 'function' ? args(theme) : args;
 
     for (let key in styles) {

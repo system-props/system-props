@@ -190,7 +190,7 @@ export const createSystem = ({
     const parser = createParser(config, pseudoSelectors, strict);
     const cssFunction = createCss(config, tokenPrefix);
     parser.css = cssFunction;
-    return parser as Required<Parser<typeof tokenPrefix>>;
+    return parser;
   };
 
   return system;

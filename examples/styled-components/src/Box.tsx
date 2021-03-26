@@ -18,7 +18,7 @@ import {
   CSSObject,
   Theme,
 } from 'system-props';
-import { CSSProp } from 'styled-components';
+import styled, { CSSProp } from 'styled-components';
 import * as CSS from 'csstype';
 
 const system = createSystem();

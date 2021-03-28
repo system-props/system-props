@@ -1,7 +1,14 @@
 import { get, memoizedGet } from './get';
-import { Theme, SystemConfig, PrefixOptions } from '../types';
+import {
+  PropConfigCollection,
+  Theme,
+  SystemConfig,
+  PrefixOptions,
+} from '../types';
 import { CSSObject } from '../css-prop';
 import { merge } from './merge';
+import * as CSS from 'csstype';
+import { createStyleFunction } from './createStyleFunction';
 
 type CSSFunctionArgs<T extends PrefixOptions> =
   | CSSObject<T>
@@ -12,9 +19,29 @@ export type CSSFunction<T extends PrefixOptions> = (
 ) => (theme: Theme) => CSSObject<T> | undefined;
 
 export const createCss = (
-  config: { [x: string]: SystemConfig },
-  tokenPrefix: 'all' | 'prefix' | 'noprefix'
+  propConfig: PropConfigCollection,
+  options: { tokenPrefix: PrefixOptions } = { tokenPrefix: 'prefix' }
 ) => {
+  const { tokenPrefix } = options;
+  const config: { [x: string]: SystemConfig } = {};
+
+  Object.keys(propConfig).forEach((key) => {
+    const conf = propConfig[key];
+    if (conf === true) {
+      // shortcut definition
+      config[key] = createStyleFunction({
+        property: key as keyof CSS.Properties,
+        scale: key,
+        tokenPrefix,
+      });
+      return;
+    }
+    if (typeof conf === 'function') {
+      return;
+    }
+    config[key] = createStyleFunction({ ...conf, tokenPrefix });
+  });
+
   const css: CSSFunction<typeof tokenPrefix> = (args) => ({ theme }) => {
     if (typeof args === 'undefined') {
       return;

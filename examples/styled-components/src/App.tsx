@@ -1,11 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import { Box } from './Box';
+import { Box, css } from './Box';
 
 const Button = (props) => {
   return (
     <Box
+      css={css({ color: '$red400' })}
       color="white"
       as="a"
       fontFamily="$base"

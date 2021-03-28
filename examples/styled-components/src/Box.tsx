@@ -1,10 +1,7 @@
-import React, { ReactNode, ElementType, PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 import {
   createSystem,
   color,
-  PseudoProps,
-  AllSystemProps,
-  SystemProp,
   border,
   space,
   layout,
@@ -15,8 +12,12 @@ import {
   grid,
   typography,
   shouldForwardProp,
-  CSSObject,
+  createCss,
+  PseudoProps,
+  AllSystemProps,
+  SystemProp,
   Theme,
+  CSSObject,
 } from 'system-props';
 import styled, { CSSProp } from 'styled-components';
 import * as CSS from 'csstype';
@@ -40,7 +41,7 @@ interface BoxProps extends BaseProps, PseudoProps<BaseProps> {
   css?: CSSProp;
 }
 
-const styles = system({
+const config = {
   ...color,
   ...border,
   ...background,
@@ -52,30 +53,13 @@ const styles = system({
   ...space,
   ...typography,
   ...extraProps,
-});
-
-const BaseElement = ({
-  is: Component = 'div',
-  ...props
-}: PropsWithChildren<{ is?: ElementType }>) => {
-  const rest = Object.keys(props).reduce((acc, curr) => {
-    if (shouldForwardProp(curr)) {
-      return { ...acc, [curr]: props[curr] };
-    }
-    return acc;
-  }, {});
-
-  return <Component {...rest} />;
 };
 
-export const Box = ({ cx, ...props }: BoxProps) => {
-  return (
-    <BaseElement
-      css={`
-        ${styles.css(cx)}
-        ${styles}
-      `}
-      {...props}
-    />
-  );
-};
+export const css = createCss(config);
+
+export const Box = styled('div').withConfig({
+  shouldForwardProp: (prop, defaultValidtorFn) =>
+    shouldForwardProp(prop) &&
+    defaultValidtorFn(prop) &&
+    !Object.keys(extraProps).includes(prop),
+})<BoxProps>({ boxSizing: 'border-box' }, system(config));

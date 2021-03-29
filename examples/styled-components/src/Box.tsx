@@ -55,7 +55,7 @@ const config = {
   ...extraProps,
 };
 
-export const css = createCss(config);
+export const css = createCss(config, { tokenPrefix: 'all' });
 
 export const Box = styled('div').withConfig({
   shouldForwardProp: (prop, defaultValidtorFn) =>

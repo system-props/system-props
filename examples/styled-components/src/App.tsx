@@ -6,7 +6,7 @@ import { Box, css } from './Box';
 const Button = (props) => {
   return (
     <Box
-      css={css({ color: '$red400' })}
+      css={css({ color: '$red400', bg: 'red400', padding: 10, fontSize: 3 })}
       color="white"
       as="a"
       fontFamily="$base"

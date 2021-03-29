@@ -5,8 +5,19 @@ import {
   Paint,
 } from './css-types';
 
-type KeysOfArray = keyof [];
-export type KeyOf<T extends []> = Exclude<keyof T, KeysOfArray>;
+export type KeyOf<T> = T extends Array<any>
+  ? number | Exclude<keyof T, keyof []>
+  : T extends object
+  ? keyof T
+  : never;
+
+// type testA = KeyOf<{ 1: string; 2: string }>;
+// type testB = KeyOf<[string, string, string]>;
+// type testC = KeyOf<{ '1': string; '2': string }>;
+
+// const foo: testA = 1;
+// const food: testB = '0';
+// const fooc: testC = '0';
 
 export type TokenScales =
   | 'colors'
@@ -54,22 +65,16 @@ export type PrefixDefault = 'prefix';
 type ScaleLookup<
   Token extends TokenScales,
   TTheme extends Theme = Theme
-> = TTheme[Token] extends Array<string | number>
-  ? TTheme[Token][number] | KeyOf<TTheme[Token]>
-  : TTheme[Token] extends object
-  ? KeyOf<TTheme[Token]>
-  : never;
+> = KeyOf<TTheme[Token]>;
 
 export type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
-  ?
-      | ScaleLookup<Token, TTheme>
-      | `$${(number | string) & ScaleLookup<Token, TTheme>}`
+  ? ScaleLookup<Token, TTheme> | `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'prefix'
-  ? `$${(number | string) & ScaleLookup<Token, TTheme>}`
+  ? `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'noprefix'
   ? ScaleLookup<Token, TTheme>
   : never;

@@ -11,7 +11,7 @@
   "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
-    "csstype": "^3.0.5",
+    "csstype": "^3.0.7",
     "eslint-plugin-no-only-tests": "^2.4.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",

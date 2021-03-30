@@ -55,15 +55,17 @@ export const createCss = (
 
       // Nested selectors (pseudo selectors, media query)
       if (x && typeof x === 'object') {
+        const nestedStyles = x as CSSObject<typeof tokenPrefix>;
+
         // If key is a mediaQueries token value
         const _get = memoizedGet[tokenPrefix];
         const maybeQuery = _get(theme.mediaQueries, key);
         if (typeof maybeQuery !== 'undefined') {
-          result[maybeQuery] = css(x)({ theme });
+          result[maybeQuery] = css(nestedStyles)({ theme });
           continue;
         }
 
-        result[key] = css(x)({ theme });
+        result[key] = css(nestedStyles)({ theme });
         continue;
       }
 

@@ -7,7 +7,11 @@ import {
   TokenScales,
 } from './types';
 
-interface PropertiesToScales extends Record<keyof CSS.Properties, TokenScales> {
+// Autocomplete string values, also allow raw numbers which
+// most libraries will convert to pixel values
+export type CSSProperties = CSS.Properties<(string & {}) | number>;
+
+interface PropertiesToScales extends Record<keyof CSSProperties, TokenScales> {
   color: 'colors';
   backgroundColor: 'colors';
   fill: 'colors';
@@ -121,16 +125,16 @@ interface AliasToProperties {
   marginY: 'marginTop';
 }
 
-export type CSSObject<
+type InternalCss<
   PrefixOption extends PrefixOptions = PrefixDefault,
   TTheme extends Theme = Theme
 > = {
   // All regular CSS Property Keys to theme values & csstype
-  [K in keyof CSS.Properties]?:
+  [K in keyof CSSProperties]?:
     | (PropertiesToScales[K] extends TokenScales
         ? PrefixToken<PropertiesToScales[K], PrefixOption, TTheme>
         : never)
-    | CSS.Properties[K];
+    | CSSProperties[K];
 } &
   // Alias properties to theme values & csstype
   {
@@ -138,19 +142,34 @@ export type CSSObject<
       | (AliasPropertiesToScales[K] extends TokenScales
           ? PrefixToken<AliasPropertiesToScales[K], PrefixOption, TTheme>
           : never)
-      | CSS.Properties[AliasToProperties[K]];
-  } &
+      | CSSProperties[AliasToProperties[K]];
+  } & {
+    [k: string]:
+      | InternalCss<PrefixOption, TTheme>
+      | string
+      | undefined
+      | number;
+  };
+
+export type CSSObject<
+  PrefixOption extends PrefixOptions = PrefixDefault,
+  TTheme extends Theme = Theme
+> = InternalCss<PrefixOption, TTheme> &
   // Pseudo Selectors
   {
-    [K in CSS.Pseudos]?: CSSObject<PrefixOption, TTheme>;
+    [K in CSS.Pseudos]?:
+      | CSSObject<PrefixOption, TTheme>
+      | string
+      | number
+      | undefined;
   } &
   // Theme Media Queries
   {
-    [K in PrefixToken<'mediaQueries', PrefixOption, TTheme>]?: CSSObject<
-      PrefixOption,
-      TTheme
-    >;
+    [K in PrefixToken<'mediaQueries', PrefixOption, TTheme>]?:
+      | CSSObject<PrefixOption, TTheme>
+      | string
+      | number
+      | undefined;
   } & {
-    // Any unknown selectors or properties
     [k: string]: CSSObject<PrefixOption, TTheme> | string | number | undefined;
   };

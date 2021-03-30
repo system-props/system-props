@@ -11,14 +11,6 @@ export type KeyOf<T> = T extends Array<any>
   ? keyof T
   : never;
 
-// type testA = KeyOf<{ 1: string; 2: string }>;
-// type testB = KeyOf<[string, string, string]>;
-// type testC = KeyOf<{ '1': string; '2': string }>;
-
-// const foo: testA = 1;
-// const food: testB = '0';
-// const fooc: testC = '0';
-
 export type TokenScales =
   | 'colors'
   | 'sizes'

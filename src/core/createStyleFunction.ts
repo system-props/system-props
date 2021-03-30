@@ -33,7 +33,7 @@ export const createStyleFunction: StyleFunction = ({
     value: number | string,
     scale: any,
     props: Props,
-    cache?: Cache
+    cache: Cache
   ) => {
     const result: Record<string, any> = {};
 
@@ -42,7 +42,7 @@ export const createStyleFunction: StyleFunction = ({
       path: value,
       object: scale,
       props,
-      strict: cache?.strict,
+      strict: cache.strict,
       get,
     });
 

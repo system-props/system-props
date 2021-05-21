@@ -14,9 +14,9 @@ type CSSFunctionArgs<T extends PrefixOptions> =
   | CSSObject<T>
   | ((theme: Theme) => CSSObject<T>);
 
-export type CSSFunction<T extends PrefixOptions> = (
-  args?: CSSFunctionArgs<T>
-) => (theme: Theme) => CSSObject<T> | undefined;
+export interface CSSFunction<T extends PrefixOptions> {
+  (args?: CSSFunctionArgs<T>): (theme: Theme) => CSSObject<T> | undefined;
+}
 
 export const createCss = (
   propConfig: PropConfigCollection,

@@ -74,6 +74,9 @@ interface PropertiesToScales extends Record<keyof CSSProperties, TokenScales> {
   borderRight: 'borders';
   borderBottom: 'borders';
   borderLeft: 'borders';
+  transition: 'transitions';
+  transitionTimingFunction: 'transitionTimingFunctions';
+  transitionDuration: 'transitionDurations';
 }
 
 interface AliasPropertiesToScales {

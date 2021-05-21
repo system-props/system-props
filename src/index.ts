@@ -38,6 +38,8 @@ export * from './shouldForwardProp';
 export {
   SystemProp,
   ColorProps,
+  PaddingProps,
+  MarginProps,
   SpaceProps,
   BorderProps,
   TypographyProps,

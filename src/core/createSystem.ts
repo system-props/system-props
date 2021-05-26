@@ -55,6 +55,12 @@ export const createParser = (
     const parseEntry = (obj: SomeObject, key: string) => {
       const systemConfig = config[key];
       let propValue: any = obj[key];
+
+      // prop value is undefined. See issue #35
+      if (!propValue) {
+        return {};
+      }
+
       const scale = get(props.theme, systemConfig.scale);
 
       if (typeof propValue === 'function') {

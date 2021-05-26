@@ -5,7 +5,13 @@ import {
   Paint,
 } from './css-types';
 
-type TokenScales =
+export type KeyOf<T> = T extends Array<any>
+  ? number | Exclude<keyof T, keyof []>
+  : T extends object
+  ? keyof T
+  : never;
+
+export type TokenScales =
   | 'colors'
   | 'sizes'
   | 'space'
@@ -20,6 +26,7 @@ type TokenScales =
   | 'lineHeights'
   | 'fonts'
   | 'radii'
+  | 'mediaQueries'
   | 'transitions'
   | 'transitionDurations'
   | 'transitionTimingFunctions'
@@ -30,7 +37,7 @@ export interface Theme {
 }
 
 type ThemeBreakpointKey = Theme['breakpoints'] extends object
-  ? keyof Theme['breakpoints']
+  ? KeyOf<Theme['breakpoints']>
   : never;
 
 export type ResponsiveObject<T> = {
@@ -44,28 +51,22 @@ export type SystemProp<T> =
   | ResponsiveValue<T>
   | ((theme: Theme) => T | ResponsiveValue<T>);
 
-type PrefixOptions = 'all' | 'prefix' | 'noprefix';
-type PrefixDefault = 'noprefix';
+export type PrefixOptions = 'all' | 'prefix' | 'noprefix';
+export type PrefixDefault = 'prefix';
 
 type ScaleLookup<
   Token extends TokenScales,
   TTheme extends Theme = Theme
-> = TTheme[Token] extends object
-  ? keyof TTheme[Token]
-  : TTheme[Token] extends Array<string | number>
-  ? TTheme[Token][number]
-  : never;
+> = KeyOf<TTheme[Token]>;
 
-type PrefixToken<
+export type PrefixToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions,
   TTheme extends Theme = Theme
 > = PrefixOption extends 'all'
-  ?
-      | ScaleLookup<Token, TTheme>
-      | `$${(number | string) & ScaleLookup<Token, TTheme>}`
+  ? ScaleLookup<Token, TTheme> | `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'prefix'
-  ? `$${(number | string) & ScaleLookup<Token, TTheme>}`
+  ? `$${string & ScaleLookup<Token, TTheme>}`
   : PrefixOption extends 'noprefix'
   ? ScaleLookup<Token, TTheme>
   : never;
@@ -84,7 +85,7 @@ export type Props = {
 };
 
 export interface SystemConfig {
-  (value: string | number, scale: string, props: Props, cache: Cache): {};
+  (value: string | number, scale: string, props: Props, cache?: Cache): {};
   scale?: 'string';
   defaultScale?: unknown;
 }

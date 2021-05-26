@@ -1,10 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 import {
   createSystem,
   color,
-  PseudoProps,
-  AllSystemProps,
-  SystemProp,
   border,
   space,
   layout,
@@ -15,10 +12,14 @@ import {
   grid,
   typography,
   shouldForwardProp,
+  createCss,
+  PseudoProps,
+  AllSystemProps,
+  SystemProp,
+  Theme,
   CSSObject,
 } from 'system-props';
-import styled from '@emotion/styled';
-import isPropValid from '@emotion/is-prop-valid';
+import styled, { CSSProp } from 'styled-components';
 import * as CSS from 'csstype';
 
 const system = createSystem();
@@ -35,10 +36,12 @@ type BaseProps = AllSystemProps<'all'> &
   };
 
 interface BoxProps extends BaseProps, PseudoProps<BaseProps> {
-  cx?: CSSObject;
+  cx?: CSSObject<'all'> | ((theme: Theme) => CSSObject<'all'>);
+  children?: ReactNode;
+  css?: CSSProp;
 }
 
-const styles = system({
+const config = {
   ...color,
   ...border,
   ...background,
@@ -50,24 +53,13 @@ const styles = system({
   ...space,
   ...typography,
   ...extraProps,
-});
+};
 
-const BaseElement = ({
-  is: Component = 'div',
-  ...props
-}: {
-  is?: React.ElementType;
-  children?: React.ReactNode;
-}) => <Component {...props} />;
+export const css = createCss(config, { tokenPrefix: 'all' });
 
-export const BaseBox = styled(BaseElement, {
-  shouldForwardProp: (prop) =>
-    typeof prop === 'string' &&
+export const Box = styled('div').withConfig({
+  shouldForwardProp: (prop, defaultValidtorFn) =>
     shouldForwardProp(prop) &&
-    isPropValid(prop) &&
+    defaultValidtorFn(prop) &&
     !Object.keys(extraProps).includes(prop),
-})<BoxProps>({ boxSizing: 'border-box' }, styles);
-
-export const Box = ({ cx, ...props }: BoxProps) => (
-  <BaseBox css={styles.css(cx)} {...props} />
-);
+})<BoxProps>({ boxSizing: 'border-box' }, system(config));

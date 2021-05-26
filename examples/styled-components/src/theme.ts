@@ -96,11 +96,7 @@ interface BaseColors {
   loContrast?: string;
 }
 
-interface Colors extends BaseColors {
-  modes?: {
-    dark?: BaseColors;
-  };
-}
+interface Colors extends BaseColors {}
 
 export interface AppTheme {
   colors: Colors;
@@ -133,6 +129,9 @@ export interface AppTheme {
   fonts: {
     base: string;
     mono: string;
+  };
+  mediaQueries: {
+    bp2: string;
   };
   breakpoints: {
     bp2: string;
@@ -226,41 +225,6 @@ const colors: Colors = {
 colors.hiContrast = colors.gray900;
 colors.loContrast = '#fff';
 
-Object.assign(colors, {
-  modes: {
-    dark: [
-      'blue',
-      'green',
-      'yellow',
-      'red',
-      'purple',
-      'orange',
-      'cyan',
-      'gray',
-    ].reduce(
-      (acc, curr) => {
-        return {
-          ...acc,
-          [`${curr}50`]: colors[`${curr}900`],
-          [`${curr}100`]: colors[`${curr}800`],
-          [`${curr}200`]: colors[`${curr}700`],
-          [`${curr}300`]: colors[`${curr}600`],
-          [`${curr}400`]: colors[`${curr}500`],
-          [`${curr}500`]: colors[`${curr}400`],
-          [`${curr}600`]: colors[`${curr}300`],
-          [`${curr}700`]: colors[`${curr}200`],
-          [`${curr}800`]: colors[`${curr}100`],
-          [`${curr}900`]: colors[`${curr}50`],
-        };
-      },
-      { hiContrast: colors.gray50, loContrast: '#141719' }
-    ),
-  },
-});
-// Corrections for better readability
-colors.modes.dark.blue500 = '#6ca2ff';
-colors.modes.dark.purple500 = '#8465ff';
-
 const space = {
   '0': '0px',
   '1': '5px',
@@ -306,6 +270,9 @@ export const theme: AppTheme = {
   sizes: ['450px', '550px', '585px', '865px'],
   breakpoints: {
     bp2: '900px',
+  },
+  mediaQueries: {
+    bp2: '@media and (min-width:900px)',
   },
   zIndices: {
     0: 0,

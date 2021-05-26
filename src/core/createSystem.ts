@@ -35,7 +35,7 @@ export const createParser = (
   config: { [x: string]: SystemConfig },
   pseudoSelectors: { [x: string]: string } = {},
   strict: boolean = false
-): Parser => {
+) => {
   const cache: Cache = { strict, key: '__systemprops__' };
 
   const parse: Parser = (props: Props) => {

@@ -1,6 +1,6 @@
 {
   "name": "system-props",
-  "version": "0.18.0",
+  "version": "0.19.0-5",
   "description": "Inspired by styled-system, a responsive, theme-based style props for building design systems with React.",
   "author": "Rogin Farrer",
   "homepage": "https://github.com/system-props/system-props#readme",
@@ -11,7 +11,7 @@
   "module": "dist/system-props.esm.js",
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.1",
-    "csstype": "^3.0.5",
+    "csstype": "^3.0.7",
     "eslint-plugin-no-only-tests": "^2.4.0",
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",

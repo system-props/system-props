@@ -1,17 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './theme';
-import { Box } from './Box';
+import { Box, css } from './Box';
 
 const Button = (props) => {
   return (
     <Box
+      css={css({ color: '$red400', bg: 'red400', padding: 10, fontSize: 3 })}
+      color="white"
       as="a"
       fontFamily="$base"
       backgroundColor="$blue400"
       borderRadius="$pill"
-      color="white"
       fontSize="$body"
       fontWeight="600"
       p="$2 $3"
@@ -48,4 +48,4 @@ const App = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+export default App;

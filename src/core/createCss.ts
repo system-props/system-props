@@ -5,17 +5,21 @@ import {
   SystemConfig,
   PrefixOptions,
 } from '../types';
-import { CSSObject } from '../css-prop';
+import { CSSObject as SystemPropsCSSObject } from '../css-prop';
 import { merge } from './merge';
-import * as CSS from 'csstype';
+import { CSSObject, CSSProperties } from '../css-types';
 import { createStyleFunction } from './createStyleFunction';
 
+interface PropsWithTheme {
+  theme: Theme;
+}
+
 type CSSFunctionArgs<T extends PrefixOptions> =
-  | CSSObject<T>
-  | ((theme: Theme) => CSSObject<T>);
+  | SystemPropsCSSObject<T>
+  | ((theme: Theme) => SystemPropsCSSObject<T>);
 
 export interface CSSFunction<T extends PrefixOptions> {
-  (args?: CSSFunctionArgs<T>): (theme: Theme) => CSSObject<T> | undefined;
+  (args?: CSSFunctionArgs<T>): (props: PropsWithTheme) => CSSObject | undefined;
 }
 
 export const createCss = (
@@ -30,7 +34,7 @@ export const createCss = (
     if (conf === true) {
       // shortcut definition
       config[key] = createStyleFunction({
-        property: key as keyof CSS.Properties,
+        property: key as keyof CSSProperties,
         scale: key,
         tokenPrefix,
       });
@@ -47,7 +51,7 @@ export const createCss = (
       return;
     }
 
-    let result: CSSObject<typeof tokenPrefix> = {};
+    let result: CSSObject = {};
     const styles = typeof args === 'function' ? args(theme) : args;
 
     for (let key in styles) {
@@ -55,7 +59,7 @@ export const createCss = (
 
       // Nested selectors (pseudo selectors, media query)
       if (x && typeof x === 'object') {
-        const nestedStyles = x as CSSObject<typeof tokenPrefix>;
+        const nestedStyles = x as SystemPropsCSSObject<typeof tokenPrefix>;
 
         // If key is a mediaQueries token value
         const _get = memoizedGet[tokenPrefix];

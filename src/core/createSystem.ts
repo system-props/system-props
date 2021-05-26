@@ -57,7 +57,7 @@ export const createParser = (
       let propValue: any = obj[key];
 
       // prop value is undefined. See issue #35
-      if (!propValue) {
+      if (propValue == null) {
         return {};
       }
 

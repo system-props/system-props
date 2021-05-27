@@ -6,6 +6,7 @@ const theme = {
     secondary: 'papayawhip',
   },
   fontSize: [0, 4, 8, 16],
+  space: [0, 4, 8, 16],
   breakpoints: [40, 52, 64].map((n) => n + 'em'),
   systemPropsId: false,
 };
@@ -34,6 +35,8 @@ const parser = system({
   },
   fontSize: true,
   border: true,
+  mx: { properties: ['marginLeft', 'marginRight'], scale: 'space' },
+  marginLeft: { property: 'marginLeft', scale: 'space' },
 });
 
 test('parses pseudo selectors', () => {
@@ -232,4 +235,14 @@ test('parses raw function values at each breakpoint', () => {
       color: 'papayawhip',
     },
   });
+});
+
+test('ignores undefined values - issue #35', () => {
+  const styles = parser({
+    theme,
+    color: undefined,
+    mx: '$2',
+    marginLeft: undefined,
+  });
+  expect(styles).toMatchObject({ marginLeft: 8, marginRight: 8 });
 });

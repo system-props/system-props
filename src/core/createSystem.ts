@@ -56,8 +56,8 @@ export const createParser = (
       const systemConfig = config[key];
       let propValue: any = obj[key];
 
-      // prop value is undefined. See issue #35
-      if (propValue == null) {
+      // See issue #35
+      if (propValue === undefined) {
         return {};
       }
 

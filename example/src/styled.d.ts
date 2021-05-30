@@ -1,4 +1,4 @@
-import { AppTheme } from './theme';
+import { Theme as AppTheme } from './theme';
 import type {} from 'styled-components/cssprop';
 
 declare module 'styled-components' {
@@ -6,5 +6,9 @@ declare module 'styled-components' {
 }
 
 declare module 'system-props' {
+  export interface Theme extends AppTheme {}
+}
+
+declare module '@emotion/react' {
   export interface Theme extends AppTheme {}
 }

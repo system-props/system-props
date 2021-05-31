@@ -1,3 +1,6 @@
+/**
+ * NOTE: If running in codesandbox, you will need to specify a version of system-props
+ */
 import React from 'react';
 import { Box as ScBox } from './box-styled-components';
 import { Box as ScTransientBox } from './box-styled-components-transient-props';

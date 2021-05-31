@@ -11,8 +11,8 @@ export const pseudoSelectors = {
   _placeholder: '&::placeholder',
   _hoverAndFocus: '&:hover, &:focus',
   _disabled:
-    '[disabled], [disabled]:hover, [disabled]:focus, [aria-disabled], [aria-disabled]:hover, [aria-disabled]:focus',
-  _readOnly: '[readOnly]',
+    '&[disabled], &[disabled]:hover, &[disabled]:focus, &[aria-disabled], &[aria-disabled]:hover, &[aria-disabled]:focus',
+  _readOnly: '&[readOnly]',
   _first: '&:first-child',
   _last: '&:last-child',
   _notFirst: '&:not(:first-of-type)',

@@ -35,7 +35,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "lint": "tsdx lint src example/src",
+    "lint": "tsdx lint src",
     "prepare": "tsdx build",
     "format": "yarn lint --fix",
     "clean": "rm -rf node_modules example/node_modules dist",

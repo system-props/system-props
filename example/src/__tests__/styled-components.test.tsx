@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box } from '../box-styled-components';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import 'jest-styled-components';
 
 describe('pseudo selectors', () => {

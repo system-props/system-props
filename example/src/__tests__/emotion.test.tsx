@@ -1,7 +1,18 @@
 import * as React from 'react';
 import { Box } from '../box-emotion';
 import { createSerializer, matchers } from '@emotion/jest';
-import { render } from '@testing-library/react';
+import { render as bareRender, RenderOptions } from '@testing-library/react';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from '../theme';
+
+const AllTheProviders = ({ children }: { children?: React.ReactNode }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
+
+const render = (
+  ui: React.ReactElement,
+  options?: Omit<RenderOptions, 'queries'>
+) => bareRender(ui, { wrapper: AllTheProviders, ...options });
 
 // configures @emotion/jest to ignore DOM elements
 expect.addSnapshotSerializer(createSerializer());
@@ -12,7 +23,7 @@ describe('pseudo selectors', () => {
   it('disabled - see issue #43', () => {
     const { container } = render(
       // @ts-ignore
-      <Box _disabled={{ color: 'blue' }} disabled>
+      <Box _disabled={{ color: '$red200' }} disabled>
         foo
       </Box>
     );
@@ -27,7 +38,7 @@ describe('pseudo selectors', () => {
       .emotion-0[aria-disabled],
       .emotion-0[aria-disabled]:hover,
       .emotion-0[aria-disabled]:focus {
-        color: blue;
+        color: #f28e8e;
       }
 
       <div

@@ -1,13 +1,24 @@
 import * as React from 'react';
 import { Box } from '../box-styled-components';
-import { render } from '@testing-library/react';
+import { render as bareRender, RenderOptions } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../theme';
 import 'jest-styled-components';
+
+const AllTheProviders = ({ children }: { children?: React.ReactNode }) => {
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};
+
+const render = (
+  ui: React.ReactElement,
+  options?: Omit<RenderOptions, 'queries'>
+) => bareRender(ui, { wrapper: AllTheProviders, ...options });
 
 describe('pseudo selectors', () => {
   it('disabled - see issue #43', () => {
     const { container } = render(
       // @ts-ignore
-      <Box _disabled={{ color: 'blue' }} disabled>
+      <Box _disabled={{ color: '$red200' }} disabled>
         foo
       </Box>
     );
@@ -22,7 +33,7 @@ describe('pseudo selectors', () => {
       .c0[aria-disabled],
       .c0[aria-disabled]:hover,
       .c0[aria-disabled]:focus {
-        color: blue;
+        color: #f28e8e;
       }
 
       <div

@@ -1,5 +1,5 @@
 {
-  "include": ["src"],
+  "include": ["src", "vite.config.ts"],
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "node",
@@ -12,7 +12,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
-    "baseUrl": "."
+    "jsx": "react"
   }
 }

@@ -1,6 +1,10 @@
 {
-  "extends": "../tsconfig.json",
+  "include": ["src"],
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["dom", "esnext"],
+    "strict": true,
     "allowJs": false,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,

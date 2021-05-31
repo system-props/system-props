@@ -5,7 +5,7 @@ This example project serves two purposes:
 * Examples of how to use System Props in your project (setting up types, creating a Box component)
 * Integration tests with styled-components and Emotion (with types, too)
 
-## Running in codesandbox
+## Running in CodeSandbox
 
 [Click here to fork in CodeSandbox](https://codesandbox.io/s/github/system-props/system-props/tree/main/example)
 

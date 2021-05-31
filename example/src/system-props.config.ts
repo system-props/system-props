@@ -26,12 +26,11 @@ const extraProps = {
 
 type PrefixOptions = 'noprefix' | 'prefix' | 'all';
 
-export type BaseProps<
-  Prefix extends PrefixOptions = 'prefix'
-> = AllSystemProps<Prefix> &
-  {
-    [k in keyof typeof extraProps]?: SystemProp<CSS.Properties[k]>;
-  };
+export type BaseProps<Prefix extends PrefixOptions = 'prefix'> =
+  AllSystemProps<Prefix> &
+    {
+      [k in keyof typeof extraProps]?: SystemProp<CSS.Properties[k]>;
+    };
 
 export interface BoxProps<Prefix extends PrefixOptions = 'prefix'>
   extends BaseProps<Prefix>,

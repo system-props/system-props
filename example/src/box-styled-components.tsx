@@ -7,8 +7,6 @@ const system = createSystem();
 export const Box = styled('div').withConfig({
   shouldForwardProp: (prop, defaultValidtorFn) =>
     shouldForwardProp(prop) && defaultValidtorFn(prop),
-})<BoxProps<'noprefix'>>(
-  { boxSizing: 'border-box' },
-  system(config),
-  ({ sx, ...props }) => css(sx)(props)
+})<BoxProps>({ boxSizing: 'border-box' }, system(config), ({ sx, ...props }) =>
+  css(sx)(props)
 );

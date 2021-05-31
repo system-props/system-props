@@ -4,8 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview",
-    "lint": "tsdx lint src"
+    "serve": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",
@@ -23,7 +22,6 @@
     "csstype": "^3.0.7",
     "typescript": "file:../node_modules/typescript",
     "vite": "^2.1.0",
-    "vite-babel-plugin": "^0.0.2",
-    "tsdx": "file:../node_modules/tsdx"
+    "vite-babel-plugin": "^0.0.2"
   }
 }

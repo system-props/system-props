@@ -9,9 +9,9 @@ const App = () => {
       display="flex"
       justifyContent="center"
       flexDirection="column"
-      gap={3}
+      gap="$5"
     >
-      <ScBox p={6} bg="lightpink">
+      <ScBox p="$6" bg="lightpink">
         <ScBox>Styled Components</ScBox>
         <ScBox
           color="white"
@@ -20,7 +20,6 @@ const App = () => {
           borderRadius="$pill"
           fontSize="$body"
           fontWeight={600}
-          marginLeft={2}
           p="$2 $3"
           textDecoration="none"
           transition="all 200ms ease"

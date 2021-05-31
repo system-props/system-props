@@ -95,49 +95,6 @@ const colors = {
   loContrast: 'undefined',
 };
 
-type Colors = typeof colors;
-
-// export interface AppTheme {
-//   colors: Colors;
-//   fontSizes: FontSizes;
-//   zIndices: {
-//     0: number;
-//     10: number;
-//     20: number;
-//     100: number;
-//   };
-//   space: {
-//     '0': string;
-//     '1': string;
-//     '2': string;
-//     '3': string;
-//     '4': string;
-//     '5': string;
-//     '6': string;
-//     '7': string;
-//     '8': string;
-//     '9': string;
-//   };
-//   radii: {
-//     small: string;
-//     medium: string;
-//     large: string;
-//     round: string;
-//     pill: string;
-//   };
-//   fonts: {
-//     base: string;
-//     mono: string;
-//   };
-//   mediaQueries: {
-//     bp2: string;
-//   };
-//   breakpoints: {
-//     bp2: string;
-//   };
-//   sizes: [string, string, string, string];
-// }
-
 colors.hiContrast = colors.gray900;
 colors.loContrast = '#fff';
 
@@ -158,19 +115,18 @@ fontSizes.rootFontSize = '17px';
 export const theme = {
   colors,
   fontSizes,
-  space: [0, 4, 8, 12, 16, 32, 64, 128],
-  // space: {
-  //   '0': '0px',
-  //   '1': '5px',
-  //   '2': '10px',
-  //   '3': '15px',
-  //   '4': '20px',
-  //   '5': '25px',
-  //   '6': '35px',
-  //   '7': '45px',
-  //   '8': '65px',
-  //   '9': '80px',
-  // },
+  space: {
+    '0': '0px',
+    '1': '5px',
+    '2': '10px',
+    '3': '15px',
+    '4': '20px',
+    '5': '25px',
+    '6': '35px',
+    '7': '45px',
+    '8': '65px',
+    '9': '80px',
+  },
   fonts: {
     base: 'system-ui, apple-system, BlinkMacSystemFont, sans-serif',
     mono: 'menlo, monospace',

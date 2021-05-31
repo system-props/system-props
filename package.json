@@ -16,7 +16,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "husky": "^4.3.0",
     "np": "^6.5.0",
-    "prettier": "^2.1.2",
+    "prettier": "^2.3.0",
     "tsdx": "^0.14.1",
     "tslib": "^2.0.1",
     "typescript": "^4.1.0"
@@ -35,11 +35,10 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "lint": "tsdx lint src && yarn --cwd example lint",
+    "lint": "tsdx lint src example/src",
     "prepare": "tsdx build",
     "format": "yarn lint --fix",
-    "start-sc": "yarn --cwd ./examples/styled-components start",
-    "clean": "rm -rf node_modules && rm -rf examples/**/node_modules && rm -rf dist",
+    "clean": "rm -rf node_modules example/node_modules dist",
     "release": "np"
   },
   "peerDependencies": {},

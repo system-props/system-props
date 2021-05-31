@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1622488111895" clover="3.2.0">
+  <project timestamp="1622488111895" name="All files">
+    <metrics statements="49" coveredstatements="18" conditionals="7" coveredconditionals="5" methods="8" coveredmethods="4" elements="64" coveredelements="27" complexity="0" loc="49" ncloc="49" packages="1" files="8" classes="8"/>
+    <file name="App.tsx" path="/Users/rfarrer/repos/system-props/example/src/App.tsx">
+      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+      <line num="1" count="0" type="stmt"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="7" count="0" type="stmt"/>
+      <line num="80" count="0" type="stmt"/>
+    </file>
+    <file name="box-emotion.tsx" path="/Users/rfarrer/repos/system-props/example/src/box-emotion.tsx">
+      <metrics statements="8" coveredstatements="8" conditionals="3" coveredconditionals="3" methods="2" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="8" count="1" type="stmt"/>
+      <line num="10" count="4" type="cond" truecount="3" falsecount="0"/>
+      <line num="12" count="1" type="stmt"/>
+    </file>
+    <file name="box-styled-components-transient-props.tsx" path="/Users/rfarrer/repos/system-props/example/src/box-styled-components-transient-props.tsx">
+      <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="9" count="0" type="stmt"/>
+      <line num="10" count="0" type="stmt"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="14" count="0" type="stmt"/>
+      <line num="15" count="0" type="stmt"/>
+      <line num="30" count="0" type="stmt"/>
+      <line num="32" count="0" type="cond" truecount="0" falsecount="2"/>
+      <line num="36" count="0" type="stmt"/>
+    </file>
+    <file name="box-styled-components.tsx" path="/Users/rfarrer/repos/system-props/example/src/box-styled-components.tsx">
+      <metrics statements="7" coveredstatements="7" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="1" type="stmt"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="9" count="3" type="cond" truecount="2" falsecount="0"/>
+      <line num="11" count="1" type="stmt"/>
+    </file>
+    <file name="main.tsx" path="/Users/rfarrer/repos/system-props/example/src/main.tsx">
+      <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="1" count="0" type="stmt"/>
+      <line num="2" count="0" type="stmt"/>
+      <line num="3" count="0" type="stmt"/>
+      <line num="4" count="0" type="stmt"/>
+      <line num="5" count="0" type="stmt"/>
+      <line num="6" count="0" type="stmt"/>
+      <line num="8" count="0" type="stmt"/>
+    </file>
+    <file name="styled.d.ts" path="/Users/rfarrer/repos/system-props/example/src/styled.d.ts">
+      <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+    </file>
+    <file name="system-props.config.ts" path="/Users/rfarrer/repos/system-props/example/src/system-props.config.ts">
+      <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="2" count="2" type="stmt"/>
+      <line num="21" count="2" type="stmt"/>
+      <line num="42" count="2" type="stmt"/>
+    </file>
+    <file name="theme.ts" path="/Users/rfarrer/repos/system-props/example/src/theme.ts">
+      <metrics statements="8" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <line num="13" count="0" type="stmt"/>
+      <line num="98" count="0" type="stmt"/>
+      <line num="99" count="0" type="stmt"/>
+      <line num="101" count="0" type="stmt"/>
+      <line num="112" count="0" type="stmt"/>
+      <line num="113" count="0" type="stmt"/>
+      <line num="115" count="0" type="stmt"/>
+      <line num="158" count="0" type="stmt"/>
+    </file>
+  </project>
+</coverage>

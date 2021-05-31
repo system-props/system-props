@@ -5,7 +5,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "test": "tsdx test src"
+    "test": "tsdx test src",
+    "lint": "tsdx lint src"
   },
   "dependencies": {
     "@emotion/react": "^11.4.0",

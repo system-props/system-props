@@ -27,7 +27,7 @@ jobs:
           CI: true
 
       - name: Lint
-        run: yarn lint
+        run: yarn lint && yarn --cwd example lint
         env:
           CI: true
 

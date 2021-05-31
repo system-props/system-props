@@ -46,50 +46,52 @@ export const createCss = (
     config[key] = createStyleFunction({ ...conf, tokenPrefix });
   });
 
-  const css: CSSFunction<typeof tokenPrefix> = (args) => ({ theme }) => {
-    if (typeof args === 'undefined') {
-      return;
-    }
+  const css: CSSFunction<typeof tokenPrefix> =
+    (args) =>
+    ({ theme }) => {
+      if (typeof args === 'undefined') {
+        return;
+      }
 
-    let result: CSSObject = {};
-    const styles = typeof args === 'function' ? args(theme) : args;
+      let result: CSSObject = {};
+      const styles = typeof args === 'function' ? args(theme) : args;
 
-    for (let key in styles) {
-      const x = styles[key];
+      for (let key in styles) {
+        const x = styles[key];
 
-      // Nested selectors (pseudo selectors, media query)
-      if (x && typeof x === 'object') {
-        const nestedStyles = x as SystemPropsCSSObject<typeof tokenPrefix>;
+        // Nested selectors (pseudo selectors, media query)
+        if (x && typeof x === 'object') {
+          const nestedStyles = x as SystemPropsCSSObject<typeof tokenPrefix>;
 
-        // If key is a mediaQueries token value
-        const _get = memoizedGet[tokenPrefix];
-        const maybeQuery = _get(theme.mediaQueries, key);
-        if (typeof maybeQuery !== 'undefined') {
-          result[maybeQuery] = css(nestedStyles)({ theme });
+          // If key is a mediaQueries token value
+          const _get = memoizedGet[tokenPrefix];
+          const maybeQuery = _get(theme.mediaQueries, key);
+          if (typeof maybeQuery !== 'undefined') {
+            result[maybeQuery] = css(nestedStyles)({ theme });
+            continue;
+          }
+
+          result[key] = css(nestedStyles)({ theme });
           continue;
         }
 
-        result[key] = css(nestedStyles)({ theme });
-        continue;
+        const systemConfig = config[key];
+
+        // Not a token in the config, let pass through
+        if (!systemConfig) {
+          result[key] = x;
+          continue;
+        }
+
+        const scale = get(theme, systemConfig.scale);
+
+        const propValue = x as string | number;
+
+        result = merge(result, systemConfig(propValue, scale, { theme }));
       }
 
-      const systemConfig = config[key];
-
-      // Not a token in the config, let pass through
-      if (!systemConfig) {
-        result[key] = x;
-        continue;
-      }
-
-      const scale = get(theme, systemConfig.scale);
-
-      const propValue = x as string | number;
-
-      result = merge(result, systemConfig(propValue, scale, { theme }));
-    }
-
-    return result;
-  };
+      return result;
+    };
 
   return css;
 };

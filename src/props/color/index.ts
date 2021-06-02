@@ -5,7 +5,15 @@ export const color: PropConfigCollection = {
     property: 'color',
     scale: 'colors',
   },
+  textColor: {
+    property: 'color',
+    scale: 'colors',
+  },
   backgroundColor: {
+    property: 'backgroundColor',
+    scale: 'colors',
+  },
+  bg: {
     property: 'backgroundColor',
     scale: 'colors',
   },
@@ -19,5 +27,3 @@ export const color: PropConfigCollection = {
   },
   opacity: true,
 };
-color.bg = color.backgroundColor;
-color.textColor = color.color;

@@ -1,10 +1,4 @@
-import {
-  Property as P,
-  Properties as CSSProperties,
-  Color,
-  Paint,
-} from './css-types';
-import * as CSS from 'csstype';
+import { CSSProperties } from './css-types';
 
 export type KeyOf<T> = T extends Array<any>
   ? number | Exclude<keyof T, keyof []>
@@ -101,7 +95,7 @@ interface PropertiesToScales extends Record<keyof CSSProperties, TokenScales> {
   transitionDuration: 'transitionDurations';
 }
 
-interface AliasPropertiesToScales {
+interface AliasPropertiesToScales extends Record<string, TokenScales> {
   textColor: 'colors';
   bg: 'colors';
   size: 'sizes';
@@ -127,7 +121,7 @@ interface AliasPropertiesToScales {
   borderY: 'borders';
 }
 
-interface AliasToProperties {
+interface AliasToProperties extends Record<string, keyof CSSProperties> {
   textColor: 'color';
   bg: 'backgroundColor';
   p: 'padding';
@@ -192,12 +186,13 @@ export type PrefixToken<
   : never;
 
 type MaybeToken<
-  CSSProperty extends any,
-  PrefixOption extends PrefixOptions = PrefixDefault,
-  Token extends TokenScales | null = null
-> = Token extends TokenScales
-  ? SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>
-  : SystemProp<CSSProperty>;
+  // This should be the following, but for some reason
+  // the performance of the TypeScript process TANKS
+  // CSSProperty extends keyof CSSProperties,
+  CSSProperty,
+  Token extends TokenScales,
+  PrefixOption extends PrefixOptions = PrefixDefault
+> = SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>;
 
 export type Props = {
   theme?: Theme;
@@ -266,8 +261,8 @@ type MakeSystemProp<
 > = {
   [k in keyof Pick<CSSProperties, PropNames>]?: MaybeToken<
     CSSProperties[k],
-    PrefixOption,
-    PropertiesToScales[k]
+    PropertiesToScales[k],
+    PrefixOption
   >;
 };
 
@@ -276,13 +271,36 @@ type MakeAliasSystemProps<
   PrefixOption extends PrefixOptions = PrefixDefault
 > = {
   [k in PropNames]?: MaybeToken<
-    AliasToProperties[k],
-    PrefixOption,
-    AliasPropertiesToScales[k]
+    CSSProperties[AliasToProperties[k]],
+    AliasPropertiesToScales[k],
+    PrefixOption
   >;
 };
 
+type MakeAnyProp<
+  PropNames extends keyof AliasToProperties | keyof CSSProperties,
+  PrefixOption extends PrefixOptions = PrefixDefault
+> = {
+  [k in PropNames]?: k extends keyof CSSProperties
+    ? MaybeToken<CSSProperties[k], PropertiesToScales[k], PrefixOption>
+    : MaybeToken<
+        CSSProperties[AliasToProperties[k]],
+        AliasPropertiesToScales[k],
+        PrefixOption
+      >;
+};
+
 export interface ColorProps<PrefixOption extends PrefixOptions = PrefixDefault>
+  // extends MakeAnyProp<
+  //   | 'color'
+  //   | 'backgroundColor'
+  //   | 'fill'
+  //   | 'stroke'
+  //   | 'opacity'
+  //   | 'bg'
+  //   | 'textColor',
+  //   PrefixOption
+  // > {}
   extends MakeSystemProp<
       'color' | 'backgroundColor' | 'fill' | 'stroke' | 'opacity',
       PrefixOption
@@ -474,10 +492,6 @@ export interface AllSystemProps<
     GridProps<PrefixOption>,
     FlexboxProps,
     TransitionProps<PrefixOption> {}
-
-const foo: FlexboxProps = {
-  justifyContent: 'colors',
-};
 
 export type SystemPropsTheme = Partial<
   Record<TokenScales, Record<string, string | number>>

@@ -8,8 +8,6 @@ export interface CSSObject extends CSSProperties, CSSPseudos {
   [key: string]: CSSObject | string | number | undefined;
 }
 
-export * from 'csstype';
-
 // csstype assigns "DeprecatedSystemColor" to the regular "Color"
 // type, which just adds noise to the color autosuggestions. However,
 // they don't export this NamedColor type by itself. This is just copied

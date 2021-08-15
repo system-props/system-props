@@ -121,7 +121,8 @@ interface AliasPropertiesToScales extends Record<string, TokenScales> {
   borderY: 'borders';
 }
 
-interface AliasToProperties extends Record<string, keyof CSSProperties> {
+interface AliasToProperties
+  extends Record<keyof AliasPropertiesToScales, keyof CSSProperties> {
   textColor: 'color';
   bg: 'backgroundColor';
   p: 'padding';
@@ -291,16 +292,6 @@ type MakeAnyProp<
 };
 
 export interface ColorProps<PrefixOption extends PrefixOptions = PrefixDefault>
-  // extends MakeAnyProp<
-  //   | 'color'
-  //   | 'backgroundColor'
-  //   | 'fill'
-  //   | 'stroke'
-  //   | 'opacity'
-  //   | 'bg'
-  //   | 'textColor',
-  //   PrefixOption
-  // > {}
   extends MakeSystemProp<
       'color' | 'backgroundColor' | 'fill' | 'stroke' | 'opacity',
       PrefixOption

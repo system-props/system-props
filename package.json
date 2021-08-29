@@ -11,10 +11,7 @@
   "source": "src/index.ts",
   "module": "dist/system-props.module.js",
   "main": "dist/system-props.cjs",
-  "exports": {
-    "require": "dist/system-props.js",
-    "default": "dist/system-props.modern.js"
-  },
+  "exports": "dist/system-props.modern.js",
   "unpkg": "dist/system-props.umd.js",
   "types": "dist/index.d.ts",
   "devDependencies": {

@@ -8,36 +8,40 @@
     "url": "https://github.com/system-props/system-props/issues"
   },
   "repository": "github:system-props/system-props",
-  "module": "dist/system-props.esm.js",
+  "source": "src/index.ts",
+  "module": "dist/system-props.module.js",
+  "main": "dist/system-props.cjs",
+  "exports": {
+    "require": "dist/system-props.js",
+    "default": "dist/system-props.modern.js"
+  },
+  "unpkg": "dist/system-props.umd.js",
+  "types": "dist/index.d.ts",
   "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.1",
+    "@types/jest": "^27.0.1",
     "csstype": "^3.0.7",
-    "eslint-plugin-no-only-tests": "^2.4.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.3.0",
-    "np": "^6.5.0",
+    "jest": "^27.1.0",
+    "microbundle": "^0.13.3",
+    "np": "^7.5.0",
     "prettier": "^2.3.0",
-    "tsdx": "^0.14.1",
-    "tslib": "^2.0.1",
-    "typescript": "^4.1.0"
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.3.0"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint src",
-    "prepare": "tsdx build",
-    "format": "yarn lint --fix",
+    "watch": "microbundle watch",
+    "build": "microbundle",
+    "test": "jest",
+    "lint": "tsc --project tsconfig.json --noEmit",
+    "format": "prettier --write **/*.{js,ts,tsx,json}",
     "clean": "rm -rf node_modules example/node_modules dist",
     "release": "np"
   },
@@ -50,10 +54,5 @@
   },
   "publishConfig": {
     "registry": "https://registry.yarnpkg.com"
-  },
-  "resolutions": {
-    "**/typescript": "^4.1.0",
-    "**/@typescript-eslint/eslint-plugin": "^4.6.1",
-    "**/@typescript-eslint/parser": "^4.6.1"
   }
 }

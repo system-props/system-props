@@ -1,8 +1,4 @@
-import { Config } from '@jest/types';
-
-export type JestConfigOptions = Partial<Config.InitialOptions>;
-
-const config: JestConfigOptions = {
+module.exports = {
   transform: {
     '^.+\\.tsx?$': ['esbuild-jest', { sourcemap: true }],
   },
@@ -16,5 +12,3 @@ const config: JestConfigOptions = {
   },
   testEnvironment: 'jsdom',
 };
-
-export default config;

@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "jest.config.ts"],
+  "include": ["src", "types"],
   "compilerOptions": {
     "module": "esnext",
     "lib": ["dom", "esnext"],

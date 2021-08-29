@@ -123,29 +123,97 @@ interface AliasPropertiesToScales extends Record<string, TokenScales> {
 
 interface AliasToProperties
   extends Record<keyof AliasPropertiesToScales, keyof CSSProperties> {
+  /**
+   * Alias for the `color` property
+   */
   textColor: 'color';
+  /**
+   * Alias for the `backgroundColor` property
+   */
   bg: 'backgroundColor';
+  /**
+   * Alias for the `padding` property
+   */
   p: 'padding';
+  /**
+   * Alias for the `paddingTop` property
+   */
   pt: 'paddingTop';
+  /**
+   * Alias for the `paddingRight` property
+   */
   pr: 'paddingRight';
+  /**
+   * Alias for the `paddingBottom` property
+   */
   pb: 'paddingBottom';
+  /**
+   * Alias for the `paddingLeft` property
+   */
   pl: 'paddingLeft';
+  /**
+   * Alias for the `margin` property
+   */
   m: 'margin';
+  /**
+   * Alias for the `marginTop` property
+   */
   mt: 'marginTop';
+  /**
+   * Alias for the `marginRight` property
+   */
   mr: 'marginRight';
+  /**
+   * Alias for the `marginBottom` property
+   */
   mb: 'marginBottom';
+  /**
+   * Alias for the `marginLeft` property
+   */
   ml: 'marginLeft';
-  // Multiple Property Aliases
+  /**
+   * Alias for the `height` and `width` properties
+   */
   size: 'width';
+  /**
+   * Alias for the `paddingLeft` and `paddingRight` properties
+   */
   px: 'paddingLeft';
+  /**
+   * Alias for the `paddingTop` and `paddingBottom` properties
+   */
   py: 'paddingTop';
+  /**
+   * Alias for the `paddingLeft` and `paddingRight` properties
+   */
   paddingX: 'paddingLeft';
+  /**
+   * Alias for the `paddingTop` and `paddingBottom` properties
+   */
   paddingY: 'paddingTop';
+  /**
+   * Alias for the `marginLeft` and `marginRight` properties
+   */
   mx: 'marginLeft';
+  /**
+   * Alias for the `marginTop` and `marginBottom` properties
+   */
   my: 'marginTop';
+  /**
+   * Alias for the `marginLeft` and `marginRight` properties
+   */
   marginX: 'marginLeft';
+  /**
+   * Alias for the `marginTop` and `marginBottom` properties
+   */
   marginY: 'marginTop';
+  /**
+   * Alias for the `borderLeft` and `borderRight` properties
+   */
   borderX: 'borderLeft';
+  /**
+   * Alias for the `borderTop` and `borderBottom` properties
+   */
   borderY: 'borderTop';
 }
 
@@ -268,27 +336,14 @@ type MakeSystemProp<
 };
 
 type MakeAliasSystemProps<
-  PropNames extends keyof AliasPropertiesToScales,
+  PropNames extends keyof AliasToProperties,
   PrefixOption extends PrefixOptions = PrefixDefault
 > = {
-  [k in PropNames]?: MaybeToken<
+  [k in keyof Pick<AliasToProperties, PropNames>]?: MaybeToken<
     CSSProperties[AliasToProperties[k]],
     AliasPropertiesToScales[k],
     PrefixOption
   >;
-};
-
-type MakeAnyProp<
-  PropNames extends keyof AliasToProperties | keyof CSSProperties,
-  PrefixOption extends PrefixOptions = PrefixDefault
-> = {
-  [k in PropNames]?: k extends keyof CSSProperties
-    ? MaybeToken<CSSProperties[k], PropertiesToScales[k], PrefixOption>
-    : MaybeToken<
-        CSSProperties[AliasToProperties[k]],
-        AliasPropertiesToScales[k],
-        PrefixOption
-      >;
 };
 
 export interface ColorProps<PrefixOption extends PrefixOptions = PrefixDefault>

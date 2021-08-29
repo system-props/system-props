@@ -4,8 +4,7 @@ export type JestConfigOptions = Partial<Config.InitialOptions>;
 
 const config: JestConfigOptions = {
   transform: {
-    '.(ts|tsx)$': require.resolve('ts-jest/dist'),
-    '.(js|jsx)$': require.resolve('babel-jest'), // jest's default
+    '^.+\\.tsx?$': ['esbuild-jest', { sourcemap: true }],
   },
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],

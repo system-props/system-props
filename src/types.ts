@@ -54,8 +54,10 @@ export type SystemProp<T> =
 export type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 export type PrefixDefault = 'prefix';
 
-type ScaleLookup<Token extends TokenScales, TTheme extends Theme = Theme> =
-  KeyOf<TTheme[Token]>;
+type ScaleLookup<
+  Token extends TokenScales,
+  TTheme extends Theme = Theme
+> = KeyOf<TTheme[Token]>;
 
 export type PrefixToken<
   Token extends TokenScales,

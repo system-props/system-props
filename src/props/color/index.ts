@@ -1,4 +1,4 @@
-import { PropConfigCollection } from '../../types';
+import { PropConfigCollection } from '../../core/types';
 
 export const color: PropConfigCollection = {
   color: {

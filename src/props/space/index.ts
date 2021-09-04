@@ -1,4 +1,4 @@
-import { PropConfigCollection, Transform } from '../../types';
+import { PropConfigCollection, Transform } from '../../core/types';
 import { positiveOrNegative } from '../positiveOrNegative';
 
 const getMargin: Transform = ({ path, object, props, strict, get }) => {

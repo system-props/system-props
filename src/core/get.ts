@@ -1,4 +1,4 @@
-import { Get } from '../types';
+import { Get } from './types';
 
 /**
  * Generic "get" function

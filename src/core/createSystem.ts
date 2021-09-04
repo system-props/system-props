@@ -2,13 +2,13 @@ import { parseResponsiveStyle, parseResponsiveObject } from './parseResponsive';
 import { createStyleFunction } from './createStyleFunction';
 import { get } from './get';
 import {
-  SystemProp,
   SystemConfig,
   PropConfigCollection,
   Props,
   SomeObject,
   Cache,
-} from '../types';
+} from './types';
+import { SystemProp } from '../types/system-props';
 import { sort } from './sort';
 import { merge } from './merge';
 import { pseudoSelectors as defaultPseudos } from '../pseudos';

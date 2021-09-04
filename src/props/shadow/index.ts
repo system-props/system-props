@@ -1,4 +1,4 @@
-import { PropConfigCollection } from '../../types';
+import { PropConfigCollection } from '../../core/types';
 import { getShadow } from './getShadow';
 
 export const shadow: PropConfigCollection = {

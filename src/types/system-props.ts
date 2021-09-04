@@ -1,4 +1,4 @@
-import { CSSProperties } from './css-types';
+import { CSSProperties } from './css';
 
 export type KeyOf<T> = T extends Array<any>
   ? number | Exclude<keyof T, keyof []>
@@ -239,10 +239,8 @@ export type SystemProp<T> =
 export type PrefixOptions = 'all' | 'prefix' | 'noprefix';
 export type PrefixDefault = 'prefix';
 
-type ScaleLookup<
-  Token extends TokenScales,
-  TTheme extends Theme = Theme
-> = KeyOf<TTheme[Token]>;
+type ScaleLookup<Token extends TokenScales, TTheme extends Theme = Theme> =
+  KeyOf<TTheme[Token]>;
 
 export type PrefixToken<
   Token extends TokenScales,
@@ -264,67 +262,6 @@ type MaybeToken<
   Token extends TokenScales,
   PrefixOption extends PrefixOptions = PrefixDefault
 > = SystemProp<PrefixToken<Token, PrefixOption> | CSSProperty>;
-
-export type Props = {
-  theme?: Theme;
-  [x: string]: any;
-};
-
-export interface SystemConfig {
-  (value: string | number, scale: string, props: Props, cache?: Cache): {};
-  scale?: 'string';
-  defaultScale?: unknown;
-}
-
-export interface Get {
-  (obj?: any, path?: any, fallback?: any): any;
-}
-
-export interface StyleFunction {
-  (propertyConfig: PropertyConfig): SystemConfig;
-}
-
-export interface Transform {
-  ({
-    path,
-    object,
-    props,
-    strict,
-    get,
-  }: {
-    path?: any;
-    object?: any;
-    props?: Props;
-    strict?: boolean;
-    get: Get;
-  }): any;
-}
-
-export type MaybeCSSProperty = keyof CSSProperties | (string & {});
-
-export type PropertyConfig = {
-  properties?: Array<MaybeCSSProperty>;
-  property?: MaybeCSSProperty;
-  scale?: string;
-  defaultScale?: Array<string | number>;
-  transform?: Transform;
-  tokenPrefix?: 'prefix' | 'noprefix' | 'all';
-};
-
-export interface PropConfigCollection {
-  [key: string]: true | PropertyConfig;
-}
-
-export interface Cache {
-  breakpoints?: Record<string, string> | string[];
-  media?: (string | null)[];
-  strict: boolean;
-  key: string;
-}
-
-export interface SomeObject {
-  [x: string]: SomeObject | string | number | ((x: Theme) => string | number);
-}
 
 type MakeSystemProp<
   PropNames extends keyof CSSProperties,
@@ -540,7 +477,3 @@ export interface AllSystemProps<
     GridProps<PrefixOption>,
     FlexboxProps,
     TransitionProps<PrefixOption> {}
-
-export type SystemPropsTheme = Partial<
-  Record<TokenScales, Record<string, string | number>>
->;

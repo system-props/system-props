@@ -5,7 +5,7 @@ import {
   StyleFunction,
   Transform,
   MaybeCSSProperty,
-} from '../types';
+} from './types';
 
 const defaultTransform: Transform = ({ path, object, strict, get }) => {
   return get(object, path, strict === true ? undefined : path);

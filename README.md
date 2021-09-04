@@ -28,11 +28,7 @@ Functions almost identically to styled-system, but adds the following features:
 
 ## Quick Start
 
-CodeSandbox demos:
-
-- [styled-components](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/styled-components)
-- [styled-components with transient props](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/styled-components-transient-props)
-- [emotion](https://codesandbox.io/s/github/roginfarrer/system-props/tree/main/examples/emotion)
+See the example project in this repo for a more complete example.
 
 ```tsx
 import { createSystem, color, space } from 'system-props';
@@ -63,7 +59,7 @@ const App = () => {
         border="1px solid $blue200"
         borderBottom={(theme) => `3px dotted ${theme.colors.blue200}`}
         _hover={{
-          bg: 'blue700',
+          bg: '$blue700',
         }}
       />
     </ThemeProvider>

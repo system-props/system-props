@@ -1,4 +1,4 @@
-import { Transform } from '../types';
+import { Transform } from '../core/types';
 
 const isNumber = (n: unknown): boolean => typeof n === 'number' && !isNaN(n);
 

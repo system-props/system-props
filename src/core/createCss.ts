@@ -1,25 +1,21 @@
 import { get, memoizedGet } from './get';
-import {
-  PropConfigCollection,
-  Theme,
-  SystemConfig,
-  PrefixOptions,
-} from '../types';
-import { CSSObject as SystemPropsCSSObject } from '../css-prop';
+import { PropConfigCollection, SystemConfig } from './types';
+import { Theme, PrefixOptions } from '../types/system-props';
 import { merge } from './merge';
-import { CSSObject, CSSProperties } from '../css-types';
+import { CSSObject } from '../types/css-prop';
+import { CSSProperties } from '../types/css';
 import { createStyleFunction } from './createStyleFunction';
 
 interface PropsWithTheme {
   theme: Theme;
 }
 
-type CSSFunctionArgs<T extends PrefixOptions> =
-  | SystemPropsCSSObject<T>
-  | ((theme: Theme) => SystemPropsCSSObject<T>);
+export type CSSFunctionArgs<T extends PrefixOptions> =
+  | CSSObject<T>
+  | ((theme: Theme) => CSSObject<T>);
 
 export interface CSSFunction<T extends PrefixOptions> {
-  (args?: CSSFunctionArgs<T>): (props: PropsWithTheme) => CSSObject | undefined;
+  (args?: CSSFunctionArgs<T>): (props: PropsWithTheme) => CSSObject;
 }
 
 export const createCss = (
@@ -50,7 +46,7 @@ export const createCss = (
     (args) =>
     ({ theme }) => {
       if (typeof args === 'undefined') {
-        return;
+        return {};
       }
 
       let result: CSSObject = {};
@@ -61,17 +57,21 @@ export const createCss = (
 
         // Nested selectors (pseudo selectors, media query)
         if (x && typeof x === 'object') {
-          const nestedStyles = x as SystemPropsCSSObject<typeof tokenPrefix>;
+          const nestedStyles = x;
 
           // If key is a mediaQueries token value
           const _get = memoizedGet[tokenPrefix];
           const maybeQuery = _get(theme.mediaQueries, key);
           if (typeof maybeQuery !== 'undefined') {
-            result[maybeQuery] = css(nestedStyles)({ theme });
+            Object.assign(result, {
+              [maybeQuery]: css(nestedStyles)({ theme }),
+            });
             continue;
           }
 
-          result[key] = css(nestedStyles)({ theme });
+          Object.assign(result, {
+            [key]: css(nestedStyles)({ theme }),
+          });
           continue;
         }
 
@@ -79,7 +79,7 @@ export const createCss = (
 
         // Not a token in the config, let pass through
         if (!systemConfig) {
-          result[key] = x;
+          Object.assign(result, { [key]: x });
           continue;
         }
 

@@ -1,4 +1,4 @@
-import { Transform } from '../../types';
+import { Transform } from '../../core/types';
 import { tokenizeValue } from '../tokenizeValue';
 
 export const borderShorthandTransform: Transform = ({

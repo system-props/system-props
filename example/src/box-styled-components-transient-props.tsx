@@ -3,11 +3,10 @@ import {
   createSystem,
   shouldForwardProp,
   css,
-  Theme,
-  CSSObject,
+  CSSFunctionArgs,
 } from 'system-props';
 import { config, BaseProps } from './system-props.config';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
 const system = createSystem();
 
@@ -23,7 +22,7 @@ type TransientBaseProps = {
 };
 
 interface TransientBoxProps extends TransientBaseProps {
-  sx?: CSSObject | ((theme: Theme) => CSSObject);
+  sx?: CSSFunctionArgs<'prefix'>;
   children?: ReactNode;
 }
 
@@ -33,5 +32,5 @@ export const Box = styled('div').withConfig({
 })<TransientBoxProps>(
   { boxSizing: 'border-box' },
   system(transientConfig),
-  ({ sx, ...props }) => css(sx)(props)
+  ({ sx, ...props }) => css(sx)(props) as CSSObject
 );

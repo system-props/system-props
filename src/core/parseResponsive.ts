@@ -1,11 +1,9 @@
+import { Cache, SystemConfig, Props } from './types';
 import {
-  Cache,
-  SystemConfig,
-  ResponsiveObject,
   ResponsiveArray,
-  Props,
+  ResponsiveObject,
   Theme,
-} from '../types';
+} from '../types/system-props';
 
 const createMediaQuery = (n: string) => `@media screen and (min-width: ${n})`;
 

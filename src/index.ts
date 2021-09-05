@@ -30,7 +30,7 @@ export const css = createCss(
   { tokenPrefix: 'prefix' }
 );
 
-export { createSystem, createCss } from './core';
+export { createSystem, createCss, CSSFunction, CSSFunctionArgs } from './core';
 export * from './props';
 export * from './pseudos';
 export * from './propNames';
@@ -54,7 +54,7 @@ export {
   FlexboxProps,
   TransitionProps,
   AllSystemProps,
-  PropConfigCollection,
   Theme,
-} from './types';
-export { CSSObject } from './css-prop';
+} from './types/system-props';
+export { PropConfigCollection } from './core/types';
+export { CSSObject } from './types/css-prop';

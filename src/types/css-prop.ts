@@ -1,15 +1,12 @@
-import * as CSS from 'csstype';
 import {
   Theme,
   PrefixToken,
   PrefixOptions,
   PrefixDefault,
   TokenScales,
-} from './types';
-
-// Autocomplete string values, also allow raw numbers which
-// most libraries will convert to pixel values
-export type CSSProperties = CSS.Properties<(string & {}) | number>;
+} from './system-props';
+import { CSSProperties } from './css';
+import { Pseudos } from 'csstype';
 
 interface PropertiesToScales extends Record<keyof CSSProperties, TokenScales> {
   color: 'colors';
@@ -160,7 +157,7 @@ export type CSSObject<
 > = InternalCss<PrefixOption, TTheme> &
   // Pseudo Selectors
   {
-    [K in CSS.Pseudos]?:
+    [K in Pseudos]?:
       | CSSObject<PrefixOption, TTheme>
       | string
       | number

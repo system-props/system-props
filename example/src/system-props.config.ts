@@ -13,8 +13,7 @@ import {
   PseudoProps,
   AllSystemProps,
   SystemProp,
-  Theme,
-  CSSObject,
+  CSSFunctionArgs,
 } from 'system-props';
 import * as CSS from 'csstype';
 
@@ -35,7 +34,7 @@ export type BaseProps<Prefix extends PrefixOptions = 'prefix'> =
 export interface BoxProps<Prefix extends PrefixOptions = 'prefix'>
   extends BaseProps<Prefix>,
     PseudoProps<BaseProps<Prefix>> {
-  sx?: CSSObject<Prefix> | ((theme: Theme) => CSSObject<Prefix>);
+  sx?: CSSFunctionArgs<'prefix'>;
   children?: ReactNode;
 }
 

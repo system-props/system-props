@@ -1,4 +1,4 @@
-import { PropConfigCollection, Transform } from '../../types';
+import { PropConfigCollection, Transform } from '../../core/types';
 import { tokenizeValue } from '../tokenizeValue';
 
 const parseTransition: Transform = ({ path, object, get, strict }) => {

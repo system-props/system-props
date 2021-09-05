@@ -1,55 +1,6 @@
 {
-  "name": "system-props",
-  "version": "0.20.0",
-  "description": "Inspired by styled-system, a responsive, theme-based style props for building design systems with React.",
-  "author": "Rogin Farrer",
-  "homepage": "https://github.com/system-props/system-props#readme",
-  "bugs": {
-    "url": "https://github.com/system-props/system-props/issues"
-  },
-  "repository": "github:system-props/system-props",
-  "source": "src/index.ts",
-  "module": "dist/system-props.module.js",
-  "main": "dist/system-props.cjs",
-  "exports": "dist/system-props.modern.js",
-  "unpkg": "dist/system-props.umd.js",
-  "types": "dist/index.d.ts",
-  "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "csstype": "^3.0.7",
-    "esbuild": "^0.12.24",
-    "esbuild-jest": "^0.5.0",
-    "jest": "^27.1.0",
-    "microbundle": "^0.13.3",
-    "np": "^7.5.0",
-    "prettier": "^2.3.0",
-    "ts-node": "^10.2.1",
-    "typescript": "^4.3.0"
-  },
-  "license": "MIT",
-  "files": [
-    "dist",
+  "workspaces": [
+    "example",
     "src"
-  ],
-  "engines": {
-    "node": ">=12"
-  },
-  "scripts": {
-    "watch": "microbundle watch",
-    "build": "microbundle",
-    "test": "jest",
-    "lint": "tsc --project tsconfig.json --noEmit",
-    "format": "prettier --write **/*.{js,ts,tsx,json}",
-    "clean": "rm -rf node_modules example/node_modules dist",
-    "release": "np"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
-  "publishConfig": {
-    "registry": "https://registry.yarnpkg.com"
-  }
+  ]
 }

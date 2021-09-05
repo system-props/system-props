@@ -21,7 +21,7 @@ jobs:
             yarn2-
 
       - name: Install dependencies
-        run: yarn --immutable
+        run: yarn install
 
       - name: Lint
         run: yarn lint

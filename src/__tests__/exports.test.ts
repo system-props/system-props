@@ -5,6 +5,8 @@ test('package has expected exports', () => {
 Array [
   "AllSystemProps",
   "BorderProps",
+  "CSSFunction",
+  "CSSFunctionArgs",
   "CSSObject",
   "ColorProps",
   "FlexContainerProps",

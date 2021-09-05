@@ -23,11 +23,11 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
+      - name: Build
+        run: yarn workspace system-props build
+
       - name: Lint
         run: yarn lint
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
-
-      - name: Build
-        run: yarn workspace system-props build

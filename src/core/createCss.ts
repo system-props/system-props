@@ -63,7 +63,6 @@ export const createCss = (
           const _get = memoizedGet[tokenPrefix];
           const maybeQuery = _get(theme.mediaQueries, key);
           if (typeof maybeQuery !== 'undefined') {
-            // result[maybeQuery] = css(nestedStyles)({ theme });
             Object.assign(result, {
               [maybeQuery]: css(nestedStyles)({ theme }),
             });
@@ -80,7 +79,6 @@ export const createCss = (
 
         // Not a token in the config, let pass through
         if (!systemConfig) {
-          // result[key] = x;
           Object.assign(result, { [key]: x });
           continue;
         }

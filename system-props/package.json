@@ -27,9 +27,7 @@
   "license": "MIT",
   "files": [
     "dist",
-    "src",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "engines": {
     "node": ">=12"

@@ -43,7 +43,6 @@
     "clean": "rm -rf node_modules example/node_modules dist",
     "release": "np"
   },
-  "peerDependencies": {},
   "prettier": {
     "printWidth": 80,
     "semi": true,

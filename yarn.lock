@@ -4785,7 +4785,7 @@ __metadata:
     react-dom: ^17.0.0
     react-is: ^17.0.2
     styled-components: ^5.2.1
-    system-props: "*"
+    system-props: "workspace:*"
     typescript: ^4.3.0
     vite: ^2.5.3
   languageName: unknown
@@ -10278,7 +10278,7 @@ resolve@1.17.0:
   languageName: node
   linkType: hard
 
-"system-props@*, system-props@workspace:system-props":
+"system-props@workspace:*, system-props@workspace:system-props":
   version: 0.0.0-use.local
   resolution: "system-props@workspace:system-props"
   dependencies:

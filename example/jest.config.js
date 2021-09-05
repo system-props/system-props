@@ -4,8 +4,10 @@ module.exports = {
   },
   transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  collectCoverageFrom: ["src/**/*.{ts,tsx,js,jsx}"],
-  testMatch: ["<rootDir>/**/*.(spec|test).{ts,tsx,js,jsx}"],
-  rootDir: ".",
+  testMatch: ["<rootDir>/example/**/*.(spec|test).{ts,tsx,js,jsx}"],
+  rootDir: "..",
   testEnvironment: "jsdom",
+  moduleNameMapper: {
+    "^system-props$": "<rootDir>/system-props/src",
+  },
 };

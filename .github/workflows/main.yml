@@ -20,8 +20,6 @@ jobs:
           restore-keys: |
             yarn2-
 
-      - run: yarn set version from sources
-
       - name: Install dependencies
         run: yarn --immutable
 

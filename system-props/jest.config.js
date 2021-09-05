@@ -7,8 +7,5 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,tsx,js,jsx}'],
   testMatch: ['<rootDir>/**/*.(spec|test).{ts,tsx,js,jsx}'],
   rootDir: '.',
-  moduleNameMapper: {
-    '^system-props$': '<rootDir>/src',
-  },
   testEnvironment: 'jsdom',
 };

@@ -17,12 +17,9 @@
   "devDependencies": {
     "@types/jest": "^27.0.1",
     "csstype": "^3.0.7",
-    "esbuild": "^0.12.24",
-    "esbuild-jest": "^0.5.0",
     "jest": "^27.1.0",
     "microbundle": "^0.13.3",
     "np": "^7.5.0",
-    "prettier": "^2.3.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.0"
   },

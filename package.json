@@ -1,6 +1,19 @@
 {
   "workspaces": [
     "example",
-    "src"
-  ]
+    "system-props"
+  ],
+  "scripts": {
+    "test": "yarn workspaces foreach run test",
+    "lint": "yarn workspaces foreach run lint",
+    "validate": "yarn workspace system-props build && yarn lint && yarn test"
+  },
+  "devDependencies": {
+    "@types/prettier": "^2",
+    "prettier": "^2.3.2"
+  },
+  "engines": {
+    "node": ">12",
+    "yarn": "^2"
+  }
 }

@@ -16,20 +16,21 @@ export const borderShorthandTransform: Transform = ({
     return border;
   }
   const [[width, style, color]] = tokenizeValue(path);
+
   const borderWidth = get(
     props?.theme?.borderWidths,
     width,
-    strict ? undefined : width
+    strict && !!object ? undefined : width
   );
   const borderStyle = get(
     props?.theme?.borderStyles,
     style,
-    strict ? undefined : style
+    strict && !!object ? undefined : style
   );
   const borderColor = get(
     props?.theme?.colors,
     color,
-    strict ? undefined : color
+    strict && !!object ? undefined : color
   );
   return [borderWidth, borderStyle, borderColor].filter(Boolean).join(' ');
 };

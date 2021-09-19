@@ -155,6 +155,8 @@ test('gets values from theme', () => {
 test('if strict, only allows theme values', () => {
   const system = createSystem({ strict: true });
   const parser = system({
+    // verify that strict mode allows properties that don't rely on theme values
+    textAlign: true,
     mx: {
       properties: ['marginLeft', 'marginRight'],
       scale: 'space',
@@ -179,11 +181,13 @@ test('if strict, only allows theme values', () => {
     mx: ['$0', '$1', '$2', '$3', '$4'],
     color: ['$primary', 'black'],
     bg: 'blue',
+    textAlign: 'center',
   });
   expect(style).toEqual({
     color: 'tomato',
     marginLeft: 0,
     marginRight: 0,
+    textAlign: 'center',
     '@media screen and (min-width: 40em)': {
       marginLeft: 6,
       marginRight: 6,

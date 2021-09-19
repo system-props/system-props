@@ -91,3 +91,45 @@ test('returns border top and bottom radii', () => {
     borderBottomLeftRadius: 5,
   });
 });
+
+test('strict only allows theme values', () => {
+  const strictSystem = createSystem({ strict: true });
+
+  const strictParser = strictSystem(border);
+
+  expect(
+    strictParser({
+      theme: {
+        breakpoints: [],
+        colors: { red500: '#ff0000' },
+        borders: { base: '1px solid papayawhip' },
+        borderWidths: { thin: '1px' },
+        borderStyles: { solid: 'solid' },
+      },
+      border: '$thin $solid $red500',
+      borderRight: '$base',
+    })
+  ).toMatchObject({
+    border: '1px solid #ff0000',
+    borderRight: '1px solid papayawhip',
+  });
+
+  expect(
+    strictParser({
+      theme: {
+        breakpoints: [],
+        colors: { red500: '#ff0000' },
+        borders: { base: '1px solid papayawhip' },
+      },
+      border: '1px solid $red500',
+      borderLeft: '1px solid $red500',
+      borderRight: '$base',
+      borderBottom: '1px solid',
+      borderTop: '1px solid blue',
+    })
+  ).toMatchObject({
+    borderLeft: '#ff0000',
+    border: '#ff0000',
+    borderRight: '1px solid papayawhip',
+  });
+});

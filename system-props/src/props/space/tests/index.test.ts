@@ -279,3 +279,30 @@ test('padding does not handle negative values, just passes through', () => {
   const styles = themedParser({ paddingLeft: -1, p: '$1 -2 -$2 $1' });
   expect(styles).toEqual({ paddingLeft: -1, padding: '4px -2 -$2 4px' });
 });
+
+test('does not allow non theme values if strict enabled', () => {
+  const strictSystem = createSystem({ strict: true });
+  const strictSpace = strictSystem(space);
+  const strictParser = (config: { [x: string]: any }) =>
+    strictSpace({
+      theme: {
+        breakpoints: ['40em', '52em', '64em'],
+        space: [0, 4, 8, 12, 16],
+      },
+      ...config,
+    });
+  expect(
+    strictParser({
+      m: '4px',
+    })
+  ).toEqual({});
+  expect(
+    strictParser({
+      m: '$2',
+    })
+  ).toEqual({ margin: 8 });
+  expect(strictParser({ m: '$2 $4', p: '$2 $4' })).toEqual({
+    margin: '8px 16px',
+    padding: '8px 16px',
+  });
+});

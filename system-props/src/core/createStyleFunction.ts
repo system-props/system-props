@@ -8,7 +8,7 @@ import {
 } from './types';
 
 const defaultTransform: Transform = ({ path, object, strict, get }) => {
-  return get(object, path, strict === true ? undefined : path);
+  return get(object, path, strict === true && !!object ? undefined : path);
 };
 
 export const createStyleFunction: StyleFunction = ({

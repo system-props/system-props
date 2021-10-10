@@ -14,7 +14,11 @@ const parseTransition: Transform = ({ path, object, get, strict }) => {
     result = transitions
       .map((transition) => {
         if (transition.length === 1) {
-          return get(object, transition[0], strict ? undefined : transition[0]);
+          return get(
+            object,
+            transition[0],
+            strict && !!object ? undefined : transition[0]
+          );
         }
         return transition.join(' ');
       })

@@ -11,20 +11,24 @@ export const positiveOrNegative: Transform = ({
   if (!isNumber(path)) {
     if (typeof path === 'string' && path.startsWith('-')) {
       const raw = path.slice(1);
-      const value = get(object, raw, raw);
+      const value = get(object, raw, strict && !!object ? undefined : raw);
       if (isNumber(value)) {
         return value * -1;
       }
       return `-${value}`;
     }
-    return get(object, path, strict ? undefined : path);
+    return get(object, path, strict && !!object ? undefined : path);
   }
 
   const num = path as number;
 
   const isNegative = num < 0;
   const absolute = Math.abs(num);
-  const value = get(object, absolute, strict ? undefined : absolute);
+  const value = get(
+    object,
+    absolute,
+    strict && !!object ? undefined : absolute
+  );
   if (isNumber(value)) {
     return value * (isNegative ? -1 : 1);
   }

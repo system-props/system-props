@@ -1,24 +1,22 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Begin CI...
-        uses: actions/checkout@v2
-
-      - name: Use Node 14
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
-          node-version: 14.x
-
-      - uses: actions/cache@v2
-        with:
-          path: .yarn/cache
-          key: yarn2-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            yarn2-
+          node-version: 14
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
 
       - name: Install dependencies
         run: yarn install --immutable
@@ -31,3 +29,23 @@ jobs:
 
       - name: Test
         run: yarn test --ci --coverage --maxWorkers=2
+
+  release:
+    name: Publish to NPM
+    needs: test
+    # publish only when merged in master on original repo, not on PR
+    if: github.repository == 'system-props/system-props' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install Dependencies
+        uses: bahmutov/npm-install@v1
+      - name: Build
+        run: yarn workspace system-props build
+      - run: yarn workspace system-props semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

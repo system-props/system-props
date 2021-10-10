@@ -9,9 +9,9 @@
   },
   "repository": "github:system-props/system-props",
   "source": "src/index.ts",
-  "module": "dist/system-props.module.js",
-  "main": "dist/system-props.cjs",
-  "exports": "dist/system-props.modern.js",
+  "module": "dist/system-props.esm.js",
+  "main": "dist/system-props.js",
+  "umd:main": "dist/system-props.umd.js",
   "unpkg": "dist/system-props.umd.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
@@ -21,6 +21,7 @@
     "jest": "^27.1.0",
     "microbundle": "^0.13.3",
     "np": "^7.5.0",
+    "semantic-release": "^18.0.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.0"
   },

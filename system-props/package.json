@@ -21,7 +21,7 @@
     "jest": "^27.1.0",
     "microbundle": "^0.13.3",
     "np": "^7.5.0",
-    "semantic-release": "^18.0.0",
+    "semantic-release": "^19.0.3",
     "ts-node": "^10.2.1",
     "typescript": "^4.3.0"
   },
